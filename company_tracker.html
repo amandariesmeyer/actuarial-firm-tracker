@@ -164,6 +164,9 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
     <h3>Firm Type</h3>
     <div class="cb-group" id="firmTypeFilters"></div>
 
+    <h3>Country</h3>
+    <div class="cb-group" id="countryFilters"></div>
+
     <h3>Focus Areas</h3>
     <div class="cb-group" id="focusFilters"></div>
 
@@ -208,6 +211,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Seattle, WA",
+    country: "United States",
     ownership: "Private",
     employees: "~4,400",
     employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Milliman"},{label:"LinkedIn",url:"https://www.linkedin.com/company/milliman"},{label:"Acturhire",url:"https://www.acturhire.com/company/milliman"}],
@@ -224,6 +228,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "London / Arlington, VA",
+    country: "United States",
     ownership: "Public (NASDAQ: WTW)",
     employees: "~48,900",
     employeeSources: [{label:"SEC 10-K",url:"https://www.sec.gov/Archives/edgar/data/1140536/000095017025026278/wtw-20241231.htm"},{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/WTW/willis-towers-watson-public/number-of-employees"}],
@@ -240,6 +245,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Dublin / Chicago, IL",
+    country: "United States",
     ownership: "Public (NYSE: AON)",
     employees: "~60,000",
     employeeSources: [{label:"SEC 10-K",url:"https://filecache.investorroom.com/mr5ir_aon/600/Aon%20plc%202024%2010-K%20(10).pdf"},{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/AON/aon/number-of-employees"}],
@@ -256,6 +262,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
     employees: "~25,000",
     employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Mercer_(consulting_firm)"},{label:"LinkedIn",url:"https://www.linkedin.com/company/mercer"}],
@@ -272,6 +279,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Big 4 / Accounting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Private (Partnership)",
     employees: "~470,000",
     employeeSources: [{label:"Deloitte Facts",url:"https://www.deloitte.com/global/en/about/governance/facts-and-figures.html"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Deloitte"}],
@@ -288,6 +296,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Big 4 / Accounting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Private (Partnership)",
     employees: "~364,000",
     employeeSources: [{label:"PwC Global Review",url:"https://www.pwc.com/gx/en/about/global-annual-review/at-a-glance.html"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/PwC"}],
@@ -304,6 +313,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Big 4 / Accounting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Private (Partnership)",
     employees: "~393,000-406,000",
     employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Ernst_%26_Young"},{label:"EY Newsroom",url:"https://www.ey.com/en_gl/newsroom/2025/10/ey-announces-global-revenue-of-us-53-2b-for-fiscal-year-2025"}],
@@ -320,6 +330,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Big 4 / Accounting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Private (Partnership)",
     employees: "~276,000",
     employeeSources: [{label:"KPMG Corporate Reporting",url:"https://kpmg.com/xx/en/about/corporate-reporting.html"},{label:"KPMG Press Release",url:"https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html"}],
@@ -336,6 +347,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
     employees: "~7,000-9,100",
     employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Oliver_Wyman"},{label:"LinkedIn",url:"https://www.linkedin.com/company/oliver-wyman"},{label:"PitchBook",url:"https://pitchbook.com/profiles/advisor/51280-48"}],
@@ -352,6 +364,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Southfield, MI",
+    country: "United States",
     ownership: "Private",
     employees: "~107-176",
     employeeSources: [{label:"RocketReach",url:"https://rocketreach.co/gabriel-roeder-smith-company-profile_b5d09b95f42e40c2"},{label:"LinkedIn",url:"https://www.linkedin.com/company/gabriel-roeder-smith-&-company"}],
@@ -368,6 +381,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Kennesaw, GA",
+    country: "United States",
     ownership: "Private",
     employees: "~29-50",
     employeeSources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/cavanaugh-macdonald-consulting-llc"},{label:"ZoomInfo",url:"https://www.zoominfo.com/c/cavanaugh-macdonald-consulting-llc/28004869"}],
@@ -384,6 +398,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Private",
     employees: "~1,100",
     employeeSources: [{label:"Segal Website",url:"https://www.segalco.com/"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Segal_(company)"}],
@@ -400,6 +415,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Washington, DC",
+    country: "United States",
     ownership: "Employee-Owned",
     employees: "65+",
     employeeSources: [{label:"Cheiron Story",url:"https://cheiron.us/cheironHome/content/about/the-story-of-cheiron"},{label:"LinkedIn",url:"https://www.linkedin.com/company/cheiron"}],
@@ -416,6 +432,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Subsidiary of Arthur J. Gallagher (NYSE: AJG)",
     employees: "~2,300",
     employeeSources: [{label:"Gallagher Announcement",url:"https://investor.ajg.com/news/news-details/2022/Arthur-J.-Gallagher--Co.-Announces-Agreement-To-Acquire-Buck/default.aspx"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Buck_(human_resources_consulting_company)"}],
@@ -432,6 +449,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Fort Lauderdale, FL",
+    country: "United States",
     ownership: "Private",
     employees: "100+",
     employeeSources: [{label:"Foster & Foster",url:"https://foster-foster.com/"},{label:"ZoomInfo",url:"https://www.zoominfo.com/c/foster--foster-consulting-actuaries-inc/35063839"}],
@@ -448,6 +466,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Bloomington, IL",
+    country: "United States",
     ownership: "Employee-Owned",
     employees: "~93-95",
     employeeSources: [{label:"PitchBook",url:"https://pitchbook.com/profiles/company/332589-16"},{label:"LinkedIn",url:"https://www.linkedin.com/company/pinnacle-actuarial-resources-inc-"}],
@@ -464,6 +483,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Dallas, TX",
+    country: "United States",
     ownership: "Private",
     employees: "~140-165",
     employeeSources: [{label:"LeadIQ",url:"https://leadiq.com/c/lewis--ellis---actuaries-and-consultants/5a1d848024000024005f00f6/employee-directory"},{label:"LinkedIn",url:"https://www.linkedin.com/company/lewis-&-ellis"}],
@@ -480,6 +500,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Boca Raton, FL",
+    country: "United States",
     ownership: "Private",
     employees: "150+",
     employeeSources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/perrandknight"},{label:"Perr&Knight About",url:"https://www.perrknight.com/about/"}],
@@ -496,6 +517,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Boston, MA",
+    country: "United States",
     ownership: "Acquired by Brown & Brown (NYSE: BRO) Aug 2025",
     employees: "5,000+",
     employeeSources: [{label:"About Us",url:"https://www.risk-strategies.com/about/"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Risk_Strategies"}],
@@ -505,13 +527,14 @@ const firms = [
     revenueSources: [],
     website: "risk-strategies.com",
     practiceAreas: {pension:false,life:true,pc:true,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Primarily insurance brokerage; actuarial is small division. Acquired by Brown & Brown Aug 2025."
+    notes: "Primarily insurance brokerage; actuarial is small division. Acquired by Brown & Brown Aug 2025. Acquired Centric Actuarial Solutions (Overland Park, KS) in Aug 2021."
   },
   {
     name: "FTI Consulting",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Washington, DC",
+    country: "United States",
     ownership: "Public (NYSE: FCN)",
     employees: "8,118",
     employeeSources: [{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/FCN/fti-consulting/number-of-employees"},{label:"FTI Q4 2025",url:"https://www.fticonsulting.com/about/newsroom/press-releases/fti-consulting-reports-fourth-quarter-and-full-year-2025-financial-results"}],
@@ -528,6 +551,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Big 4 / Accounting",
     hq: "Chicago, IL",
+    country: "United States",
     ownership: "Private",
     employees: "~17,000-19,000",
     employeeSources: [{label:"RSM Snapshot",url:"https://impactreport.rsmus.com/our-impact/our-firm/rsm-us-llp-snapshot.html"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/RSM_US"}],
@@ -544,6 +568,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Cleveland, OH",
+    country: "United States",
     ownership: "Public (NYSE: CBZ)",
     employees: "~9,500+",
     employeeSources: [{label:"CBIZ Earnings",url:"https://cbiz.gcs-web.com/news-releases/news-release-details/cbiz-reports-fourth-quarter-and-full-year-2025-financial-results"},{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/CBZ/cbiz/number-of-employees"}],
@@ -560,6 +585,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Lansing, MI",
+    country: "United States",
     ownership: "Private",
     employees: "~700-1,000",
     employeeSources: [{label:"HMA Website",url:"https://www.healthmanagement.com/our-team/"},{label:"HMA News",url:"https://www.healthmanagement.com/insights/hma-news/health-management-associates-acquires-wakely-consulting-group/"}],
@@ -576,6 +602,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Unknown",
+    country: "Unknown",
     ownership: "Private",
     employees: "~5-10",
     employeeSources: [{label:"Company Website",url:"https://healthcareactuaries.com/"}],
@@ -592,6 +619,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Media, PA",
+    country: "United States",
     ownership: "Acquired by Lewis & Ellis (June 2025)",
     employees: "~12-16",
     employeeSources: [{label:"LeadIQ",url:"https://leadiq.com"},{label:"Insurance Business Mag",url:"https://www.insurancebusinessmag.com/us/news/mergers-acquisitions/lewis-and-ellis-and-huggins-merger-expands-actuarial-services-538883.aspx"}],
@@ -608,6 +636,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Brentwood, TN",
+    country: "United States",
     ownership: "Private",
     employees: "~25-40",
     employeeSources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/sigma-actuarial-consulting-group-inc-"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
@@ -624,6 +653,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Manhattan Beach, CA",
+    country: "United States",
     ownership: "Private (Consultant-Owned)",
     employees: "~1-10",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
@@ -640,6 +670,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Lyndhurst, NJ",
+    country: "United States",
     ownership: "Private",
     employees: "~6-10",
     employeeSources: [{label:"SGRisk About",url:"https://sgrisk.com/about/"}],
@@ -656,6 +687,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Toronto, ON",
+    country: "Canada",
     ownership: "Private",
     employees: "~17-19",
     employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
@@ -672,6 +704,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Safety Harbor, FL",
+    country: "United States",
     ownership: "Private",
     employees: "~11-15",
     employeeSources: [{label:"Company Website",url:"https://sydneygrp.com/who-we-are/"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
@@ -688,6 +721,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "North Haven, CT",
+    country: "United States",
     ownership: "Private",
     employees: "~36",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
@@ -704,6 +738,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "TPA / Benefits Admin",
     hq: "Utica, NY",
+    country: "United States",
     ownership: "Private",
     employees: "~400-480",
     employeeSources: [{label:"BPAS Website",url:"https://bpas.com/employers/services/actuarial-pension/"},{label:"LinkedIn",url:"https://www.linkedin.com/company/bpas"}],
@@ -720,6 +755,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Sea Girt, NJ",
+    country: "United States",
     ownership: "Private",
     employees: "~11",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"},{label:"LeadIQ",url:"https://leadiq.com"}],
@@ -736,6 +772,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Carmel, IN",
+    country: "United States",
     ownership: "Employee-Owned",
     employees: "~27",
     employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"}],
@@ -752,6 +789,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Minneapolis, MN",
+    country: "United States",
     ownership: "Private",
     employees: "~5",
     employeeSources: [{label:"Team Page",url:"https://actuarialadvisors.com/our-team/"}],
@@ -768,6 +806,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Public (NYSE: MMC)",
     employees: "~90,000+",
     employeeSources: [],
@@ -784,6 +823,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Rolling Meadows, IL",
+    country: "United States",
     ownership: "Public (NYSE: AJG)",
     employees: "52,000+",
     employeeSources: [],
@@ -800,6 +840,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Chicago, IL",
+    country: "United States",
     ownership: "Private",
     employees: "~153-178",
     employeeSources: [],
@@ -816,6 +857,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Farmington, CT",
+    country: "United States",
     ownership: "Private",
     employees: "~51-200",
     employeeSources: [],
@@ -832,6 +874,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Austin, TX",
+    country: "United States",
     ownership: "Private",
     employees: "~29",
     employeeSources: [],
@@ -848,7 +891,8 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Boston, MA",
-    ownership: "Private",
+    country: "United States",
+    ownership: "Subsidiary of Alera Group (acquired Feb 2018)",
     employees: "~36",
     employeeSources: [],
     actuaries: "Not disclosed",
@@ -857,13 +901,14 @@ const firms = [
     revenueSources: [],
     website: "springgroup.com",
     practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:true,ma:false},
-    notes: "\"Actuarial Firm of the Year\" by Captive Review. Specialist in captive insurance consulting."
+    notes: "Acquired by Alera Group Feb 2018. \"Actuarial Firm of the Year\" by Captive Review. Specialist in captive insurance consulting."
   },
   {
     name: "INS Consultants (The INS Companies)",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Philadelphia, PA",
+    country: "United States",
     ownership: "Private",
     employees: "~32",
     employeeSources: [],
@@ -880,6 +925,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Sacramento, CA",
+    country: "United States",
     ownership: "Private",
     employees: "Not disclosed",
     employeeSources: [],
@@ -896,6 +942,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Pittsburgh, PA",
+    country: "United States",
     ownership: "Private (Acrisure partner, PE-backed)",
     employees: "~16",
     employeeSources: [],
@@ -912,6 +959,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Toronto, Canada",
+    country: "Canada",
     ownership: "Private (Principal-Owned)",
     employees: "~385",
     employeeSources: [],
@@ -928,6 +976,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Multi-city",
+    country: "United States",
     ownership: "Subsidiary of HMA (since 2021)",
     employees: "200+",
     employeeSources: [],
@@ -944,6 +993,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Murrieta, CA",
+    country: "United States",
     ownership: "Private (Founder-Owned)",
     employees: "~20-24",
     employeeSources: [],
@@ -960,6 +1010,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Sahuarita, AZ",
+    country: "United States",
     ownership: "Private (Founder-Owned)",
     employees: "~5-15",
     employeeSources: [],
@@ -976,6 +1027,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "London, UK",
+    country: "United Kingdom",
     ownership: "Acquired by Howden Group (Mar 2025)",
     employees: "~1,750",
     employeeSources: [],
@@ -992,6 +1044,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Glasgow, UK",
+    country: "United Kingdom",
     ownership: "Independent LLP (B Corporation)",
     employees: "~1,200",
     employeeSources: [],
@@ -1008,6 +1061,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "London, UK",
+    country: "United Kingdom",
     ownership: "Public (LSE: XPS)",
     employees: "1,800+",
     employeeSources: [],
@@ -1024,6 +1078,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "London, UK",
+    country: "United Kingdom",
     ownership: "PE-backed (Aquiline Capital)",
     employees: "~1,200",
     employeeSources: [],
@@ -1040,6 +1095,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "UK",
+    country: "United Kingdom",
     ownership: "Acquired by Gallagher (Dec 2025)",
     employees: "Not disclosed",
     employeeSources: [],
@@ -1056,6 +1112,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Sydney, Australia",
+    country: "Australia",
     ownership: "Private",
     employees: "120+ Fellows/Associates",
     employeeSources: [],
@@ -1072,6 +1129,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "UK",
+    country: "United Kingdom",
     ownership: "PE-backed (Bain Capital)",
     employees: "Not disclosed",
     employeeSources: [],
@@ -1088,6 +1146,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Reinsurance Broker",
     hq: "New York, NY",
+    country: "United States",
     ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
     employees: "Part of MMC 90K+",
     employeeSources: [],
@@ -1104,6 +1163,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Reinsurance Broker",
     hq: "Chicago, IL",
+    country: "United States",
     ownership: "Subsidiary of Aon (NYSE: AON)",
     employees: "Part of Aon 60K+",
     employeeSources: [],
@@ -1120,6 +1180,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Reinsurance Broker",
     hq: "London, UK",
+    country: "United Kingdom",
     ownership: "Subsidiary of Arthur J. Gallagher (NYSE: AJG)",
     employees: "Part of AJG 52K+",
     employeeSources: [],
@@ -1136,6 +1197,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Unknown",
+    country: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
     employeeSources: [],
@@ -1152,6 +1214,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Tuckahoe, NY",
+    country: "United States",
     ownership: "Private",
     employees: "6-10",
     employeeSources: [],
@@ -1168,6 +1231,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Grand Rapids, MI",
+    country: "United States",
     ownership: "Private (PE-backed)",
     employees: "20,000+",
     employeeSources: [],
@@ -1184,6 +1248,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Broomfield, CO",
+    country: "United States",
     ownership: "Private",
     employees: "~5",
     employeeSources: [{label:"RocketReach",url:"https://rocketreach.co/becker-garland-actuarial-email-format_b6ef5510c6f43249"}],
@@ -1200,6 +1265,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Daytona Beach, FL",
+    country: "United States",
     ownership: "Public (NYSE: BRO)",
     employees: "16,000+",
     employeeSources: [],
@@ -1216,6 +1282,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "McLean, VA",
+    country: "United States",
     ownership: "Private",
     employees: "~13",
     employeeSources: [],
@@ -1232,6 +1299,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Harrisburg, PA",
+    country: "United States",
     ownership: "Private (Consultant-Owned Partnership)",
     employees: "~103",
     employeeSources: [{label:"LeadIQ",url:"https://leadiq.com/c/conrad-siegel-actuaries/5a1d849324000024005f2f82"}],
@@ -1248,6 +1316,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Itasca, IL",
+    country: "United States",
     ownership: "Subsidiary of Captive Resources, LLC",
     employees: "~19",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com/c/edgewater-actuarial-insights-llc/1315073511"}],
@@ -1264,6 +1333,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "TPA / Benefits Admin",
     hq: "Cleveland, OH",
+    country: "United States",
     ownership: "Acquired by USI Insurance Services (Nov 2020)",
     employees: "250+ (pre-acquisition)",
     employeeSources: [],
@@ -1280,6 +1350,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Columbus, OH",
+    country: "United States",
     ownership: "Private",
     employees: "~8",
     employeeSources: [],
@@ -1296,6 +1367,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Atlanta, GA",
+    country: "United States",
     ownership: "Private",
     employees: "~70-80",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com/c/horizon-actuarial-services-llc/354101427"}],
@@ -1312,6 +1384,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Chicago, IL",
+    country: "United States",
     ownership: "Private (PE-backed, Hellman & Friedman)",
     employees: "19,000+",
     employeeSources: [],
@@ -1328,6 +1401,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Insurance Broker",
     hq: "Kansas City, MO",
+    country: "United States",
     ownership: "Private (Family-Owned)",
     employees: "13,000+",
     employeeSources: [],
@@ -1344,6 +1418,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Newtown Square, PA",
+    country: "United States",
     ownership: "Private (PGF/Polaris Partners invested 2024)",
     employees: "~115",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com/c/martin--co/344928232"}],
@@ -1360,6 +1435,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Nashville, TN",
+    country: "United States",
     ownership: "Private",
     employees: "~17",
     employeeSources: [],
@@ -1376,6 +1452,7 @@ const firms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Potomac, MD",
+    country: "United States",
     ownership: "Private",
     employees: "~8",
     employeeSources: [],
@@ -1541,6 +1618,13 @@ function initFilters() {
     ftDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(t) + '" onchange="applyFilters()" checked> ' + escHTML(t) + '</label>';
   });
 
+  // Countries
+  const countries = [...new Set(firms.map(f => f.country))].sort();
+  const countryDiv = document.getElementById('countryFilters');
+  countries.forEach(c => {
+    countryDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(c) + '" onchange="applyFilters()" checked> ' + escHTML(c) + '</label>';
+  });
+
   // Focus areas
   const focusDiv = document.getElementById('focusFilters');
   for (const [key, cfg] of Object.entries(practiceAreaConfig)) {
@@ -1560,6 +1644,7 @@ function getFiltered() {
   const cat = document.getElementById('categoryFilter').value;
   const search = document.getElementById('searchInput').value.toLowerCase().trim();
   const checkedFirmTypes = [...document.querySelectorAll('#firmTypeFilters input:checked')].map(i => i.value);
+  const checkedCountries = [...document.querySelectorAll('#countryFilters input:checked')].map(i => i.value);
   const checkedFocus = [...document.querySelectorAll('#focusFilters input:checked')].map(i => i.value);
   const checkedOwn = [...document.querySelectorAll('#ownershipFilters input:checked')].map(i => i.value);
   const sizeFilter = document.getElementById('sizeFilter').value;
@@ -1569,6 +1654,7 @@ function getFiltered() {
     if (cat && f.category !== cat) return false;
     if (search && !f.name.toLowerCase().includes(search) && !f.hq.toLowerCase().includes(search) && !f.notes.toLowerCase().includes(search) && !f.ownership.toLowerCase().includes(search)) return false;
     if (!checkedFirmTypes.includes(f.firmType)) return false;
+    if (!checkedCountries.includes(f.country)) return false;
     if (checkedFocus.length > 0 && !checkedFocus.some(k => f.practiceAreas[k])) return false;
     if (!checkedOwn.includes(getOwnershipType(f.ownership))) return false;
     if (sizeFilter && getSizeCategory(f.employees) !== sizeFilter) return false;
@@ -1709,6 +1795,7 @@ function renderDetail(f) {
         '<h4>Firm Details</h4>' +
         '<div class="detail-row-item"><div class="detail-label">Website</div><div class="detail-val"><a href="' + escHTML(websiteURL) + '" target="_blank" rel="noopener">' + escHTML(f.website) + ' \u2197</a></div></div>' +
         '<div class="detail-row-item"><div class="detail-label">Headquarters</div><div class="detail-val">' + escHTML(f.hq) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Country</div><div class="detail-val">' + escHTML(f.country) + '</div></div>' +
         '<div class="detail-row-item"><div class="detail-label">Ownership</div><div class="detail-val">' + escHTML(f.ownership) + '</div></div>' +
         '<div class="detail-row-item"><div class="detail-label">Employees</div><div class="detail-val">' + escHTML(f.employees) + '</div></div>' +
         '<div class="detail-row-item"><div class="detail-label">Actuaries</div><div class="detail-val">' + escHTML(f.actuaries) + '</div></div>' +
@@ -1789,6 +1876,7 @@ function clearFilters() {
   document.getElementById('categoryFilter').value = '';
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('#firmTypeFilters input').forEach(i => i.checked = true);
+  document.querySelectorAll('#countryFilters input').forEach(i => i.checked = true);
   document.querySelectorAll('#focusFilters input').forEach(i => i.checked = false);
   document.querySelectorAll('#ownershipFilters input').forEach(i => i.checked = true);
   document.getElementById('sizeFilter').value = '';
