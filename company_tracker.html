@@ -64,12 +64,15 @@ tr.data-row:hover{background:#e3f2fd}
 tr.data-row.priority-row{border-left:3px solid var(--star-gold)}
 .row-num{color:var(--gray-600);font-size:.75rem;min-width:28px;text-align:center}
 .category-label{display:block;font-size:.65rem;color:var(--gray-600);font-weight:400;margin-top:1px}
-/* TIER BADGES */
-.tier-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;white-space:nowrap}
-.tier-t1l{background:#e3f2fd;color:var(--blue)}
-.tier-t1b{background:#f3e5f5;color:var(--purple)}
-.tier-t2{background:#e0f2f1;color:#00796b}
-.tier-t3{background:#fff3e0;color:#e65100}
+/* FIRM TYPE BADGES */
+.firmtype-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.firmtype-actuarial{background:#1565c0;color:#fff}
+.firmtype-broker{background:#7b1fa2;color:#fff}
+.firmtype-big4{background:#00695c;color:#fff}
+.firmtype-reinsurance{background:#e65100;color:#fff}
+.firmtype-tpa{background:#283593;color:#fff}
+.firmtype-healthcare{background:#2e7d32;color:#fff}
+.firmtype-proforg{background:#546e7a;color:#fff}
 /* FOCUS AREA TAGS */
 .focus-tags{display:flex;flex-wrap:wrap;gap:3px}
 .focus-tag{display:inline-block;padding:1px 6px;border-radius:8px;font-size:.65rem;font-weight:600;color:#fff;white-space:nowrap;line-height:1.5}
@@ -158,8 +161,8 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
     <h3>Search</h3>
     <input type="text" id="searchInput" placeholder="Search firms..." oninput="applyFilters()">
 
-    <h3>Tier</h3>
-    <div class="cb-group" id="tierFilters"></div>
+    <h3>Firm Type</h3>
+    <div class="cb-group" id="firmTypeFilters"></div>
 
     <h3>Focus Areas</h3>
     <div class="cb-group" id="focusFilters"></div>
@@ -203,7 +206,7 @@ const firms = [
   {
     name: "Milliman",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Actuarial Consulting",
     hq: "Seattle, WA",
     ownership: "Private",
     employees: "~4,400",
@@ -219,7 +222,7 @@ const firms = [
   {
     name: "Willis Towers Watson (WTW)",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "London / Arlington, VA",
     ownership: "Public (NASDAQ: WTW)",
     employees: "~48,900",
@@ -235,7 +238,7 @@ const firms = [
   {
     name: "Aon",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "Dublin / Chicago, IL",
     ownership: "Public (NYSE: AON)",
     employees: "~60,000",
@@ -251,7 +254,7 @@ const firms = [
   {
     name: "Mercer",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Actuarial Consulting",
     hq: "New York, NY",
     ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
     employees: "~25,000",
@@ -267,7 +270,7 @@ const firms = [
   {
     name: "Deloitte",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Big 4",
+    firmType: "Big 4 / Accounting",
     hq: "New York, NY",
     ownership: "Private (Partnership)",
     employees: "~470,000",
@@ -283,7 +286,7 @@ const firms = [
   {
     name: "PricewaterhouseCoopers (PwC)",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Big 4",
+    firmType: "Big 4 / Accounting",
     hq: "New York, NY",
     ownership: "Private (Partnership)",
     employees: "~364,000",
@@ -299,7 +302,7 @@ const firms = [
   {
     name: "Ernst & Young (EY)",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Big 4",
+    firmType: "Big 4 / Accounting",
     hq: "New York, NY",
     ownership: "Private (Partnership)",
     employees: "~393,000-406,000",
@@ -315,7 +318,7 @@ const firms = [
   {
     name: "KPMG",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Big 4",
+    firmType: "Big 4 / Accounting",
     hq: "New York, NY",
     ownership: "Private (Partnership)",
     employees: "~276,000",
@@ -331,7 +334,7 @@ const firms = [
   {
     name: "Oliver Wyman",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Actuarial Consulting",
     hq: "New York, NY",
     ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
     employees: "~7,000-9,100",
@@ -347,7 +350,7 @@ const firms = [
   {
     name: "Gabriel Roeder Smith (GRS)",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Southfield, MI",
     ownership: "Private",
     employees: "~107-176",
@@ -363,7 +366,7 @@ const firms = [
   {
     name: "Cavanaugh Macdonald",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Kennesaw, GA",
     ownership: "Private",
     employees: "~29-50",
@@ -379,7 +382,7 @@ const firms = [
   {
     name: "Segal Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "New York, NY",
     ownership: "Private",
     employees: "~1,100",
@@ -395,7 +398,7 @@ const firms = [
   {
     name: "Cheiron",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Washington, DC",
     ownership: "Employee-Owned",
     employees: "65+",
@@ -411,7 +414,7 @@ const firms = [
   {
     name: "Buck (now Gallagher)",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "New York, NY",
     ownership: "Subsidiary of Arthur J. Gallagher (NYSE: AJG)",
     employees: "~2,300",
@@ -427,7 +430,7 @@ const firms = [
   {
     name: "Foster & Foster",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Fort Lauderdale, FL",
     ownership: "Private",
     employees: "100+",
@@ -443,7 +446,7 @@ const firms = [
   {
     name: "Pinnacle Actuarial Resources",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Bloomington, IL",
     ownership: "Employee-Owned",
     employees: "~93-95",
@@ -459,7 +462,7 @@ const firms = [
   {
     name: "Lewis & Ellis",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Dallas, TX",
     ownership: "Private",
     employees: "~140-165",
@@ -475,7 +478,7 @@ const firms = [
   {
     name: "Perr&Knight",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Boca Raton, FL",
     ownership: "Private",
     employees: "150+",
@@ -491,7 +494,7 @@ const firms = [
   {
     name: "Risk Strategies",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Insurance Broker",
     hq: "Boston, MA",
     ownership: "Acquired by Brown & Brown (NYSE: BRO) Aug 2025",
     employees: "5,000+",
@@ -507,7 +510,7 @@ const firms = [
   {
     name: "FTI Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Washington, DC",
     ownership: "Public (NYSE: FCN)",
     employees: "8,118",
@@ -523,7 +526,7 @@ const firms = [
   {
     name: "RSM US",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Big 4 / Accounting",
     hq: "Chicago, IL",
     ownership: "Private",
     employees: "~17,000-19,000",
@@ -539,7 +542,7 @@ const firms = [
   {
     name: "CBIZ",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Cleveland, OH",
     ownership: "Public (NYSE: CBZ)",
     employees: "~9,500+",
@@ -555,7 +558,7 @@ const firms = [
   {
     name: "illumifin",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Greenville, SC",
     ownership: "Private",
     employees: "2,500+",
@@ -571,7 +574,7 @@ const firms = [
   {
     name: "Grant Thornton",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Big 4 / Accounting",
     hq: "Chicago, IL",
     ownership: "Private (Partnership)",
     employees: "~10,000-12,000",
@@ -587,7 +590,7 @@ const firms = [
   {
     name: "Davies Group",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "London / US offices",
     ownership: "Private (PE-backed)",
     employees: "8,500+",
@@ -603,7 +606,7 @@ const firms = [
   {
     name: "Health Management Associates (HMA)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "Lansing, MI",
     ownership: "Private",
     employees: "~700-1,000",
@@ -619,7 +622,7 @@ const firms = [
   {
     name: "Public Consulting Group (PCG)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "Boston, MA",
     ownership: "Private",
     employees: "~2,700",
@@ -635,7 +638,7 @@ const firms = [
   {
     name: "Actuarial Resources Corp (ARC)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Overland Park, KS",
     ownership: "Private",
     employees: "~36-51",
@@ -651,7 +654,7 @@ const firms = [
   {
     name: "Healthcare Actuaries",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "~5-10",
@@ -667,7 +670,7 @@ const firms = [
   {
     name: "Huggins Actuarial Services",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Media, PA",
     ownership: "Acquired by Lewis & Ellis (June 2025)",
     employees: "~12-16",
@@ -683,7 +686,7 @@ const firms = [
   {
     name: "SIGMA Actuarial Consulting Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Brentwood, TN",
     ownership: "Private",
     employees: "~25-40",
@@ -699,7 +702,7 @@ const firms = [
   {
     name: "Actuarial Solutions (Davies)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Charlotte, NC",
     ownership: "Subsidiary of Davies Group",
     employees: "~25-30",
@@ -715,7 +718,7 @@ const firms = [
   {
     name: "American Actuarial Consulting Group (AACG)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Manhattan Beach, CA",
     ownership: "Private (Consultant-Owned)",
     employees: "~1-10",
@@ -731,7 +734,7 @@ const firms = [
   {
     name: "Ark-tuary",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "~1-5",
@@ -747,7 +750,7 @@ const firms = [
   {
     name: "Moore Actuarial Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Westchester, IL",
     ownership: "Private",
     employees: "~1-5",
@@ -763,7 +766,7 @@ const firms = [
   {
     name: "Capital Actuarial Services",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Fort Worth, TX",
     ownership: "Private",
     employees: "~1-5",
@@ -779,7 +782,7 @@ const firms = [
   {
     name: "SGRisk",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Lyndhurst, NJ",
     ownership: "Private",
     employees: "~6-10",
@@ -795,7 +798,7 @@ const firms = [
   {
     name: "Dion Strategic Consulting Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Toronto, ON",
     ownership: "Private",
     employees: "~17-19",
@@ -811,7 +814,7 @@ const firms = [
   {
     name: "Sydney Consulting Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Safety Harbor, FL",
     ownership: "Private",
     employees: "~11-15",
@@ -827,7 +830,7 @@ const firms = [
   {
     name: "TPS Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "North Haven, CT",
     ownership: "Private",
     employees: "~36",
@@ -843,7 +846,7 @@ const firms = [
   {
     name: "BPAS",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "TPA / Benefits Admin",
     hq: "Utica, NY",
     ownership: "Private",
     employees: "~400-480",
@@ -859,7 +862,7 @@ const firms = [
   {
     name: "E.H. Thomson & Co",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Sea Girt, NJ",
     ownership: "Private",
     employees: "~11",
@@ -875,7 +878,7 @@ const firms = [
   {
     name: "Curcio Webb",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Oakland, CA",
     ownership: "Private (WBENC-certified)",
     employees: "~28",
@@ -891,7 +894,7 @@ const firms = [
   {
     name: "United Actuarial Services",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Carmel, IN",
     ownership: "Employee-Owned",
     employees: "~27",
@@ -907,7 +910,7 @@ const firms = [
   {
     name: "Pinnacle Plan Design",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "TPA / Benefits Admin",
     hq: "Tucson, AZ",
     ownership: "Private",
     employees: "~45",
@@ -923,7 +926,7 @@ const firms = [
   {
     name: "Actuarial Advisors Inc",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Minneapolis, MN",
     ownership: "Private",
     employees: "~5",
@@ -939,7 +942,7 @@ const firms = [
   {
     name: "Marsh McLennan",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "New York, NY",
     ownership: "Public (NYSE: MMC)",
     employees: "~90,000+",
@@ -955,7 +958,7 @@ const firms = [
   {
     name: "Arthur J. Gallagher",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "Rolling Meadows, IL",
     ownership: "Public (NYSE: AJG)",
     employees: "52,000+",
@@ -971,7 +974,7 @@ const firms = [
   {
     name: "October Three Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Chicago, IL",
     ownership: "Private",
     employees: "~153-178",
@@ -987,7 +990,7 @@ const firms = [
   {
     name: "Risk & Regulatory Consulting (RRC)",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Farmington, CT",
     ownership: "Private",
     employees: "~51-200",
@@ -1003,7 +1006,7 @@ const firms = [
   {
     name: "Rudd and Wisdom",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Austin, TX",
     ownership: "Private",
     employees: "~29",
@@ -1019,7 +1022,7 @@ const firms = [
   {
     name: "Spring Consulting Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Boston, MA",
     ownership: "Private",
     employees: "~36",
@@ -1035,7 +1038,7 @@ const firms = [
   {
     name: "INS Consultants (The INS Companies)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Philadelphia, PA",
     ownership: "Private",
     employees: "~32",
@@ -1051,7 +1054,7 @@ const firms = [
   {
     name: "Bickmore / Prime Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Sacramento, CA",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1067,7 +1070,7 @@ const firms = [
   {
     name: "Cowden Associates",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Pittsburgh, PA",
     ownership: "Private (Acrisure partner, PE-backed)",
     employees: "~16",
@@ -1083,7 +1086,7 @@ const firms = [
   {
     name: "Eckler",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Toronto, Canada",
     ownership: "Private (Principal-Owned)",
     employees: "~385",
@@ -1099,7 +1102,7 @@ const firms = [
   {
     name: "Wakely Consulting Group",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Healthcare Consulting",
     hq: "Multi-city",
     ownership: "Subsidiary of HMA (since 2021)",
     employees: "200+",
@@ -1115,7 +1118,7 @@ const firms = [
   {
     name: "Axene Health Partners",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "Murrieta, CA",
     ownership: "Private (Founder-Owned)",
     employees: "~20-24",
@@ -1131,7 +1134,7 @@ const firms = [
   {
     name: "NovaRest Actuarial Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "Sahuarita, AZ",
     ownership: "Private (Founder-Owned)",
     employees: "~5-15",
@@ -1147,7 +1150,7 @@ const firms = [
   {
     name: "Nyhart (now FuturePlan by Ascensus)",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "TPA / Benefits Admin",
     hq: "Indianapolis, IN",
     ownership: "PE-backed (Stone Point Capital + GIC via Ascensus)",
     employees: "~100 (pre-acquisition)",
@@ -1163,7 +1166,7 @@ const firms = [
   {
     name: "Barnett Waddingham",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "London, UK",
     ownership: "Acquired by Howden Group (Mar 2025)",
     employees: "~1,750",
@@ -1179,7 +1182,7 @@ const firms = [
   {
     name: "Hymans Robertson",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Glasgow, UK",
     ownership: "Independent LLP (B Corporation)",
     employees: "~1,200",
@@ -1195,7 +1198,7 @@ const firms = [
   {
     name: "Lane Clark & Peacock (LCP)",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "London, UK",
     ownership: "Independent Partnership",
     employees: "~1,200+",
@@ -1211,7 +1214,7 @@ const firms = [
   {
     name: "XPS Pensions Group",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "London, UK",
     ownership: "Public (LSE: XPS)",
     employees: "1,800+",
@@ -1227,7 +1230,7 @@ const firms = [
   {
     name: "Isio",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "London, UK",
     ownership: "PE-backed (Aquiline Capital)",
     employees: "~1,200",
@@ -1243,7 +1246,7 @@ const firms = [
   {
     name: "First Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "UK",
     ownership: "Acquired by Gallagher (Dec 2025)",
     employees: "Not disclosed",
@@ -1259,7 +1262,7 @@ const firms = [
   {
     name: "Finity Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Sydney, Australia",
     ownership: "Private",
     employees: "120+ Fellows/Associates",
@@ -1275,7 +1278,7 @@ const firms = [
   {
     name: "Taylor Fry",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Sydney, Australia",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1291,7 +1294,7 @@ const firms = [
   {
     name: "Actuarial Partners Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Kuala Lumpur, Malaysia",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1307,7 +1310,7 @@ const firms = [
   {
     name: "K.A. Pandit (KAP)",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "Mumbai, India",
     ownership: "Private",
     employees: "50+",
@@ -1323,7 +1326,7 @@ const firms = [
   {
     name: "Aptia",
     category: "Actuarial Firms",
-    tier: "Tier 2 - Specialized",
+    firmType: "Actuarial Consulting",
     hq: "UK",
     ownership: "PE-backed (Bain Capital)",
     employees: "Not disclosed",
@@ -1339,7 +1342,7 @@ const firms = [
   {
     name: "Karen Clark & Company (KCC)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Boston, MA",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1355,7 +1358,7 @@ const firms = [
   {
     name: "CyberCube",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "San Francisco, CA",
     ownership: "Private (VC-backed)",
     employees: "Not disclosed",
@@ -1371,7 +1374,7 @@ const firms = [
   {
     name: "Club Vita",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "London, UK / US",
     ownership: "Private (Hymans Robertson-backed)",
     employees: "Not disclosed",
@@ -1387,7 +1390,7 @@ const firms = [
   {
     name: "Guy Carpenter",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Reinsurance Broker",
     hq: "New York, NY",
     ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
     employees: "Part of MMC 90K+",
@@ -1403,7 +1406,7 @@ const firms = [
   {
     name: "Aon Reinsurance Solutions",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Reinsurance Broker",
     hq: "Chicago, IL",
     ownership: "Subsidiary of Aon (NYSE: AON)",
     employees: "Part of Aon 60K+",
@@ -1419,7 +1422,7 @@ const firms = [
   {
     name: "Gallagher Re",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Reinsurance Broker",
     hq: "London, UK",
     ownership: "Subsidiary of Arthur J. Gallagher (NYSE: AJG)",
     employees: "Part of AJG 52K+",
@@ -1435,7 +1438,7 @@ const firms = [
   {
     name: "Terry Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Chicago, IL",
     ownership: "Private",
     employees: "Small",
@@ -1451,7 +1454,7 @@ const firms = [
   {
     name: "AmeRisk Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Albuquerque, NM",
     ownership: "Private",
     employees: "2-10",
@@ -1467,7 +1470,7 @@ const firms = [
   {
     name: "The Kilbourne Company",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "San Diego, CA",
     ownership: "Private",
     employees: "~2",
@@ -1483,7 +1486,7 @@ const firms = [
   {
     name: "Blue Raven Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "Provo, UT",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1499,7 +1502,7 @@ const firms = [
   {
     name: "Bolton Partners",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1515,7 +1518,7 @@ const firms = [
   {
     name: "Frost King Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1531,7 +1534,7 @@ const firms = [
   {
     name: "Precision Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Healthcare Consulting",
     hq: "San Francisco, CA",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1547,7 +1550,7 @@ const firms = [
   {
     name: "Lepton Actuarial and Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Tuckahoe, NY",
     ownership: "Private",
     employees: "6-10",
@@ -1563,7 +1566,7 @@ const firms = [
   {
     name: "Axiom Actuarial Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Barrington, RI",
     ownership: "Private (Minority Business Enterprise)",
     employees: "~1",
@@ -1579,7 +1582,7 @@ const firms = [
   {
     name: "Nicolay Consulting Group",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "San Francisco, CA",
     ownership: "Private (Family-Owned)",
     employees: "~15-17",
@@ -1595,7 +1598,7 @@ const firms = [
   {
     name: "Acrisure",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "Grand Rapids, MI",
     ownership: "Private (PE-backed)",
     employees: "20,000+",
@@ -1611,7 +1614,7 @@ const firms = [
   {
     name: "The Actuarial Advantage (TAA)",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Sussex, WI",
     ownership: "Private",
     employees: "~11",
@@ -1627,7 +1630,7 @@ const firms = [
   {
     name: "Actuarial and Predictive Analytics Solutions, LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Jefferson City, MO",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1643,7 +1646,7 @@ const firms = [
   {
     name: "Actuarial Insights LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1659,7 +1662,7 @@ const firms = [
   {
     name: "Ann Green Actuarial Services",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1673,25 +1676,9 @@ const firms = [
     notes: "Solo practice opened 2018, appears no longer active. Ann Green moved to Enstar Group (2020) then Thimble (2021)."
   },
   {
-    name: "BCBS (Blue Cross Blue Shield)",
-    category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
-    hq: "Chicago, IL (BCBSA)",
-    ownership: "Federation of nonprofits",
-    employees: "Not disclosed (system-wide)",
-    employeeSources: [],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "bcbs.com",
-    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Federation of 34 independent BCBS companies. Each has own actuarial dept."
-  },
-  {
     name: "Becker Garland Actuarial, LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Broomfield, CO",
     ownership: "Private",
     employees: "~5",
@@ -1707,7 +1694,7 @@ const firms = [
   {
     name: "Bickerstaff Actuarial Consultants, LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Frisco, TX",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1723,7 +1710,7 @@ const firms = [
   {
     name: "Boor Actuarial Inc.",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Tallahassee, FL",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1739,7 +1726,7 @@ const firms = [
   {
     name: "Brown & Brown",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "Daytona Beach, FL",
     ownership: "Public (NYSE: BRO)",
     employees: "16,000+",
@@ -1755,7 +1742,7 @@ const firms = [
   {
     name: "By the Numbers Actuarial Consulting, Inc.",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Brentwood, TN",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1771,7 +1758,7 @@ const firms = [
   {
     name: "Casualty Actuarial Society",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Professional Organization",
     hq: "Arlington, VA",
     ownership: "Nonprofit (501(c)(6))",
     employees: "~37 staff",
@@ -1787,7 +1774,7 @@ const firms = [
   {
     name: "CGH Actuarial LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1801,25 +1788,9 @@ const firms = [
     notes: "No information found. May be inactive or operating under a different name."
   },
   {
-    name: "Clear Spring P&C",
-    category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
-    hq: "Zionsville, IN",
-    ownership: "Subsidiary of Group 1001",
-    employees: "~29",
-    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co/clear-spring-property-and-casualty-company-profile_b791bd85c5f889fd"}],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "~$358M",
-    revenueSources: [{label:"Demotech",url:"https://www.demotech.com/company/15563/"}],
-    website: "clearspringpc.com",
-    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
-    notes: "Insurance carrier (not consulting firm). Workers compensation specialty. Part of Group 1001 ($65.4B AUM)."
-  },
-  {
     name: "Coefficient Actuarial Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Quebec, Canada",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1835,7 +1806,7 @@ const firms = [
   {
     name: "Complete Actuarial Solutions Company",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "McLean, VA",
     ownership: "Private",
     employees: "~13",
@@ -1851,7 +1822,7 @@ const firms = [
   {
     name: "Conrad Siegel",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Harrisburg, PA",
     ownership: "Private (Consultant-Owned Partnership)",
     employees: "~103",
@@ -1867,7 +1838,7 @@ const firms = [
   {
     name: "Dorman Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "New York, NY area",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1883,7 +1854,7 @@ const firms = [
   {
     name: "Edgewater Actuarial Insights",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Itasca, IL",
     ownership: "Subsidiary of Captive Resources, LLC",
     employees: "~19",
@@ -1899,7 +1870,7 @@ const firms = [
   {
     name: "Edlefson Actuarial Consulting Services",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Middleton, WI",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1915,7 +1886,7 @@ const firms = [
   {
     name: "Findley",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "TPA / Benefits Admin",
     hq: "Cleveland, OH",
     ownership: "Acquired by USI Insurance Services (Nov 2020)",
     employees: "250+ (pre-acquisition)",
@@ -1931,7 +1902,7 @@ const firms = [
   {
     name: "Garland Actuarial LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Los Altos Hills, CA",
     ownership: "Private",
     employees: "~3",
@@ -1947,7 +1918,7 @@ const firms = [
   {
     name: "GPW and Associates",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Phoenix, AZ",
     ownership: "Private",
     employees: "~20-87",
@@ -1963,7 +1934,7 @@ const firms = [
   {
     name: "Hansen Actuarial & Risk Consulting, LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Columbus, OH",
     ownership: "Private",
     employees: "~8",
@@ -1979,7 +1950,7 @@ const firms = [
   {
     name: "Holnagel Actuarial Services",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -1995,7 +1966,7 @@ const firms = [
   {
     name: "Horizon Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Atlanta, GA",
     ownership: "Private",
     employees: "~70-80",
@@ -2011,7 +1982,7 @@ const firms = [
   {
     name: "Hub International",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "Chicago, IL",
     ownership: "Private (PE-backed, Hellman & Friedman)",
     employees: "19,000+",
@@ -2025,25 +1996,9 @@ const firms = [
     notes: "One of largest North American insurance brokerages."
   },
   {
-    name: "Humana",
-    category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
-    hq: "Louisville, KY",
-    ownership: "Public (NYSE: HUM)",
-    employees: "65,000+",
-    employeeSources: [],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "$100B+",
-    revenueSources: [],
-    website: "humana.com",
-    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Major health insurance carrier. Internal actuarial department."
-  },
-  {
     name: "Inform Actuarial Consulting, LLC",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Overland Park, KS",
     ownership: "Private",
     employees: "1-10",
@@ -2057,25 +2012,9 @@ const firms = [
     notes: "Boutique P&C firm led by Sam Cargnel. Workers comp, auto, GL, med mal, construction defects, warranty."
   },
   {
-    name: "Kaiser (Kaiser Permanente)",
-    category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
-    hq: "Oakland, CA",
-    ownership: "Nonprofit",
-    employees: "300,000+",
-    employeeSources: [],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "$100B+",
-    revenueSources: [],
-    website: "kaiserpermanente.org",
-    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Largest managed care organization in US. Internal actuarial."
-  },
-  {
     name: "Lockton",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "Kansas City, MO",
     ownership: "Private (Family-Owned)",
     employees: "13,000+",
@@ -2091,7 +2030,7 @@ const firms = [
   {
     name: "Martin & Company",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Newtown Square, PA",
     ownership: "Private (PGF/Polaris Partners invested 2024)",
     employees: "~115",
@@ -2107,7 +2046,7 @@ const firms = [
   {
     name: "NFP",
     category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
+    firmType: "Insurance Broker",
     hq: "New York, NY",
     ownership: "Subsidiary of Aon (acquired 2024 for $13B)",
     employees: "8,000+",
@@ -2123,7 +2062,7 @@ const firms = [
   {
     name: "Point Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Unknown",
     ownership: "Private",
     employees: "Not disclosed",
@@ -2139,7 +2078,7 @@ const firms = [
   {
     name: "Princeton Actuarial and Risk Consulting Ltd",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Princeton, NJ area",
     ownership: "Private",
     employees: "Not disclosed",
@@ -2155,7 +2094,7 @@ const firms = [
   {
     name: "Select Actuarial",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Nashville, TN",
     ownership: "Private",
     employees: "~17",
@@ -2171,7 +2110,7 @@ const firms = [
   {
     name: "Sound Actuarial Consulting",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Port Jefferson, NY",
     ownership: "Private",
     employees: "1-10",
@@ -2187,7 +2126,7 @@ const firms = [
   {
     name: "Taylor & Mulder",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "Potomac, MD",
     ownership: "Private",
     employees: "~8",
@@ -2203,7 +2142,7 @@ const firms = [
   {
     name: "Taylor-Walker",
     category: "Actuarial Firms",
-    tier: "Tier 3 - Boutique",
+    firmType: "Actuarial Consulting",
     hq: "South Jordan, UT",
     ownership: "Acquired by Examination Resources, LLC (Jan 2024)",
     employees: "~10",
@@ -2215,22 +2154,6 @@ const firms = [
     website: "taylor-walker.com",
     practiceAreas: {pension:false,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:false},
     notes: "Founded 1984. 4 consulting actuaries. Actuarial and regulatory consulting. Acquired by Examination Resources Jan 2024."
-  },
-  {
-    name: "United Healthcare",
-    category: "Actuarial Firms",
-    tier: "Tier 1 - Large",
-    hq: "Minnetonka, MN",
-    ownership: "Subsidiary of UnitedHealth Group (NYSE: UNH)",
-    employees: "400,000+ (UHG)",
-    employeeSources: [],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "$370B+ (UHG)",
-    revenueSources: [],
-    website: "uhc.com",
-    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Largest US health insurer. Internal actuarial department."
   }
 ];
 
@@ -2256,7 +2179,7 @@ const columns = [
   { key: '#', label: '#', sortable: false },
   { key: 'star', label: '\u2606', sortable: false },
   { key: 'name', label: 'Firm Name', sortable: true },
-  { key: 'tier', label: 'Tier', sortable: true },
+  { key: 'firmType', label: 'Firm Type', sortable: true },
   { key: 'hq', label: 'Headquarters', sortable: true },
   { key: 'ownership', label: 'Ownership', sortable: true },
   { key: 'employees', label: 'Employees', sortable: true },
@@ -2306,18 +2229,19 @@ function getOwnershipType(own) {
   return 'Private';
 }
 
-function tierClass(tier) {
-  if (tier.includes('Big 4')) return 'tier-t1b';
-  if (tier.includes('Tier 1')) return 'tier-t1l';
-  if (tier.includes('Tier 2')) return 'tier-t2';
-  return 'tier-t3';
+function firmTypeClass(ft) {
+  if (ft === 'Insurance Broker') return 'firmtype-broker';
+  if (ft === 'Big 4 / Accounting') return 'firmtype-big4';
+  if (ft === 'Reinsurance Broker') return 'firmtype-reinsurance';
+  if (ft === 'TPA / Benefits Admin') return 'firmtype-tpa';
+  if (ft === 'Healthcare Consulting') return 'firmtype-healthcare';
+  if (ft === 'Professional Organization') return 'firmtype-proforg';
+  return 'firmtype-actuarial';
 }
 
-function tierSortVal(tier) {
-  if (tier.includes('Tier 1 - Large')) return 1;
-  if (tier.includes('Tier 1 - Big 4')) return 2;
-  if (tier.includes('Tier 2')) return 3;
-  return 4;
+function firmTypeSortVal(ft) {
+  const order = {'Actuarial Consulting':1, 'Insurance Broker':2, 'Big 4 / Accounting':3, 'Reinsurance Broker':4, 'TPA / Benefits Admin':5, 'Healthcare Consulting':6, 'Professional Organization':7};
+  return order[ft] || 99;
 }
 
 function getSizeCategory(emp) {
@@ -2378,11 +2302,11 @@ function initFilters() {
     catSel.appendChild(opt);
   });
 
-  // Tiers
-  const tiers = [...new Set(firms.map(f => f.tier))].sort((a,b) => tierSortVal(a) - tierSortVal(b));
-  const tierDiv = document.getElementById('tierFilters');
-  tiers.forEach(t => {
-    tierDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(t) + '" onchange="applyFilters()" checked> ' + escHTML(t) + '</label>';
+  // Firm Types
+  const firmTypes = [...new Set(firms.map(f => f.firmType))].sort((a,b) => firmTypeSortVal(a) - firmTypeSortVal(b));
+  const ftDiv = document.getElementById('firmTypeFilters');
+  firmTypes.forEach(t => {
+    ftDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(t) + '" onchange="applyFilters()" checked> ' + escHTML(t) + '</label>';
   });
 
   // Focus areas
@@ -2403,7 +2327,7 @@ function initFilters() {
 function getFiltered() {
   const cat = document.getElementById('categoryFilter').value;
   const search = document.getElementById('searchInput').value.toLowerCase().trim();
-  const checkedTiers = [...document.querySelectorAll('#tierFilters input:checked')].map(i => i.value);
+  const checkedFirmTypes = [...document.querySelectorAll('#firmTypeFilters input:checked')].map(i => i.value);
   const checkedFocus = [...document.querySelectorAll('#focusFilters input:checked')].map(i => i.value);
   const checkedOwn = [...document.querySelectorAll('#ownershipFilters input:checked')].map(i => i.value);
   const sizeFilter = document.getElementById('sizeFilter').value;
@@ -2412,7 +2336,7 @@ function getFiltered() {
   return firms.filter(f => {
     if (cat && f.category !== cat) return false;
     if (search && !f.name.toLowerCase().includes(search) && !f.hq.toLowerCase().includes(search) && !f.notes.toLowerCase().includes(search) && !f.ownership.toLowerCase().includes(search)) return false;
-    if (!checkedTiers.includes(f.tier)) return false;
+    if (!checkedFirmTypes.includes(f.firmType)) return false;
     if (checkedFocus.length > 0 && !checkedFocus.some(k => f.practiceAreas[k])) return false;
     if (!checkedOwn.includes(getOwnershipType(f.ownership))) return false;
     if (sizeFilter && getSizeCategory(f.employees) !== sizeFilter) return false;
@@ -2427,7 +2351,7 @@ function sortFirms(list) {
     let va, vb;
     switch (sortCol) {
       case 'name': va = a.name.toLowerCase(); vb = b.name.toLowerCase(); break;
-      case 'tier': va = tierSortVal(a.tier); vb = tierSortVal(b.tier); break;
+      case 'firmType': va = firmTypeSortVal(a.firmType); vb = firmTypeSortVal(b.firmType); break;
       case 'hq': va = a.hq.toLowerCase(); vb = b.hq.toLowerCase(); break;
       case 'ownership': va = a.ownership.toLowerCase(); vb = b.ownership.toLowerCase(); break;
       case 'employees': va = parseEmployeeNum(a.employees); vb = parseEmployeeNum(b.employees); break;
@@ -2491,8 +2415,8 @@ function renderBody(list) {
     // Name + category label
     tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
 
-    // Tier
-    tr.innerHTML += '<td><span class="tier-badge ' + tierClass(firm.tier) + '">' + escHTML(firm.tier) + '</span></td>';
+    // Firm Type
+    tr.innerHTML += '<td><span class="firmtype-badge ' + firmTypeClass(firm.firmType) + '">' + escHTML(firm.firmType) + '</span></td>';
 
     // HQ
     tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
@@ -2581,10 +2505,8 @@ function toggleExpand(name, rowEl) {
 // ===== STATS =====
 function renderStats(list) {
   const total = list.length;
-  const t1l = list.filter(f => f.tier === 'Tier 1 - Large').length;
-  const t1b = list.filter(f => f.tier === 'Tier 1 - Big 4').length;
-  const t2 = list.filter(f => f.tier === 'Tier 2 - Specialized').length;
-  const t3 = list.filter(f => f.tier === 'Tier 3 - Boutique').length;
+  const firmTypeCounts = {};
+  list.forEach(f => { firmTypeCounts[f.firmType] = (firmTypeCounts[f.firmType] || 0) + 1; });
   const prioCount = list.filter(f => isPriority(f.name)).length;
 
   // Top focus areas
@@ -2596,10 +2518,11 @@ function renderStats(list) {
 
   let html = '';
   html += '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">Total Firms</div></div>';
-  if (t1l) html += '<div class="stat-card"><div class="stat-value">' + t1l + '</div><div class="stat-label">Tier 1 Large</div></div>';
-  if (t1b) html += '<div class="stat-card"><div class="stat-value">' + t1b + '</div><div class="stat-label">Tier 1 Big 4</div></div>';
-  if (t2) html += '<div class="stat-card"><div class="stat-value">' + t2 + '</div><div class="stat-label">Tier 2 Specialized</div></div>';
-  if (t3) html += '<div class="stat-card"><div class="stat-value">' + t3 + '</div><div class="stat-label">Tier 3 Boutique</div></div>';
+  const ftOrder = ['Actuarial Consulting','Insurance Broker','Big 4 / Accounting','Reinsurance Broker','TPA / Benefits Admin','Healthcare Consulting','Professional Organization'];
+  ftOrder.forEach(ft => {
+    const c = firmTypeCounts[ft] || 0;
+    if (c > 0) html += '<div class="stat-card"><div class="stat-value">' + c + '</div><div class="stat-label">' + ft + '</div></div>';
+  });
   html += '<div class="stat-card"><div class="stat-value" style="color:var(--star-gold)">' + prioCount + '</div><div class="stat-label">Priorities \u2605</div></div>';
 
   topFocus.forEach(([key, count]) => {
@@ -2633,7 +2556,7 @@ function applyFilters() { render(); }
 function clearFilters() {
   document.getElementById('categoryFilter').value = '';
   document.getElementById('searchInput').value = '';
-  document.querySelectorAll('#tierFilters input').forEach(i => i.checked = true);
+  document.querySelectorAll('#firmTypeFilters input').forEach(i => i.checked = true);
   document.querySelectorAll('#focusFilters input').forEach(i => i.checked = false);
   document.querySelectorAll('#ownershipFilters input').forEach(i => i.checked = true);
   document.getElementById('sizeFilter').value = '';
@@ -2644,10 +2567,10 @@ function clearFilters() {
 // ===== EXPORT =====
 function exportCSV() {
   const filtered = sortFirms(getFiltered());
-  const headers = ['Name','Category','Tier','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Notes'];
+  const headers = ['Name','Category','Firm Type','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Notes'];
   const rows = filtered.map(f => {
     const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
-    return [f.name, f.category, f.tier, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+    return [f.name, f.category, f.firmType, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
   });
   const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
   const blob = new Blob([csv], {type:'text/csv'});
