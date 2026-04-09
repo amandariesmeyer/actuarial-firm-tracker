@@ -61,7 +61,7 @@ td{padding:8px 10px;border-bottom:1px solid var(--gray-200);vertical-align:middl
 tr.data-row{cursor:pointer;transition:background .15s}
 tr.data-row:nth-child(even of .data-row){background:var(--gray-50)}
 tr.data-row:hover{background:#e3f2fd}
-tr.data-row.priority-row{border-left:3px solid var(--star-gold)}
+/* priority-row class removed, using tagged-top/tagged-potential instead */
 .row-num{color:var(--gray-600);font-size:.75rem;min-width:28px;text-align:center}
 .category-label{display:block;font-size:.65rem;color:var(--gray-600);font-weight:400;margin-top:1px}
 /* FIRM TYPE BADGES */
@@ -83,10 +83,13 @@ tr.data-row.priority-row{border-left:3px solid var(--star-gold)}
 .tag-reins{background:#ef6c00}
 .tag-erm{background:#00838f}
 .tag-ma{background:#455a64}
-/* STAR */
-.star-btn{background:none;border:none;cursor:pointer;font-size:1.05rem;color:var(--gray-400);transition:color .15s;padding:0 2px;line-height:1}
-.star-btn.starred{color:var(--star-gold)}
-.star-btn:hover{color:var(--star-gold)}
+/* TAG BUTTONS */
+.tag-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;padding:0 4px;transition:color .15s;line-height:1}
+.tag-none{color:#bdbdbd}
+.tag-potential{color:#1565c0}
+.tag-top{color:#ffc107}
+tr.data-row.tagged-top{border-left:3px solid #ffc107}
+tr.data-row.tagged-potential{border-left:3px solid #1565c0}
 /* SOURCED VALUE */
 .sourced-value{position:relative;white-space:nowrap}
 .source-icon{font-size:.7rem;color:var(--blue);margin-left:3px;cursor:pointer;opacity:.6;transition:opacity .15s}
@@ -184,7 +187,8 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
 
     <h3>Priority</h3>
     <div class="cb-group">
-      <label><input type="checkbox" id="priorityOnly" onchange="applyFilters()"> Show only priorities &#9733;</label>
+      <label><input type="checkbox" id="filterTopPriority" onchange="applyFilters()"> Top Priority &#9733;</label>
+      <label><input type="checkbox" id="filterPotential" onchange="applyFilters()"> Potential &#9679;</label>
     </div>
 
     <button class="clear-btn" onclick="clearFilters()">Clear All Filters</button>
@@ -1464,6 +1468,23 @@ const firms = [
     practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:true,erm:false,ma:false},
     notes: "P&C actuarial. Reserving, reinsurance evaluation, rating models. Led by Evelyn Toni Mulder (FCAS). Serves insurers, reinsurers, government."
   },
+  {
+    name: "Centric Actuarial Solutions",
+    category: "Actuarial Firms",
+    firmType: "Actuarial Consulting",
+    hq: "Overland Park, KS",
+    country: "United States",
+    ownership: "Subsidiary of Risk Strategies (acquired Aug 2021)",
+    employees: "Not disclosed",
+    employeeSources: [],
+    actuaries: "Not disclosed",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "centricactuaries.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:true,erm:true,ma:false},
+    notes: "Founded 2005 by Dustin Gary. P&C actuarial consulting. Specialty in captives and RRGs. Acquired by Risk Strategies Aug 2021."
+  },
 ];
 
 // ===== PRACTICE AREA CONFIG =====
@@ -1478,7 +1499,26 @@ const practiceAreaConfig = {
 };
 
 // ===== STATE =====
-let priorities = JSON.parse(localStorage.getItem('firm_priorities') || '[]');
+// Migration: convert old firm_priorities or actuary_bookmarks to new firm_tags format
+let tags = JSON.parse(localStorage.getItem('firm_tags') || '{}');
+(function migrateOldPriorities() {
+  let migrated = false;
+  ['firm_priorities', 'actuary_bookmarks'].forEach(oldKey => {
+    const old = localStorage.getItem(oldKey);
+    if (old) {
+      try {
+        const arr = JSON.parse(old);
+        if (Array.isArray(arr)) {
+          arr.forEach(name => { if (!tags[name]) { tags[name] = 'top'; } });
+          migrated = true;
+        }
+      } catch(e) {}
+      localStorage.removeItem(oldKey);
+    }
+  });
+  if (migrated) localStorage.setItem('firm_tags', JSON.stringify(tags));
+})();
+
 let sortCol = 'name';
 let sortDir = 1; // 1 = asc, -1 = desc
 let expandedRow = null;
@@ -1486,7 +1526,7 @@ let expandedRow = null;
 // ===== COLUMNS =====
 const columns = [
   { key: '#', label: '#', sortable: false },
-  { key: 'star', label: '\u2606', sortable: false },
+  { key: 'tag', label: 'Tag', sortable: false },
   { key: 'name', label: 'Firm Name', sortable: true },
   { key: 'firmType', label: 'Firm Type', sortable: true },
   { key: 'hq', label: 'Headquarters', sortable: true },
@@ -1562,14 +1602,13 @@ function getSizeCategory(emp) {
   return 'enterprise';
 }
 
-function isPriority(name) { return priorities.includes(name); }
-
-function togglePriority(name, e) {
-  e.stopPropagation();
-  const idx = priorities.indexOf(name);
-  if (idx >= 0) priorities.splice(idx, 1);
-  else priorities.push(name);
-  localStorage.setItem('firm_priorities', JSON.stringify(priorities));
+function cycleTag(name, event) {
+  event.stopPropagation();
+  const current = tags[name];
+  if (!current) tags[name] = "potential";
+  else if (current === "potential") tags[name] = "top";
+  else delete tags[name];
+  localStorage.setItem("firm_tags", JSON.stringify(tags));
   render();
 }
 
@@ -1648,7 +1687,8 @@ function getFiltered() {
   const checkedFocus = [...document.querySelectorAll('#focusFilters input:checked')].map(i => i.value);
   const checkedOwn = [...document.querySelectorAll('#ownershipFilters input:checked')].map(i => i.value);
   const sizeFilter = document.getElementById('sizeFilter').value;
-  const prioOnly = document.getElementById('priorityOnly').checked;
+  const showTop = document.getElementById('filterTopPriority').checked;
+  const showPotential = document.getElementById('filterPotential').checked;
 
   return firms.filter(f => {
     if (cat && f.category !== cat) return false;
@@ -1658,7 +1698,12 @@ function getFiltered() {
     if (checkedFocus.length > 0 && !checkedFocus.some(k => f.practiceAreas[k])) return false;
     if (!checkedOwn.includes(getOwnershipType(f.ownership))) return false;
     if (sizeFilter && getSizeCategory(f.employees) !== sizeFilter) return false;
-    if (prioOnly && !isPriority(f.name)) return false;
+    if (showTop || showPotential) {
+      const t = tags[f.name];
+      if (showTop && showPotential) { if (t !== 'top' && t !== 'potential') return false; }
+      else if (showTop) { if (t !== 'top') return false; }
+      else if (showPotential) { if (t !== 'potential') return false; }
+    }
     return true;
   });
 }
@@ -1719,16 +1764,20 @@ function renderBody(list) {
   }
 
   list.forEach((firm, idx) => {
-    const prio = isPriority(firm.name);
+    const tag = tags[firm.name];
+    const tagRowClass = tag === 'top' ? ' tagged-top' : tag === 'potential' ? ' tagged-potential' : '';
     const tr = document.createElement('tr');
-    tr.className = 'data-row' + (prio ? ' priority-row' : '');
+    tr.className = 'data-row' + tagRowClass;
     tr.onclick = () => toggleExpand(firm.name, tr);
 
     // # column
     tr.innerHTML = '<td class="row-num">' + (idx + 1) + '</td>';
 
-    // Star
-    tr.innerHTML += '<td><button class="star-btn' + (prio ? ' starred' : '') + '" onclick="togglePriority(\'' + escHTML(firm.name).replace(/'/g, "\\'") + '\', event)" title="Toggle priority">\u2605</button></td>';
+    // Tag
+    const tagClass = tag === 'top' ? 'tag-top' : tag === 'potential' ? 'tag-potential' : 'tag-none';
+    const tagIcon = tag === 'top' ? '\u2605' : tag === 'potential' ? '\u25CF' : '\u25CB';
+    const tagTitle = tag === 'top' ? 'Top Priority' : tag === 'potential' ? 'Potential' : 'Click to tag';
+    tr.innerHTML += '<td><button class="tag-btn ' + tagClass + '" onclick="cycleTag(\'' + escHTML(firm.name).replace(/'/g, "\\'") + '\',event)" title="' + tagTitle + '">' + tagIcon + '</button></td>';
 
     // Name + category label
     tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
@@ -1826,7 +1875,8 @@ function renderStats(list) {
   const total = list.length;
   const firmTypeCounts = {};
   list.forEach(f => { firmTypeCounts[f.firmType] = (firmTypeCounts[f.firmType] || 0) + 1; });
-  const prioCount = list.filter(f => isPriority(f.name)).length;
+  const topCount = list.filter(f => tags[f.name] === 'top').length;
+  const potentialCount = list.filter(f => tags[f.name] === 'potential').length;
 
   // Top focus areas
   const focusCounts = {};
@@ -1842,7 +1892,8 @@ function renderStats(list) {
     const c = firmTypeCounts[ft] || 0;
     if (c > 0) html += '<div class="stat-card"><div class="stat-value">' + c + '</div><div class="stat-label">' + ft + '</div></div>';
   });
-  html += '<div class="stat-card"><div class="stat-value" style="color:var(--star-gold)">' + prioCount + '</div><div class="stat-label">Priorities \u2605</div></div>';
+  html += '<div class="stat-card"><div class="stat-value" style="color:#ffc107">' + topCount + '</div><div class="stat-label">Top Priority \u2605</div></div>';
+  html += '<div class="stat-card"><div class="stat-value" style="color:#1565c0">' + potentialCount + '</div><div class="stat-label">Potential \u25CF</div></div>';
 
   topFocus.forEach(([key, count]) => {
     if (count > 0) {
@@ -1855,9 +1906,10 @@ function renderStats(list) {
 
 // ===== HEADER =====
 function renderHeader(filtered) {
-  const prioCount = priorities.length;
+  const topCount = Object.values(tags).filter(v => v === 'top').length;
+  const potentialCount = Object.values(tags).filter(v => v === 'potential').length;
   document.getElementById('headerSub').textContent = '';
-  document.getElementById('filterCount').textContent = filtered.length + ' of ' + firms.length + ' firms | ' + prioCount + ' priorities';
+  document.getElementById('filterCount').textContent = filtered.length + ' of ' + firms.length + ' firms | ' + topCount + ' Top Priority | ' + potentialCount + ' Potential';
 }
 
 // ===== MAIN RENDER =====
@@ -1880,17 +1932,19 @@ function clearFilters() {
   document.querySelectorAll('#focusFilters input').forEach(i => i.checked = false);
   document.querySelectorAll('#ownershipFilters input').forEach(i => i.checked = true);
   document.getElementById('sizeFilter').value = '';
-  document.getElementById('priorityOnly').checked = false;
+  document.getElementById('filterTopPriority').checked = false;
+  document.getElementById('filterPotential').checked = false;
   render();
 }
 
 // ===== EXPORT =====
 function exportCSV() {
   const filtered = sortFirms(getFiltered());
-  const headers = ['Name','Category','Firm Type','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Notes'];
+  const headers = ['Name','Category','Firm Type','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Priority','Notes'];
   const rows = filtered.map(f => {
     const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
-    return [f.name, f.category, f.firmType, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+    const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
+    return [f.name, f.category, f.firmType, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, priority, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
   });
   const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
   const blob = new Blob([csv], {type:'text/csv'});
@@ -1902,7 +1956,13 @@ function exportCSV() {
 
 function exportJSON() {
   const filtered = sortFirms(getFiltered());
-  const blob = new Blob([JSON.stringify(filtered, null, 2)], {type:'application/json'});
+  const exportData = filtered.map(f => {
+    const obj = Object.assign({}, f);
+    const tag = tags[f.name];
+    obj.priority = tag === 'top' ? 'Top Priority' : tag === 'potential' ? 'Potential' : '';
+    return obj;
+  });
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'firm_tracker_export.json';
