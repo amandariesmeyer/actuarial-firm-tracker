@@ -3,149 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Actuarial Firm Tracker</title>
+<title>Industry Firm Tracker</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#1a237e;--navy-light:#283593;--white:#ffffff;--gray-50:#fafafa;--gray-100:#f5f5f5;
   --gray-200:#eeeeee;--gray-300:#e0e0e0;--gray-400:#bdbdbd;--gray-600:#757575;--gray-700:#616161;--gray-800:#424242;
-  --green:#4caf50;--blue:#1565c0;--purple:#7b1fa2;--teal:#00897b;--orange:#e65100;
-  --star-gold:#ffc107;--bookmark-bg:#fffde7;
+  --blue:#1565c0;--purple:#7b1fa2;--teal:#00838f;--orange:#ef6c00;--red:#c62828;--green:#2e7d32;--slate:#455a64;
+  --star-gold:#ffc107;
   --sidebar-w:300px;--header-h:64px;
 }
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--gray-100);color:var(--gray-800);line-height:1.5}
 /* HEADER */
 .header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 .header h1{font-size:1.35rem;font-weight:700;letter-spacing:.5px}
-.header-sub{font-size:.8rem;opacity:.8;margin-left:12px}
-.header-right{display:flex;align-items:center;gap:12px}
-.header-right .filter-count{background:rgba(255,255,255,.2);padding:2px 10px;border-radius:12px;font-size:.75rem}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-sub{font-size:.8rem;opacity:.85;margin-left:4px;font-weight:400}
+.header-right{display:flex;align-items:center;gap:10px}
+.header-right .filter-count{background:rgba(255,255,255,.18);padding:3px 12px;border-radius:12px;font-size:.75rem}
 .btn{padding:6px 14px;border:none;border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:600;transition:background .2s}
 .btn-light{background:rgba(255,255,255,.15);color:#fff}.btn-light:hover{background:rgba(255,255,255,.25)}
-.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#1976d2}
 .btn-sm{padding:4px 10px;font-size:.75rem}
 .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:4px 8px}
 /* LAYOUT */
 .layout{display:flex;margin-top:var(--header-h);min-height:calc(100vh - var(--header-h))}
 /* SIDEBAR */
 .sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:#fff;border-right:1px solid var(--gray-300);padding:20px 16px;overflow-y:auto;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));transition:transform .3s}
-.sidebar h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-600);margin:18px 0 8px;border-bottom:1px solid var(--gray-200);padding-bottom:4px}
+.sidebar h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-600);margin:16px 0 6px;border-bottom:1px solid var(--gray-200);padding-bottom:4px}
 .sidebar h3:first-child{margin-top:0}
 .sidebar input[type=text]{width:100%;padding:8px 10px;border:1px solid var(--gray-300);border-radius:4px;font-size:.85rem;outline:none}
 .sidebar input[type=text]:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(21,101,192,.15)}
-.cb-group{display:flex;flex-direction:column;gap:4px}
-.cb-group label{display:flex;align-items:center;gap:6px;font-size:.83rem;cursor:pointer;padding:2px 0}
+.sidebar select{width:100%;padding:8px 10px;border:1px solid var(--gray-300);border-radius:4px;font-size:.85rem;background:#fff}
+.cb-group{display:flex;flex-direction:column;gap:3px}
+.cb-group label{display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer;padding:2px 0}
 .cb-group input[type=checkbox]{accent-color:var(--blue)}
-.sidebar select{width:100%;padding:7px 8px;border:1px solid var(--gray-300);border-radius:4px;font-size:.85rem;background:#fff}
 .clear-btn{width:100%;margin-top:16px;padding:8px;background:var(--gray-200);border:1px solid var(--gray-300);border-radius:4px;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--gray-700)}
 .clear-btn:hover{background:var(--gray-300)}
+.category-select{font-size:.9rem;font-weight:600;padding:10px;border:2px solid var(--navy);border-radius:6px;background:#f0f2ff;color:var(--navy);margin-bottom:8px}
 /* MAIN CONTENT */
 .main{flex:1;padding:20px 24px;overflow-x:auto;min-width:0}
 /* STATS BAR */
-.stats-bar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
-.stat-card{background:#fff;border-radius:6px;padding:12px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);min-width:120px}
-.stat-card .stat-value{font-size:1.4rem;font-weight:700;color:var(--navy)}
-.stat-card .stat-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-600);margin-top:2px}
+.stats-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.stat-card{background:#fff;border-radius:6px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.08);min-width:100px}
+.stat-card .stat-value{font-size:1.3rem;font-weight:700;color:var(--navy)}
+.stat-card .stat-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-600);margin-top:1px}
 /* TABLE */
 .table-wrap{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
 thead{background:var(--navy-light);color:#fff;position:sticky;top:0;z-index:10}
-th{padding:10px 12px;text-align:left;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px}
+th{padding:9px 10px;text-align:left;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;font-size:.74rem;text-transform:uppercase;letter-spacing:.4px}
 th:hover{background:var(--navy)}
-th .sort-arrow{margin-left:4px;font-size:.7rem;opacity:.6}
+th .sort-arrow{margin-left:3px;font-size:.65rem;opacity:.5}
 th .sort-arrow.active{opacity:1}
-td{padding:10px 12px;border-bottom:1px solid var(--gray-200);vertical-align:middle}
+th.no-sort{cursor:default}
+th.no-sort:hover{background:var(--navy-light)}
+td{padding:8px 10px;border-bottom:1px solid var(--gray-200);vertical-align:middle}
 tr.data-row{cursor:pointer;transition:background .15s}
-tr.data-row:nth-child(even){background:var(--gray-50)}
+tr.data-row:nth-child(even of .data-row){background:var(--gray-50)}
 tr.data-row:hover{background:#e3f2fd}
-tr.data-row.bookmarked{background:var(--bookmark-bg)}
-tr.data-row.bookmarked:hover{background:#fff9c4}
+tr.data-row.priority-row{border-left:3px solid var(--star-gold)}
+.row-num{color:var(--gray-600);font-size:.75rem;min-width:28px;text-align:center}
+.category-label{display:block;font-size:.65rem;color:var(--gray-600);font-weight:400;margin-top:1px}
 /* TIER BADGES */
-.tier-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.tier-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;white-space:nowrap}
 .tier-t1l{background:#e3f2fd;color:var(--blue)}
 .tier-t1b{background:#f3e5f5;color:var(--purple)}
-.tier-t2{background:#e0f2f1;color:var(--teal)}
-.tier-t3{background:#fff3e0;color:var(--orange)}
-/* PRACTICE DOTS */
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gray-200)}
-.dot.active{background:var(--green)}
-.dot-cell{text-align:center}
+.tier-t2{background:#e0f2f1;color:#00796b}
+.tier-t3{background:#fff3e0;color:#e65100}
+/* FOCUS AREA TAGS */
+.focus-tags{display:flex;flex-wrap:wrap;gap:3px}
+.focus-tag{display:inline-block;padding:1px 6px;border-radius:8px;font-size:.65rem;font-weight:600;color:#fff;white-space:nowrap;line-height:1.5}
+.tag-pension{background:#1565c0}
+.tag-life{background:#7b1fa2}
+.tag-pc{background:#c62828}
+.tag-health{background:#2e7d32}
+.tag-reins{background:#ef6c00}
+.tag-erm{background:#00838f}
+.tag-ma{background:#455a64}
 /* STAR */
-.star-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--gray-400);transition:color .2s;padding:0 4px}
+.star-btn{background:none;border:none;cursor:pointer;font-size:1.05rem;color:var(--gray-400);transition:color .15s;padding:0 2px;line-height:1}
 .star-btn.starred{color:var(--star-gold)}
 .star-btn:hover{color:var(--star-gold)}
+/* SOURCED VALUE */
+.sourced-value{position:relative;white-space:nowrap}
+.source-icon{font-size:.7rem;color:var(--blue);margin-left:3px;cursor:pointer;opacity:.6;transition:opacity .15s}
+.sourced-value:hover .source-icon{opacity:1}
+.source-tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--gray-300);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.15);padding:8px 10px;z-index:50;min-width:160px;max-width:260px}
+.source-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--gray-300)}
+.sourced-value:hover .source-tooltip{display:block}
+.source-tooltip a{display:block;color:var(--blue);text-decoration:none;font-size:.78rem;padding:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.source-tooltip a:hover{text-decoration:underline}
+.source-tooltip .st-label{font-size:.68rem;color:var(--gray-600);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
 /* EXPANDED ROW */
 tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
-.detail-content{padding:16px 20px;background:#fafbff;animation:slideDown .25s ease}
-@keyframes slideDown{from{opacity:0;max-height:0}to{opacity:1;max-height:600px}}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.detail-section h4{font-size:.85rem;color:var(--navy);margin-bottom:8px;border-bottom:1px solid var(--gray-200);padding-bottom:4px}
-.detail-section p,.detail-section a{font-size:.83rem}
+.detail-content{padding:16px 24px;background:#fafbff;animation:slideDown .25s ease}
+@keyframes slideDown{from{opacity:0;max-height:0}to{opacity:1;max-height:800px}}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.detail-section h4{font-size:.82rem;color:var(--navy);margin-bottom:8px;border-bottom:1px solid var(--gray-200);padding-bottom:4px}
+.detail-section p,.detail-section a{font-size:.82rem}
 .detail-section a{color:var(--blue);text-decoration:none}
 .detail-section a:hover{text-decoration:underline}
-.news-item{padding:6px 0;border-bottom:1px solid var(--gray-200)}
-.news-item:last-child{border-bottom:none}
-.news-item a{color:var(--navy);font-weight:500;font-size:.82rem;text-decoration:none}
-.news-item a:hover{text-decoration:underline}
-.news-item .news-date{font-size:.72rem;color:var(--gray-600);margin-top:2px}
-.news-fallback{margin-top:8px}
-.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--gray-300);border-top-color:var(--blue);border-radius:50%;animation:spin .6s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.practice-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.practice-tag{padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:600;background:#e8f5e9;color:#2e7d32}
-/* EXPORT BAR */
-.export-bar{display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end}
+.detail-section .detail-row-item{margin-bottom:6px}
+.detail-section .detail-label{font-weight:600;color:var(--gray-700);font-size:.75rem;text-transform:uppercase;letter-spacing:.3px}
+.detail-section .detail-val{margin-top:1px}
+.source-link-list a{display:block;padding:2px 0;font-size:.8rem}
+.news-btn{display:inline-block;margin-top:8px;padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:4px;font-size:.8rem;cursor:pointer;text-decoration:none;font-weight:600}
+.news-btn:hover{background:var(--navy-light)}
+.detail-practice-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.detail-practice-tags .focus-tag{font-size:.72rem;padding:2px 10px}
 /* MOBILE */
 @media(max-width:900px){
   .menu-toggle{display:block}
-  .sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:90;transform:translateX(-100%);box-shadow:4px 0 12px rgba(0,0,0,.15)}
-  .sidebar.open{transform:translateX(0)}
-  .overlay{display:none;position:fixed;inset:0;top:var(--header-h);background:rgba(0,0,0,.3);z-index:85}
+  .sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:90;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0);box-shadow:4px 0 20px rgba(0,0,0,.2)}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:85}
   .overlay.show{display:block}
+  .main{padding:12px}
   .detail-grid{grid-template-columns:1fr}
-  .stats-bar{gap:8px}
-  .stat-card{min-width:90px;padding:8px 12px}
+  .focus-tags{flex-direction:column;align-items:flex-start}
+  .stats-bar{gap:6px}
+  .stat-card{min-width:80px;padding:8px 12px}
   .stat-card .stat-value{font-size:1.1rem}
+  .header h1{font-size:1.1rem}
 }
 @media(max-width:600px){
-  th,td{padding:6px 6px;font-size:.75rem}
-  .header h1{font-size:1.1rem}
+  .header{padding:0 12px}
   .header-sub{display:none}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div style="display:flex;align-items:center">
+<div class="header">
+  <div class="header-left">
     <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">&#9776;</button>
-    <h1>Actuarial Firm Tracker</h1>
-    <span class="header-sub" id="firmCount">47 of 47 firms</span>
+    <h1>Industry Firm Tracker<span class="header-sub" id="headerSub"></span></h1>
   </div>
   <div class="header-right">
-    <span class="filter-count" id="filterCount" style="display:none">0 filters</span>
-    <button class="btn btn-light" onclick="exportCSV()">Export CSV</button>
-    <button class="btn btn-light" onclick="exportJSON()">Export JSON</button>
+    <span class="filter-count" id="filterCount"></span>
+    <button class="btn btn-light btn-sm" onclick="exportCSV()">Export CSV</button>
+    <button class="btn btn-light btn-sm" onclick="exportJSON()">Export JSON</button>
   </div>
-</header>
+</div>
 
-<!-- OVERLAY for mobile -->
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <div class="layout">
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
+    <h3>Category</h3>
+    <select class="category-select" id="categoryFilter" onchange="applyFilters()">
+      <option value="">All Categories</option>
+    </select>
+
     <h3>Search</h3>
-    <input type="text" id="searchInput" placeholder="Search firms, HQ, notes..." oninput="applyFilters()">
+    <input type="text" id="searchInput" placeholder="Search firms..." oninput="applyFilters()">
 
     <h3>Tier</h3>
     <div class="cb-group" id="tierFilters"></div>
 
-    <h3>Practice Area</h3>
-    <div class="cb-group" id="practiceFilters"></div>
+    <h3>Focus Areas</h3>
+    <div class="cb-group" id="focusFilters"></div>
 
-    <h3>Firm Size (Employees)</h3>
+    <h3>Ownership Type</h3>
+    <div class="cb-group" id="ownershipFilters"></div>
+
+    <h3>Firm Size</h3>
     <select id="sizeFilter" onchange="applyFilters()">
       <option value="">All Sizes</option>
       <option value="small">Small (&lt;50)</option>
@@ -154,20 +176,16 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
       <option value="enterprise">Enterprise (5,000+)</option>
     </select>
 
-    <h3>Tracking</h3>
+    <h3>Priority</h3>
     <div class="cb-group">
-      <label><input type="checkbox" id="bookmarkFilter" onchange="applyFilters()"> Show only bookmarked</label>
+      <label><input type="checkbox" id="priorityOnly" onchange="applyFilters()"> Show only priorities &#9733;</label>
     </div>
 
     <button class="clear-btn" onclick="clearFilters()">Clear All Filters</button>
   </aside>
 
-  <!-- MAIN -->
-  <main class="main">
-    <!-- STATS -->
+  <div class="main">
     <div class="stats-bar" id="statsBar"></div>
-
-    <!-- TABLE -->
     <div class="table-wrap">
       <table>
         <thead>
@@ -176,402 +194,1191 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
         <tbody id="tableBody"></tbody>
       </table>
     </div>
-  </main>
+  </div>
 </div>
 
 <script>
-// ============= DATA =============
+// ===== DATA =====
 const firms = [
-  {name:"Milliman",tier:"Tier 1 - Large",hq:"Seattle, WA",employees:"~4,400",actuaries:"~1,400+",website:"milliman.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},notes:"Largest independent actuarial firm globally. Dominant in health."},
-  {name:"Willis Towers Watson (WTW)",tier:"Tier 1 - Large",hq:"London / Arlington, VA",employees:"~48,900",actuaries:"~980 (est.)",website:"wtwco.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},notes:"Global advisory firm. Major retirement/benefits practice."},
-  {name:"Aon",tier:"Tier 1 - Large",hq:"Dublin / Chicago, IL",employees:"~60,000",actuaries:"~2,300+",website:"aon.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},notes:"Global risk and retirement. Major reinsurance broker."},
-  {name:"Mercer",tier:"Tier 1 - Large",hq:"New York, NY",employees:"~25,000",actuaries:"~1,784 (est.)",website:"mercer.com",practiceAreas:{pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"Marsh McLennan subsidiary. Dominant in retirement/pension and health benefits."},
-  {name:"Deloitte",tier:"Tier 1 - Big 4",hq:"New York, NY",employees:"~470,000",actuaries:"~1,300-2,300",website:"deloitte.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:true},notes:"Big 4. Strong in insurance regulatory, audit support, M&A."},
-  {name:"PricewaterhouseCoopers (PwC)",tier:"Tier 1 - Big 4",hq:"New York, NY",employees:"~364,000",actuaries:"~1,000+",website:"pwc.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},notes:"#1 ranked by P&C loss reserves audited. Strong captive practice. IFRS 17/LDTI."},
-  {name:"Ernst & Young (EY)",tier:"Tier 1 - Big 4",hq:"New York, NY",employees:"~393,000-406,000",actuaries:"~1,700+",website:"ey.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:true},notes:"#1 among Big Four with over 1,700 actuaries."},
-  {name:"KPMG",tier:"Tier 1 - Big 4",hq:"New York, NY",employees:"~276,000",actuaries:"~700+",website:"kpmg.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:true},notes:"#4 by P&C loss reserves. 460 insurance actuaries in Europe."},
-  {name:"Oliver Wyman",tier:"Tier 1 - Large",hq:"New York, NY",employees:"~7,000-9,100",actuaries:"~600+ (300 credentialed)",website:"oliverwyman.com",practiceAreas:{pension:false,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},notes:"600+ actuarial professionals in 41 locations."},
-  {name:"Gabriel Roeder Smith (GRS)",tier:"Tier 2 - Specialized",hq:"Southfield, MI",employees:"~107-176",actuaries:"Not disclosed",website:"grsconsulting.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"#1 public pension actuarial firm. ~24% market share of public pensions."},
-  {name:"Cavanaugh Macdonald",tier:"Tier 2 - Specialized",hq:"Kennesaw, GA",employees:"~29-50",actuaries:"Not disclosed",website:"cavmacconsulting.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"#3 public pension firm by liability. $690B+ in liabilities."},
-  {name:"Segal Consulting",tier:"Tier 2 - Specialized",hq:"New York, NY",employees:"~1,100",actuaries:"~150+",website:"segalco.com",practiceAreas:{pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"#4 public pension firm. 150+ credentialed actuaries."},
-  {name:"Cheiron",tier:"Tier 2 - Specialized",hq:"Washington, DC",employees:"65+ consulting staff",actuaries:"~65+",website:"cheiron.us",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"Employee-owned. Public employers, Taft-Hartley, nonprofits."},
-  {name:"Buck (now Gallagher)",tier:"Tier 2 - Specialized",hq:"New York, NY",employees:"~2,300",actuaries:"~220+",website:"buck.com",practiceAreas:{pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"220+ credentialed actuaries. Now part of Gallagher."},
-  {name:"Foster & Foster",tier:"Tier 2 - Specialized",hq:"Fort Lauderdale, FL",employees:"100+",actuaries:"~33 credentialed",website:"foster-foster.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"Public pension specialist. Strong in Florida/Southeast."},
-  {name:"Pinnacle Actuarial Resources",tier:"Tier 2 - Specialized",hq:"Bloomington, IL",employees:"~93-95",actuaries:"~79 (historical)",website:"pinnacleactuaries.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:true,erm:true,ma:false},notes:"Largest independent P&C actuarial firm. Employee-owned."},
-  {name:"Lewis & Ellis",tier:"Tier 2 - Specialized",hq:"Dallas, TX",employees:"~140-165",actuaries:"~40+",website:"lewisellis.com",practiceAreas:{pension:false,life:true,pc:true,health:true,reinsurance:false,erm:false,ma:false},notes:"Life, health, and P&C. GLOBACS network member."},
-  {name:"Perr&Knight",tier:"Tier 2 - Specialized",hq:"Boca Raton, FL",employees:"150+",actuaries:"30+ credentialed",website:"perrknight.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},notes:"P&C ratemaking, reserving, regulatory filings."},
-  {name:"Risk Strategies",tier:"Tier 2 - Specialized",hq:"Boston, MA",employees:"5,000+",actuaries:"Not disclosed",website:"risk-strategies.com",practiceAreas:{pension:false,life:true,pc:true,health:true,reinsurance:false,erm:false,ma:false},notes:"Insurance brokerage with actuarial division. Acquired by Brown & Brown Aug 2025."},
-  {name:"FTI Consulting",tier:"Tier 2 - Specialized",hq:"Washington, DC",employees:"8,118",actuaries:"Not disclosed",website:"fticonsulting.com",practiceAreas:{pension:false,life:true,pc:true,health:true,reinsurance:true,erm:false,ma:true},notes:"Insurance actuarial solutions. Litigation support, M&A."},
-  {name:"RSM US",tier:"Tier 2 - Specialized",hq:"Chicago, IL",employees:"~17,000-19,000",actuaries:"Not disclosed",website:"rsmus.com",practiceAreas:{pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:false},notes:"Actuarial services within larger accounting firm."},
-  {name:"CBIZ",tier:"Tier 2 - Specialized",hq:"Cleveland, OH",employees:"~9,500+",actuaries:"Not disclosed",website:"cbiz.com",practiceAreas:{pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"Post-Marcum acquisition. Multiemployer pension plans."},
-  {name:"illumifin",tier:"Tier 2 - Specialized",hq:"Greenville, SC",employees:"2,500+",actuaries:"Not disclosed",website:"illumifin.com",practiceAreas:{pension:false,life:true,pc:false,health:true,reinsurance:false,erm:false,ma:true},notes:"Life, health, annuity insurance technology and actuarial."},
-  {name:"Grant Thornton",tier:"Tier 2 - Specialized",hq:"Chicago, IL",employees:"~10,000-12,000",actuaries:"Not disclosed",website:"grantthornton.com",practiceAreas:{pension:false,life:true,pc:true,health:false,reinsurance:false,erm:true,ma:false},notes:"Insurance actuarial within larger accounting firm."},
-  {name:"Davies Group",tier:"Tier 2 - Specialized",hq:"London / US offices",employees:"8,500+",actuaries:"Not disclosed",website:"davies-group.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:true},notes:"P&C actuarial pricing/reserving. Acquired Merlinos 2021."},
-  {name:"Health Management Associates (HMA)",tier:"Tier 3 - Boutique",hq:"Lansing, MI",employees:"~700-1,000",actuaries:"~50-75 (est.)",website:"healthmanagement.com",practiceAreas:{pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"Health-only actuarial. Medicaid, Medicare, ACA. Acquired Wakely."},
-  {name:"Public Consulting Group (PCG)",tier:"Tier 3 - Boutique",hq:"Boston, MA",employees:"~2,700",actuaries:"~15-25 (est.)",website:"publicconsultinggroup.com",practiceAreas:{pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"Public sector health actuarial. State Medicaid agencies."},
-  {name:"ARC Value Partners",tier:"Tier 3 - Boutique",hq:"Unknown",employees:"~36-47",actuaries:"~15-20 (est.)",website:"arcval.com",practiceAreas:{pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"ACA-compliant health insurance. Risk adjustment, MLR."},
-  {name:"Healthcare Actuaries",tier:"Tier 3 - Boutique",hq:"Unknown",employees:"~5-10",actuaries:"~3-5 (est.)",website:"healthcareactuaries.com",practiceAreas:{pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"Micro-firm. Employee health and retiree benefit plans."},
-  {name:"Huggins Actuarial Services",tier:"Tier 3 - Boutique",hq:"Media, PA",employees:"~12-16",actuaries:"~6-10 (est.)",website:"hugginsactuarial.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},notes:"Acquired by Lewis & Ellis June 2025. Founded 1911."},
-  {name:"SIGMA Actuarial Consulting Group",tier:"Tier 3 - Boutique",hq:"Brentwood, TN",employees:"~25-40",actuaries:"~10-15 (est.)",website:"sigmaactuary.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},notes:"P&C specialty. RISK66 analytics platform."},
-  {name:"Actuarial Solutions (Davies)",tier:"Tier 3 - Boutique",hq:"Charlotte, NC",employees:"~25-30",actuaries:"~3+",website:"actuarialsolutions.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},notes:"Independent P&C actuarial since 1990. Part of Davies."},
-  {name:"American Actuarial Consulting Group (AACG)",tier:"Tier 3 - Boutique",hq:"Manhattan Beach, CA",employees:"~1-10",actuaries:"~3-5 (est.)",website:"aacgllc.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},notes:"Consultant-owned. P&C loss reserving and ratemaking."},
-  {name:"Ark-tuary",tier:"Tier 3 - Boutique",hq:"Unknown",employees:"~1-5",actuaries:"~2-3 (est.)",website:"ark-tuary.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},notes:"Micro-firm. P&C pricing, reserving, risk analysis."},
-  {name:"Moore Actuarial Consulting",tier:"Tier 3 - Boutique",hq:"Westchester, IL",employees:"~1-5",actuaries:"~1-2 (est.)",website:"mooreactuarial.com",practiceAreas:{pension:false,life:false,pc:false,health:false,reinsurance:false,erm:true,ma:false},notes:"Solo/micro practice. Captive insurance specialist."},
-  {name:"Capital Actuarial Services",tier:"Tier 3 - Boutique",hq:"Fort Worth, TX",employees:"~1-5",actuaries:"~1-2 (est.)",website:"capitalactuarial.com",practiceAreas:{pension:false,life:false,pc:false,health:false,reinsurance:false,erm:true,ma:false},notes:"Risk management, captive insurance, self-insured."},
-  {name:"SGRisk",tier:"Tier 3 - Boutique",hq:"Lyndhurst, NJ",employees:"~6-10",actuaries:"~6",website:"sgrisk.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},notes:"Team of six actuaries. Founded 1979."},
-  {name:"Dion Strategic Consulting Group",tier:"Tier 3 - Boutique",hq:"Toronto, ON",employees:"~17-19",actuaries:"~5-8 (est.)",website:"dionstrategic.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},notes:"Alternative risk, captives, affinity/group programs."},
-  {name:"Sydney Consulting Group",tier:"Tier 3 - Boutique",hq:"Safety Harbor, FL",employees:"~11-15",actuaries:"~3-4",website:"sydneygrp.com",practiceAreas:{pension:false,life:false,pc:false,health:false,reinsurance:false,erm:true,ma:false},notes:"Supplemental benefits industry. Risk management."},
-  {name:"TPS Group",tier:"Tier 3 - Boutique",hq:"North Haven, CT",employees:"~36",actuaries:"~8-12 (est.)",website:"tpsgroup.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"$17.4M revenue. 60+ years in retirement plan actuarial."},
-  {name:"BPAS",tier:"Tier 3 - Boutique",hq:"Utica, NY",employees:"~400-480",actuaries:"~30+",website:"bpas.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"30+ credentialed actuaries. 17 offices. PwC spinoff 1973."},
-  {name:"E.H. Thomson & Co",tier:"Tier 3 - Boutique",hq:"Sea Girt, NJ",employees:"~11",actuaries:"~3-5 (est.)",website:"ehthomson.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"Founded 1985. Administers 500+ retirement plans."},
-  {name:"Curcio Webb",tier:"Tier 3 - Boutique",hq:"Oakland, CA",employees:"~28",actuaries:"~3-5 (est.)",website:"curciowebb.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"WBENC-certified. Benefits advisory firm."},
-  {name:"United Actuarial Services",tier:"Tier 3 - Boutique",hq:"Carmel, IN",employees:"~27",actuaries:"~8-12 (est.)",website:"unitedactuarial.com",practiceAreas:{pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},notes:"Founded 1951. Employee-owned. Taft-Hartley funds."},
-  {name:"Pinnacle Plan Design",tier:"Tier 3 - Boutique",hq:"Tucson, AZ",employees:"~45",actuaries:"~5-10 (est.)",website:"pinnacle-plan.com",practiceAreas:{pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},notes:"TPA for retirement plans. ~2,000 clients."},
-  {name:"Actuarial Advisors Inc",tier:"Tier 3 - Boutique",hq:"Minneapolis, MN",employees:"~5",actuaries:"~4-5",website:"actuarialadvisors.com",practiceAreas:{pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},notes:"Founded 1991. P&C specialty. Construction-related risks."}
+  {
+    name: "Milliman",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Large",
+    hq: "Seattle, WA",
+    ownership: "Private",
+    employees: "~4,400",
+    employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Milliman"},{label:"LinkedIn",url:"https://www.linkedin.com/company/milliman"},{label:"Acturhire",url:"https://www.acturhire.com/company/milliman"}],
+    actuaries: "~1,400+",
+    actuarySources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Milliman"},{label:"Acturhire",url:"https://www.acturhire.com/company/milliman"}],
+    revenue: "$1.6B+ (est.)",
+    revenueSources: [],
+    website: "milliman.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},
+    notes: "Largest independent actuarial firm globally. Dominant in health (Medicaid, Medicare, ACA). Major player across all practice areas."
+  },
+  {
+    name: "Willis Towers Watson (WTW)",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Large",
+    hq: "London / Arlington, VA",
+    ownership: "Public (NASDAQ: WTW)",
+    employees: "~48,900",
+    employeeSources: [{label:"SEC 10-K",url:"https://www.sec.gov/Archives/edgar/data/1140536/000095017025026278/wtw-20241231.htm"},{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/WTW/willis-towers-watson-public/number-of-employees"}],
+    actuaries: "~980 (est.)",
+    actuarySources: [{label:"Acturhire",url:"https://www.acturhire.com/company/willis-towers-watson"}],
+    revenue: "$9.5B+",
+    revenueSources: [{label:"SEC 10-K",url:"https://www.sec.gov/Archives/edgar/data/1140536/000095017025026278/wtw-20241231.htm"}],
+    website: "wtwco.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},
+    notes: "Global advisory firm. Major retirement/benefits practice. Strong in P&C and reinsurance."
+  },
+  {
+    name: "Aon",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Large",
+    hq: "Dublin / Chicago, IL",
+    ownership: "Public (NYSE: AON)",
+    employees: "~60,000",
+    employeeSources: [{label:"SEC 10-K",url:"https://filecache.investorroom.com/mr5ir_aon/600/Aon%20plc%202024%2010-K%20(10).pdf"},{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/AON/aon/number-of-employees"}],
+    actuaries: "~2,300+",
+    actuarySources: [{label:"Aon Actuarial Page",url:"https://www.aon.com/en/capabilities/risk-management/actuarial-and-analytics"}],
+    revenue: "$16B+",
+    revenueSources: [],
+    website: "aon.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},
+    notes: "Global risk and retirement. Strong pension actuarial services. Major reinsurance broker with actuarial analytics."
+  },
+  {
+    name: "Mercer",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Large",
+    hq: "New York, NY",
+    ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
+    employees: "~25,000",
+    employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Mercer_(consulting_firm)"},{label:"LinkedIn",url:"https://www.linkedin.com/company/mercer"}],
+    actuaries: "~1,784 (est.)",
+    actuarySources: [{label:"Acturhire",url:"https://www.acturhire.com/company/mercer"}],
+    revenue: "$5.7B+",
+    revenueSources: [],
+    website: "mercer.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Marsh McLennan subsidiary. Dominant in retirement/pension and health benefits consulting."
+  },
+  {
+    name: "Deloitte",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Big 4",
+    hq: "New York, NY",
+    ownership: "Private (Partnership)",
+    employees: "~470,000",
+    employeeSources: [{label:"Deloitte Facts",url:"https://www.deloitte.com/global/en/about/governance/facts-and-figures.html"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Deloitte"}],
+    actuaries: "~1,300-2,300",
+    actuarySources: [{label:"Deloitte Bermuda AIS",url:"https://www.deloitte.com/cbc/en/services/consulting/services/actuarialInsurance-solutions.html"},{label:"Deloitte Cayman AIS",url:"https://www.deloitte.com/cbc/en/services/consulting/services/ky-ais-hub.html"}],
+    revenue: "$67B+",
+    revenueSources: [{label:"Deloitte Facts",url:"https://www.deloitte.com/global/en/about/governance/facts-and-figures.html"}],
+    website: "deloitte.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:true},
+    notes: "Big 4 actuarial practice. Strong in insurance regulatory, audit support, M&A due diligence."
+  },
+  {
+    name: "PricewaterhouseCoopers (PwC)",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Big 4",
+    hq: "New York, NY",
+    ownership: "Private (Partnership)",
+    employees: "~364,000",
+    employeeSources: [{label:"PwC Global Review",url:"https://www.pwc.com/gx/en/about/global-annual-review/at-a-glance.html"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/PwC"}],
+    actuaries: "~1,000+",
+    actuarySources: [{label:"PwC Actuarial Services",url:"https://www.pwc.com/gx/en/services/audit-assurance/actuarial-insurance.html"}],
+    revenue: "$55B+",
+    revenueSources: [{label:"PwC Global Review",url:"https://www.pwc.com/gx/en/about/global-annual-review/at-a-glance.html"}],
+    website: "pwc.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},
+    notes: "#1 ranked by P&C loss reserves audited. Strong captive insurance practice. IFRS 17/LDTI."
+  },
+  {
+    name: "Ernst & Young (EY)",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Big 4",
+    hq: "New York, NY",
+    ownership: "Private (Partnership)",
+    employees: "~393,000-406,000",
+    employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Ernst_%26_Young"},{label:"EY Newsroom",url:"https://www.ey.com/en_gl/newsroom/2025/10/ey-announces-global-revenue-of-us-53-2b-for-fiscal-year-2025"}],
+    actuaries: "~1,700+",
+    actuarySources: [{label:"EY Finance Risk Actuarial",url:"https://www.ey.com/en_us/industries/insurance/finance-risk-actuarial-change"}],
+    revenue: "$53B+",
+    revenueSources: [{label:"EY Newsroom",url:"https://www.ey.com/en_gl/newsroom/2025/10/ey-announces-global-revenue-of-us-53-2b-for-fiscal-year-2025"}],
+    website: "ey.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:true},
+    notes: "#1 among Big Four with over 1,700 actuaries. Insurance actuarial and regulatory consulting."
+  },
+  {
+    name: "KPMG",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Big 4",
+    hq: "New York, NY",
+    ownership: "Private (Partnership)",
+    employees: "~276,000",
+    employeeSources: [{label:"KPMG Corporate Reporting",url:"https://kpmg.com/xx/en/about/corporate-reporting.html"},{label:"KPMG Press Release",url:"https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html"}],
+    actuaries: "~700+",
+    actuarySources: [{label:"KPMG Actuarial",url:"https://kpmg.com/ch/en/services/financial-services/actuarial.html"}],
+    revenue: "$38B+",
+    revenueSources: [{label:"KPMG Press Release",url:"https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html"}],
+    website: "kpmg.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:true},
+    notes: "#4 by P&C loss reserves. 460 insurance actuaries in 21 European countries."
+  },
+  {
+    name: "Oliver Wyman",
+    category: "Actuarial Firms",
+    tier: "Tier 1 - Large",
+    hq: "New York, NY",
+    ownership: "Subsidiary of Marsh McLennan (NYSE: MMC)",
+    employees: "~7,000-9,100",
+    employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Oliver_Wyman"},{label:"LinkedIn",url:"https://www.linkedin.com/company/oliver-wyman"},{label:"PitchBook",url:"https://pitchbook.com/profiles/advisor/51280-48"}],
+    actuaries: "~600+ (300 credentialed)",
+    actuarySources: [{label:"Oliver Wyman Actuarial",url:"https://www.oliverwyman.com/our-expertise/capabilities/actuarial.html"}],
+    revenue: "$3B+ (est.)",
+    revenueSources: [],
+    website: "oliverwyman.com",
+    practiceAreas: {pension:false,life:true,pc:true,health:true,reinsurance:true,erm:true,ma:true},
+    notes: "600+ actuarial professionals including 300 credentialed actuaries in 41 locations."
+  },
+  {
+    name: "Gabriel Roeder Smith (GRS)",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Southfield, MI",
+    ownership: "Private",
+    employees: "~107-176",
+    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co/gabriel-roeder-smith-company-profile_b5d09b95f42e40c2"},{label:"LinkedIn",url:"https://www.linkedin.com/company/gabriel-roeder-smith-&-company"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"GRS Team",url:"https://grsconsulting.com/team/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "grsconsulting.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "#1 public pension actuarial firm. $1.1T+ in accrued liability. ~24% market share of public pensions."
+  },
+  {
+    name: "Cavanaugh Macdonald",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Kennesaw, GA",
+    ownership: "Private",
+    employees: "~29-50",
+    employeeSources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/cavanaugh-macdonald-consulting-llc"},{label:"ZoomInfo",url:"https://www.zoominfo.com/c/cavanaugh-macdonald-consulting-llc/28004869"}],
+    actuaries: "Not disclosed",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "cavmacconsulting.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "#3 public pension firm by liability. $690B+ in liabilities. Public sector focus."
+  },
+  {
+    name: "Segal Consulting",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "New York, NY",
+    ownership: "Private",
+    employees: "~1,100",
+    employeeSources: [{label:"Segal Website",url:"https://www.segalco.com/"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Segal_(company)"}],
+    actuaries: "~150+",
+    actuarySources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/segalhr"},{label:"SOA Job Center",url:"https://jobs.soa.org/profile/segal/844184/?srp=d"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "segalco.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "#4 public pension firm. $551B+ in liabilities. Also does health/benefits for multiemployer plans."
+  },
+  {
+    name: "Cheiron",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Washington, DC",
+    ownership: "Employee-Owned",
+    employees: "65+",
+    employeeSources: [{label:"Cheiron Story",url:"https://cheiron.us/cheironHome/content/about/the-story-of-cheiron"},{label:"LinkedIn",url:"https://www.linkedin.com/company/cheiron"}],
+    actuaries: "~65+",
+    actuarySources: [{label:"Cheiron Story",url:"https://cheiron.us/cheironHome/content/about/the-story-of-cheiron"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "cheiron.us",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Employee-owned. Public employers, Taft-Hartley plans, nonprofits. Offices in 9 US cities."
+  },
+  {
+    name: "Buck (now Gallagher)",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "New York, NY",
+    ownership: "Subsidiary of Arthur J. Gallagher (NYSE: AJG)",
+    employees: "~2,300",
+    employeeSources: [{label:"Gallagher Announcement",url:"https://investor.ajg.com/news/news-details/2022/Arthur-J.-Gallagher--Co.-Announces-Agreement-To-Acquire-Buck/default.aspx"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Buck_(human_resources_consulting_company)"}],
+    actuaries: "~220+",
+    actuarySources: [{label:"Gallagher Announcement",url:"https://investor.ajg.com/news/news-details/2022/Arthur-J.-Gallagher--Co.-Announces-Agreement-To-Acquire-Buck/default.aspx"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "buck.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "220+ credentialed actuaries at time of Gallagher acquisition (2022-2023). Now folded into Gallagher."
+  },
+  {
+    name: "Foster & Foster",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Fort Lauderdale, FL",
+    ownership: "Private",
+    employees: "100+",
+    employeeSources: [{label:"Foster & Foster",url:"https://foster-foster.com/"},{label:"ZoomInfo",url:"https://www.zoominfo.com/c/foster--foster-consulting-actuaries-inc/35063839"}],
+    actuaries: "~33 credentialed",
+    actuarySources: [{label:"Retirement Services",url:"https://foster-foster.com/services/retirement/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "foster-foster.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Public pension specialist. Strong in Florida and Southeast US municipal plans. 90+ consultants/actuaries firm-wide."
+  },
+  {
+    name: "Pinnacle Actuarial Resources",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Bloomington, IL",
+    ownership: "Employee-Owned",
+    employees: "~93-95",
+    employeeSources: [{label:"PitchBook",url:"https://pitchbook.com/profiles/company/332589-16"},{label:"LinkedIn",url:"https://www.linkedin.com/company/pinnacle-actuarial-resources-inc-"}],
+    actuaries: "~79 (historical)",
+    actuarySources: [{label:"Pinnacle at 20",url:"https://pinnacleactuaries.com/article/pinnacle-20-numbers"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "pinnacleactuaries.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:true,erm:true,ma:false},
+    notes: "Largest independent P&C actuarial firm. Employee-owned. Reserving, ratemaking, ERM, reinsurance, captives."
+  },
+  {
+    name: "Lewis & Ellis",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Dallas, TX",
+    ownership: "Private",
+    employees: "~140-165",
+    employeeSources: [{label:"LeadIQ",url:"https://leadiq.com/c/lewis--ellis---actuaries-and-consultants/5a1d848024000024005f00f6/employee-directory"},{label:"LinkedIn",url:"https://www.linkedin.com/company/lewis-&-ellis"}],
+    actuaries: "~40+",
+    actuarySources: [{label:"Lewis & Ellis About",url:"https://lewisellis.com/about-us/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "lewisellis.com",
+    practiceAreas: {pension:false,life:true,pc:true,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Life, health, and P&C. Reserve systems, reinsurance advisory. GLOBACS network member. Acquired Huggins June 2025."
+  },
+  {
+    name: "Perr&Knight",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Boca Raton, FL",
+    ownership: "Private",
+    employees: "150+",
+    employeeSources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/perrandknight"},{label:"Perr&Knight About",url:"https://www.perrknight.com/about/"}],
+    actuaries: "30+",
+    actuarySources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/perrandknight"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "perrknight.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "30+ CAS/SOA credentialed actuaries. P&C ratemaking, reserving, regulatory filings. Insurance compliance."
+  },
+  {
+    name: "Risk Strategies",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Boston, MA",
+    ownership: "Acquired by Brown & Brown (NYSE: BRO) Aug 2025",
+    employees: "5,000+",
+    employeeSources: [{label:"About Us",url:"https://www.risk-strategies.com/about/"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Risk_Strategies"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"Actuarial Services",url:"https://www.risk-strategies.com/actuarial-services/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "risk-strategies.com",
+    practiceAreas: {pension:false,life:true,pc:true,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Primarily insurance brokerage; actuarial is small division. Acquired by Brown & Brown Aug 2025."
+  },
+  {
+    name: "FTI Consulting",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Washington, DC",
+    ownership: "Public (NYSE: FCN)",
+    employees: "8,118",
+    employeeSources: [{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/FCN/fti-consulting/number-of-employees"},{label:"FTI Q4 2025",url:"https://www.fticonsulting.com/about/newsroom/press-releases/fti-consulting-reports-fourth-quarter-and-full-year-2025-financial-results"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"FTI Actuarial",url:"https://www.fticonsulting.com/industries/insurance/actuarial-solutions"}],
+    revenue: "$3.5B+",
+    revenueSources: [{label:"FTI Q4 2025",url:"https://www.fticonsulting.com/about/newsroom/press-releases/fti-consulting-reports-fourth-quarter-and-full-year-2025-financial-results"}],
+    website: "fticonsulting.com",
+    practiceAreas: {pension:false,life:true,pc:true,health:true,reinsurance:true,erm:false,ma:true},
+    notes: "Insurance actuarial solutions. Litigation support, M&A, reinsurance. Acquired Madison Group actuarial firm March 2024."
+  },
+  {
+    name: "RSM US",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Chicago, IL",
+    ownership: "Private",
+    employees: "~17,000-19,000",
+    employeeSources: [{label:"RSM Snapshot",url:"https://impactreport.rsmus.com/our-impact/our-firm/rsm-us-llp-snapshot.html"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/RSM_US"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"RSM Actuarial",url:"https://rsmus.com/services/financial-management/actuarial-services.html"}],
+    revenue: "$3.5B+",
+    revenueSources: [],
+    website: "rsmus.com",
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:false,erm:true,ma:false},
+    notes: "Actuarial services within larger accounting/advisory firm. P&C, life, employee benefits. Captive support."
+  },
+  {
+    name: "CBIZ",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Cleveland, OH",
+    ownership: "Public (NYSE: CBZ)",
+    employees: "~9,500+",
+    employeeSources: [{label:"CBIZ Earnings",url:"https://cbiz.gcs-web.com/news-releases/news-release-details/cbiz-reports-fourth-quarter-and-full-year-2025-financial-results"},{label:"MacroTrends",url:"https://www.macrotrends.net/stocks/charts/CBZ/cbiz/number-of-employees"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"CBIZ Actuarial",url:"https://www.cbiz.com/services/benefits/actuarial"}],
+    revenue: "$1.8B+",
+    revenueSources: [{label:"CBIZ Earnings",url:"https://cbiz.gcs-web.com/news-releases/news-release-details/cbiz-reports-fourth-quarter-and-full-year-2025-financial-results"}],
+    website: "cbiz.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Post-Marcum acquisition (~2025). Multiemployer pension plans, health benefits. Mid-market focus."
+  },
+  {
+    name: "illumifin",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Greenville, SC",
+    ownership: "Private",
+    employees: "2,500+",
+    employeeSources: [{label:"illumifin About",url:"https://www.illumifin.com/about/"},{label:"LinkedIn",url:"https://www.linkedin.com/company/illumifin"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"illumifin Actuarial",url:"https://www.illumifin.com/actuarial-consulting-services/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "illumifin.com",
+    practiceAreas: {pension:false,life:true,pc:false,health:true,reinsurance:false,erm:false,ma:true},
+    notes: "Life, health, annuity insurance technology and actuarial. M&A risk assessments. US and India offices."
+  },
+  {
+    name: "Grant Thornton",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "Chicago, IL",
+    ownership: "Private (Partnership)",
+    employees: "~10,000-12,000",
+    employeeSources: [{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Grant_Thornton_LLP"},{label:"LeadIQ",url:"https://leadiq.com/c/grant-thornton-us/5a1d8a432400002400638684/employee-directory"}],
+    actuaries: "Not disclosed",
+    actuarySources: [],
+    revenue: "$2.4B+",
+    revenueSources: [],
+    website: "grantthornton.com",
+    practiceAreas: {pension:false,life:true,pc:true,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Insurance actuarial within larger accounting firm. Regulatory and financial reporting."
+  },
+  {
+    name: "Davies Group",
+    category: "Actuarial Firms",
+    tier: "Tier 2 - Specialized",
+    hq: "London / US offices",
+    ownership: "Private (PE-backed)",
+    employees: "8,500+",
+    employeeSources: [{label:"Davies About",url:"https://davies-group.com/about-us/"},{label:"PitchBook",url:"https://pitchbook.com/profiles/company/52381-00"}],
+    actuaries: "Not disclosed",
+    actuarySources: [{label:"Davies Actuarial",url:"https://davies-group.com/northamerica/solutions/insurance-services/actuarial-solutions/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "davies-group.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:true},
+    notes: "P&C actuarial pricing/reserving, product development, M&A. Acquired Merlinos & Associates 2021."
+  },
+  {
+    name: "Health Management Associates (HMA)",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Lansing, MI",
+    ownership: "Private",
+    employees: "~700-1,000",
+    employeeSources: [{label:"HMA Website",url:"https://www.healthmanagement.com/our-team/"},{label:"HMA News",url:"https://www.healthmanagement.com/insights/hma-news/health-management-associates-acquires-wakely-consulting-group/"}],
+    actuaries: "~50-75 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "healthmanagement.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Health-only actuarial. Medicaid rate setting, Medicare bid prep, ACA marketplace filings. Acquired Wakely."
+  },
+  {
+    name: "Public Consulting Group (PCG)",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Boston, MA",
+    ownership: "Private",
+    employees: "~2,700",
+    employeeSources: [{label:"PCG About",url:"https://publicconsultinggroup.com/about/about-pcg/"},{label:"LinkedIn",url:"https://www.linkedin.com/company/public-consulting-group"}],
+    actuaries: "~15-25 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "publicconsultinggroup.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Public sector health actuarial. State Medicaid agencies, ACA marketplace support."
+  },
+  {
+    name: "ARC Value Partners",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Unknown",
+    ownership: "Private",
+    employees: "~36-47",
+    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"}],
+    actuaries: "~15-20 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "arcval.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "ACA-compliant health insurance. Risk adjustment, MLR, premium rebate estimation. Develops ARCVAL software."
+  },
+  {
+    name: "Healthcare Actuaries",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Unknown",
+    ownership: "Private",
+    employees: "~5-10",
+    employeeSources: [{label:"Company Website",url:"https://healthcareactuaries.com/"}],
+    actuaries: "~3-5 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "healthcareactuaries.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Micro-firm led by Roger Burton. Employee health and retiree benefit plans."
+  },
+  {
+    name: "Huggins Actuarial Services",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Media, PA",
+    ownership: "Acquired by Lewis & Ellis (June 2025)",
+    employees: "~12-16",
+    employeeSources: [{label:"LeadIQ",url:"https://leadiq.com"},{label:"Insurance Business Mag",url:"https://www.insurancebusinessmag.com/us/news/mergers-acquisitions/lewis-and-ellis-and-huggins-merger-expands-actuarial-services-538883.aspx"}],
+    actuaries: "~6-10 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "hugginsactuarial.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Acquired by Lewis & Ellis June 2025. Founded 1911. P&C loss reserving, ERM, economic capital modeling."
+  },
+  {
+    name: "SIGMA Actuarial Consulting Group",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Brentwood, TN",
+    ownership: "Private",
+    employees: "~25-40",
+    employeeSources: [{label:"LinkedIn",url:"https://www.linkedin.com/company/sigma-actuarial-consulting-group-inc-"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    actuaries: "~10-15 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "sigmaactuary.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Founded 1995. P&C specialty. RISK66 analytics platform."
+  },
+  {
+    name: "Actuarial Solutions (Davies)",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Charlotte, NC",
+    ownership: "Subsidiary of Davies Group",
+    employees: "~25-30",
+    employeeSources: [{label:"Company Website",url:"https://actuarialsolutions.com"},{label:"Davies Press Release",url:"https://davies-group.com/knowledge/davies-strengthens-its-global-insurance-services-capabilities-through-the-acquisition-of-us-based-actuarial-consulting-firm-merlinos/"}],
+    actuaries: "~3+",
+    actuarySources: [{label:"Company Website",url:"https://actuarialsolutions.com"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "actuarialsolutions.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Independent P&C actuarial since 1990. Reserving, ratemaking, financial examinations. Part of Davies."
+  },
+  {
+    name: "American Actuarial Consulting Group (AACG)",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Manhattan Beach, CA",
+    ownership: "Private (Consultant-Owned)",
+    employees: "~1-10",
+    employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    actuaries: "~3-5 (est.)",
+    actuarySources: [{label:"AACG Website",url:"https://www.aacgllc.com/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "aacgllc.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Consultant-owned. P&C loss reserving and ratemaking specialists."
+  },
+  {
+    name: "Ark-tuary",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Unknown",
+    ownership: "Private",
+    employees: "~1-5",
+    employeeSources: [{label:"Company Website",url:"https://www.ark-tuary.com/"}],
+    actuaries: "~2-3 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "ark-tuary.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Micro-firm founded by Konstantin Sakherzon (ACAS MAAA). P&C pricing, reserving, risk analysis."
+  },
+  {
+    name: "Moore Actuarial Consulting",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Westchester, IL",
+    ownership: "Private",
+    employees: "~1-5",
+    employeeSources: [{label:"Company Website",url:"https://www.mooreactuarial.com/"}],
+    actuaries: "~1-2 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "mooreactuarial.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Solo/micro practice led by Dave Moore. 30+ years experience. Captive insurance specialist."
+  },
+  {
+    name: "Capital Actuarial Services",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Fort Worth, TX",
+    ownership: "Private",
+    employees: "~1-5",
+    employeeSources: [{label:"Company Website",url:"https://www.capitalactuarial.com/"}],
+    actuaries: "~1-2 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "capitalactuarial.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Risk management, captive insurance, self-insured companies."
+  },
+  {
+    name: "SGRisk",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Lyndhurst, NJ",
+    ownership: "Private",
+    employees: "~6-10",
+    employeeSources: [{label:"SGRisk About",url:"https://sgrisk.com/about/"}],
+    actuaries: "~6",
+    actuarySources: [{label:"SGRisk About",url:"https://sgrisk.com/about/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "sgrisk.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Team of six actuaries. Founded 1979. P&C ratemaking, reserving, self-insurance."
+  },
+  {
+    name: "Dion Strategic Consulting Group",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Toronto, ON",
+    ownership: "Private",
+    employees: "~17-19",
+    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    actuaries: "~5-8 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "dionstrategic.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Founded 2011. Alternative risk, captives, affinity/group program consulting."
+  },
+  {
+    name: "Sydney Consulting Group",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Safety Harbor, FL",
+    ownership: "Private",
+    employees: "~11-15",
+    employeeSources: [{label:"Company Website",url:"https://sydneygrp.com/who-we-are/"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    actuaries: "~3-4",
+    actuarySources: [{label:"Company Website",url:"https://sydneygrp.com/who-we-are/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "sydneygrp.com",
+    practiceAreas: {pension:false,life:false,pc:false,health:false,reinsurance:false,erm:true,ma:false},
+    notes: "Supplemental benefits industry. Actuarial, compliance, risk management."
+  },
+  {
+    name: "TPS Group",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "North Haven, CT",
+    ownership: "Private",
+    employees: "~36",
+    employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    actuaries: "~8-12 (est.)",
+    actuarySources: [],
+    revenue: "$17.4M",
+    revenueSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    website: "tpsgroup.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "$17.4M revenue. 60+ years in retirement plan actuarial. North Haven CT and Buffalo NY."
+  },
+  {
+    name: "BPAS",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Utica, NY",
+    ownership: "Private",
+    employees: "~400-480",
+    employeeSources: [{label:"BPAS Website",url:"https://bpas.com/employers/services/actuarial-pension/"},{label:"LinkedIn",url:"https://www.linkedin.com/company/bpas"}],
+    actuaries: "~30+",
+    actuarySources: [{label:"BPAS Actuarial",url:"https://bpas.com/employers/services/actuarial-pension/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "bpas.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "30+ credentialed actuaries. 17 offices. Supports 4,200 retirement plans. PwC spinoff 1973."
+  },
+  {
+    name: "E.H. Thomson & Co",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Sea Girt, NJ",
+    ownership: "Private",
+    employees: "~11",
+    employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"},{label:"LeadIQ",url:"https://leadiq.com"}],
+    actuaries: "~3-5 (est.)",
+    actuarySources: [],
+    revenue: "~$1M",
+    revenueSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    website: "ehthomson.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Founded 1985. Led by Edward Thomson (FCA MSEA MAAA). Administers 500+ retirement plans."
+  },
+  {
+    name: "Curcio Webb",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Oakland, CA",
+    ownership: "Private (WBENC-certified)",
+    employees: "~28",
+    employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
+    actuaries: "~3-5 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "curciowebb.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "WBENC-certified. Benefits advisory firm. Retirement plan consulting and actuarial services."
+  },
+  {
+    name: "United Actuarial Services",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Carmel, IN",
+    ownership: "Employee-Owned",
+    employees: "~27",
+    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"}],
+    actuaries: "~8-12 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "unitedactuarial.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    notes: "Founded 1951. Employee-owned. Exclusively serves Taft-Hartley multiemployer funds. ~9yr avg tenure."
+  },
+  {
+    name: "Pinnacle Plan Design",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Tucson, AZ",
+    ownership: "Private",
+    employees: "~45",
+    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"}],
+    actuaries: "~5-10 (est.)",
+    actuarySources: [],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "pinnacle-plan.com",
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Founded 2001 by Kevin Donovan (EA FSEA FCA). TPA for retirement plans. ~2,000 clients. Acquired Block Consulting Actuaries."
+  },
+  {
+    name: "Actuarial Advisors Inc",
+    category: "Actuarial Firms",
+    tier: "Tier 3 - Boutique",
+    hq: "Minneapolis, MN",
+    ownership: "Private",
+    employees: "~5",
+    employeeSources: [{label:"Team Page",url:"https://actuarialadvisors.com/our-team/"}],
+    actuaries: "~4-5",
+    actuarySources: [{label:"Team Page",url:"https://actuarialadvisors.com/our-team/"}],
+    revenue: "\u2014",
+    revenueSources: [],
+    website: "actuarialadvisors.com",
+    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
+    notes: "Founded 1991. P&C specialty. Construction-related risks. 25+ years serving insurers, pools, regulators."
+  }
 ];
 
-// ============= CONSTANTS =============
-const practiceAreaLabels = {
-  pension:"Pension/Retirement", life:"Life Insurance", pc:"Property & Casualty",
-  health:"Health/Benefits", reinsurance:"Reinsurance", erm:"ERM/Captive", ma:"M&A/Valuation"
+// ===== PRACTICE AREA CONFIG =====
+const practiceAreaConfig = {
+  pension: { short: "Pension", full: "Pension/Retirement", cls: "tag-pension" },
+  life:    { short: "Life",    full: "Life Insurance",      cls: "tag-life" },
+  pc:      { short: "P&C",     full: "Property & Casualty", cls: "tag-pc" },
+  health:  { short: "Health",  full: "Health/Benefits",     cls: "tag-health" },
+  reinsurance: { short: "Reins.", full: "Reinsurance",      cls: "tag-reins" },
+  erm:     { short: "ERM",     full: "ERM/Captive",         cls: "tag-erm" },
+  ma:      { short: "M&A",     full: "M&A/Valuation",       cls: "tag-ma" }
 };
-const practiceKeys = Object.keys(practiceAreaLabels);
-const tiers = [...new Set(firms.map(f=>f.tier))];
-const tierClassMap = {"Tier 1 - Large":"tier-t1l","Tier 1 - Big 4":"tier-t1b","Tier 2 - Specialized":"tier-t2","Tier 3 - Boutique":"tier-t3"};
 
+// ===== STATE =====
+let priorities = JSON.parse(localStorage.getItem('firm_priorities') || '[]');
+let sortCol = 'name';
+let sortDir = 1; // 1 = asc, -1 = desc
+let expandedRow = null;
+
+// ===== COLUMNS =====
 const columns = [
-  {key:"star",label:"",sortable:false},
-  {key:"name",label:"Firm Name",sortable:true},
-  {key:"tier",label:"Tier",sortable:true},
-  {key:"hq",label:"Headquarters",sortable:true},
-  {key:"employees",label:"Employees",sortable:true},
-  {key:"actuaries",label:"Actuaries",sortable:true},
-  ...practiceKeys.map(k=>({key:"pa_"+k,label:practiceAreaLabels[k].split("/")[0].substring(0,6),sortable:true,isPractice:true,paKey:k}))
+  { key: '#', label: '#', sortable: false },
+  { key: 'star', label: '\u2606', sortable: false },
+  { key: 'name', label: 'Firm Name', sortable: true },
+  { key: 'tier', label: 'Tier', sortable: true },
+  { key: 'hq', label: 'Headquarters', sortable: true },
+  { key: 'ownership', label: 'Ownership', sortable: true },
+  { key: 'employees', label: 'Employees', sortable: true },
+  { key: 'actuaries', label: 'Actuaries', sortable: true },
+  { key: 'revenue', label: 'Revenue', sortable: true },
+  { key: 'focus', label: 'Focus Areas', sortable: false }
 ];
 
-// ============= STATE =============
-let bookmarks = JSON.parse(localStorage.getItem("actuary_bookmarks")||"{}");
-let sortCol = "name";
-let sortDir = 1;
-let expandedRow = null;
-let filteredFirms = [...firms];
-
-// ============= HELPERS =============
-function parseEmployeeCount(s){
-  if(!s) return 0;
-  const m = s.replace(/,/g,"").match(/(\d+)/);
-  return m ? parseInt(m[1],10) : 0;
-}
-function escapeHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
-
-// ============= INIT FILTERS =============
-function initFilters(){
-  const tierDiv = document.getElementById("tierFilters");
-  tiers.forEach(t=>{
-    const id = "tier_"+t.replace(/\s+/g,"_");
-    tierDiv.innerHTML += `<label><input type="checkbox" id="${id}" value="${t}" checked onchange="applyFilters()"> ${t}</label>`;
-  });
-  const paDiv = document.getElementById("practiceFilters");
-  practiceKeys.forEach(k=>{
-    const id = "pa_"+k;
-    paDiv.innerHTML += `<label><input type="checkbox" id="${id}" value="${k}" onchange="applyFilters()"> ${practiceAreaLabels[k]}</label>`;
-  });
+// ===== HELPERS =====
+function parseNum(str) {
+  if (!str || str === '\u2014' || str === 'Not disclosed') return 0;
+  const cleaned = str.replace(/[^0-9.\-]/g, '');
+  const parts = cleaned.split('-');
+  if (parts.length === 2) return (parseFloat(parts[0]) + parseFloat(parts[1])) / 2;
+  return parseFloat(cleaned) || 0;
 }
 
-// ============= FILTERING =============
-function applyFilters(){
-  const search = document.getElementById("searchInput").value.toLowerCase().trim();
-  const checkedTiers = tiers.filter(t=>document.getElementById("tier_"+t.replace(/\s+/g,"_")).checked);
-  const checkedPA = practiceKeys.filter(k=>document.getElementById("pa_"+k).checked);
-  const sizeFilter = document.getElementById("sizeFilter").value;
-  const bookmarkOnly = document.getElementById("bookmarkFilter").checked;
+function parseRevenue(str) {
+  if (!str || str === '\u2014') return 0;
+  const m = str.match(/([\d.]+)\s*(B|M|K)?/i);
+  if (!m) return 0;
+  let val = parseFloat(m[1]);
+  if (m[2]) {
+    const u = m[2].toUpperCase();
+    if (u === 'B') val *= 1000000000;
+    else if (u === 'M') val *= 1000000;
+    else if (u === 'K') val *= 1000;
+  }
+  return val;
+}
 
-  filteredFirms = firms.filter(f=>{
-    if(search){
-      const hay = (f.name+" "+f.hq+" "+f.notes).toLowerCase();
-      if(!hay.includes(search)) return false;
+function parseEmployeeNum(str) {
+  if (!str || str === '\u2014' || str === 'Not disclosed') return 0;
+  const cleaned = str.replace(/[~,+]/g, '');
+  const parts = cleaned.match(/(\d[\d,]*)/g);
+  if (!parts) return 0;
+  if (parts.length >= 2) return (parseInt(parts[0].replace(/,/g,'')) + parseInt(parts[1].replace(/,/g,''))) / 2;
+  return parseInt(parts[0].replace(/,/g,'')) || 0;
+}
+
+function getOwnershipType(own) {
+  const o = own.toLowerCase();
+  if (o.includes('employee-owned')) return 'Employee-Owned';
+  if (o.includes('public') || o.includes('nyse') || o.includes('nasdaq')) return 'Public';
+  if (o.includes('subsidiary') || o.includes('acquired')) return 'Subsidiary';
+  if (o.includes('partnership')) return 'Partnership';
+  return 'Private';
+}
+
+function tierClass(tier) {
+  if (tier.includes('Big 4')) return 'tier-t1b';
+  if (tier.includes('Tier 1')) return 'tier-t1l';
+  if (tier.includes('Tier 2')) return 'tier-t2';
+  return 'tier-t3';
+}
+
+function tierSortVal(tier) {
+  if (tier.includes('Tier 1 - Large')) return 1;
+  if (tier.includes('Tier 1 - Big 4')) return 2;
+  if (tier.includes('Tier 2')) return 3;
+  return 4;
+}
+
+function getSizeCategory(emp) {
+  const n = parseEmployeeNum(emp);
+  if (n === 0) return 'small';
+  if (n < 50) return 'small';
+  if (n < 500) return 'medium';
+  if (n < 5000) return 'large';
+  return 'enterprise';
+}
+
+function isPriority(name) { return priorities.includes(name); }
+
+function togglePriority(name, e) {
+  e.stopPropagation();
+  const idx = priorities.indexOf(name);
+  if (idx >= 0) priorities.splice(idx, 1);
+  else priorities.push(name);
+  localStorage.setItem('firm_priorities', JSON.stringify(priorities));
+  render();
+}
+
+function sourcedValueHTML(value, sources) {
+  if (!sources || sources.length === 0) return escHTML(value);
+  let tooltip = '<span class="source-tooltip">';
+  sources.forEach(s => {
+    tooltip += '<a href="' + escHTML(s.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + escHTML(s.label) + ' \u2197</a>';
+  });
+  tooltip += '</span>';
+  return '<span class="sourced-value">' + escHTML(value) + '<span class="source-icon">\u2197</span>' + tooltip + '</span>';
+}
+
+function escHTML(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function focusTagsHTML(pa, full) {
+  let html = '';
+  for (const [key, cfg] of Object.entries(practiceAreaConfig)) {
+    if (pa[key]) {
+      const label = full ? cfg.full : cfg.short;
+      html += '<span class="focus-tag ' + cfg.cls + '">' + label + '</span>';
     }
-    if(!checkedTiers.includes(f.tier)) return false;
-    if(checkedPA.length>0){
-      const hasAny = checkedPA.some(k=>f.practiceAreas[k]);
-      if(!hasAny) return false;
-    }
-    if(sizeFilter){
-      const n = parseEmployeeCount(f.employees);
-      if(sizeFilter==="small" && n>=50) return false;
-      if(sizeFilter==="medium" && (n<50||n>500)) return false;
-      if(sizeFilter==="large" && (n<500||n>5000)) return false;
-      if(sizeFilter==="enterprise" && n<5000) return false;
-    }
-    if(bookmarkOnly && !bookmarks[f.name]) return false;
+  }
+  return html;
+}
+
+// ===== INIT FILTERS =====
+function initFilters() {
+  // Categories
+  const cats = [...new Set(firms.map(f => f.category))];
+  const catSel = document.getElementById('categoryFilter');
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    catSel.appendChild(opt);
+  });
+
+  // Tiers
+  const tiers = [...new Set(firms.map(f => f.tier))].sort((a,b) => tierSortVal(a) - tierSortVal(b));
+  const tierDiv = document.getElementById('tierFilters');
+  tiers.forEach(t => {
+    tierDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(t) + '" onchange="applyFilters()" checked> ' + escHTML(t) + '</label>';
+  });
+
+  // Focus areas
+  const focusDiv = document.getElementById('focusFilters');
+  for (const [key, cfg] of Object.entries(practiceAreaConfig)) {
+    focusDiv.innerHTML += '<label><input type="checkbox" value="' + key + '" onchange="applyFilters()"> ' + cfg.full + '</label>';
+  }
+
+  // Ownership
+  const ownerTypes = ['Public', 'Private', 'Employee-Owned', 'Subsidiary', 'Partnership'];
+  const ownDiv = document.getElementById('ownershipFilters');
+  ownerTypes.forEach(o => {
+    ownDiv.innerHTML += '<label><input type="checkbox" value="' + o + '" onchange="applyFilters()" checked> ' + o + '</label>';
+  });
+}
+
+// ===== FILTERING =====
+function getFiltered() {
+  const cat = document.getElementById('categoryFilter').value;
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const checkedTiers = [...document.querySelectorAll('#tierFilters input:checked')].map(i => i.value);
+  const checkedFocus = [...document.querySelectorAll('#focusFilters input:checked')].map(i => i.value);
+  const checkedOwn = [...document.querySelectorAll('#ownershipFilters input:checked')].map(i => i.value);
+  const sizeFilter = document.getElementById('sizeFilter').value;
+  const prioOnly = document.getElementById('priorityOnly').checked;
+
+  return firms.filter(f => {
+    if (cat && f.category !== cat) return false;
+    if (search && !f.name.toLowerCase().includes(search) && !f.hq.toLowerCase().includes(search) && !f.notes.toLowerCase().includes(search) && !f.ownership.toLowerCase().includes(search)) return false;
+    if (!checkedTiers.includes(f.tier)) return false;
+    if (checkedFocus.length > 0 && !checkedFocus.some(k => f.practiceAreas[k])) return false;
+    if (!checkedOwn.includes(getOwnershipType(f.ownership))) return false;
+    if (sizeFilter && getSizeCategory(f.employees) !== sizeFilter) return false;
+    if (prioOnly && !isPriority(f.name)) return false;
     return true;
   });
-
-  // Count active filters
-  let fc = 0;
-  if(search) fc++;
-  if(checkedTiers.length < tiers.length) fc++;
-  if(checkedPA.length > 0) fc++;
-  if(sizeFilter) fc++;
-  if(bookmarkOnly) fc++;
-  const fcEl = document.getElementById("filterCount");
-  if(fc>0){fcEl.style.display="inline";fcEl.textContent=fc+" filter"+(fc>1?"s":"");}
-  else{fcEl.style.display="none";}
-
-  expandedRow = null;
-  sortAndRender();
 }
 
-function clearFilters(){
-  document.getElementById("searchInput").value="";
-  tiers.forEach(t=>{document.getElementById("tier_"+t.replace(/\s+/g,"_")).checked=true;});
-  practiceKeys.forEach(k=>{document.getElementById("pa_"+k).checked=false;});
-  document.getElementById("sizeFilter").value="";
-  document.getElementById("bookmarkFilter").checked=false;
-  applyFilters();
-}
-
-// ============= SORTING =============
-function setSort(col){
-  if(sortCol===col) sortDir*=-1;
-  else{sortCol=col;sortDir=1;}
-  sortAndRender();
-}
-
-function sortAndRender(){
-  filteredFirms.sort((a,b)=>{
-    let va,vb;
-    if(sortCol==="name"){va=a.name.toLowerCase();vb=b.name.toLowerCase();}
-    else if(sortCol==="tier"){va=a.tier;vb=b.tier;}
-    else if(sortCol==="hq"){va=a.hq;vb=b.hq;}
-    else if(sortCol==="employees"){va=parseEmployeeCount(a.employees);vb=parseEmployeeCount(b.employees);}
-    else if(sortCol==="actuaries"){va=parseEmployeeCount(a.actuaries);vb=parseEmployeeCount(b.actuaries);}
-    else if(sortCol.startsWith("pa_")){const k=sortCol.slice(3);va=a.practiceAreas[k]?1:0;vb=b.practiceAreas[k]?1:0;}
-    else{va=a.name;vb=b.name;}
-    if(va<vb) return -1*sortDir;
-    if(va>vb) return 1*sortDir;
+// ===== SORTING =====
+function sortFirms(list) {
+  return [...list].sort((a, b) => {
+    let va, vb;
+    switch (sortCol) {
+      case 'name': va = a.name.toLowerCase(); vb = b.name.toLowerCase(); break;
+      case 'tier': va = tierSortVal(a.tier); vb = tierSortVal(b.tier); break;
+      case 'hq': va = a.hq.toLowerCase(); vb = b.hq.toLowerCase(); break;
+      case 'ownership': va = a.ownership.toLowerCase(); vb = b.ownership.toLowerCase(); break;
+      case 'employees': va = parseEmployeeNum(a.employees); vb = parseEmployeeNum(b.employees); break;
+      case 'actuaries': va = parseEmployeeNum(a.actuaries); vb = parseEmployeeNum(b.actuaries); break;
+      case 'revenue': va = parseRevenue(a.revenue); vb = parseRevenue(b.revenue); break;
+      default: va = a.name.toLowerCase(); vb = b.name.toLowerCase();
+    }
+    if (va < vb) return -1 * sortDir;
+    if (va > vb) return 1 * sortDir;
     return 0;
   });
-  renderTable();
-  renderStats();
-  document.getElementById("firmCount").textContent=filteredFirms.length+" of "+firms.length+" firms";
 }
 
-// ============= RENDER TABLE HEAD =============
-function renderHead(){
-  const tr = document.getElementById("tableHead");
-  tr.innerHTML = columns.map(c=>{
-    if(!c.sortable) return `<th style="width:36px"></th>`;
-    const arrow = sortCol===c.key ? (sortDir===1?" &#9650;":" &#9660;") : "";
-    const cls = sortCol===c.key?"active":"";
-    const title = c.isPractice ? practiceAreaLabels[c.paKey] : "";
-    return `<th onclick="setSort('${c.key}')" title="${title}">${c.label}<span class="sort-arrow ${cls}">${arrow}</span></th>`;
-  }).join("");
+function setSort(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  render();
 }
 
-// ============= RENDER TABLE BODY =============
-function renderTable(){
-  const tbody = document.getElementById("tableBody");
-  let html = "";
-  filteredFirms.forEach((f,i)=>{
-    const isBookmarked = bookmarks[f.name];
-    const bmClass = isBookmarked ? "bookmarked" : "";
-    const starClass = isBookmarked ? "starred" : "";
-    const tierCls = tierClassMap[f.tier]||"";
-    html += `<tr class="data-row ${bmClass}" data-idx="${i}" onclick="toggleExpand(${i},event)">`;
-    html += `<td><button class="star-btn ${starClass}" onclick="toggleBookmark('${escapeHtml(f.name.replace(/'/g,"\\'"))}',event)" title="Bookmark">&#9733;</button></td>`;
-    html += `<td style="font-weight:600">${escapeHtml(f.name)}</td>`;
-    html += `<td><span class="tier-badge ${tierCls}">${escapeHtml(f.tier)}</span></td>`;
-    html += `<td>${escapeHtml(f.hq)}</td>`;
-    html += `<td>${escapeHtml(f.employees)}</td>`;
-    html += `<td>${escapeHtml(f.actuaries)}</td>`;
-    practiceKeys.forEach(k=>{
-      html += `<td class="dot-cell"><span class="dot ${f.practiceAreas[k]?"active":""}"></span></td>`;
-    });
-    html += `</tr>`;
-    if(expandedRow===i){
-      html += renderDetailRow(f);
+// ===== RENDER TABLE HEAD =====
+function renderHead() {
+  const tr = document.getElementById('tableHead');
+  tr.innerHTML = '';
+  columns.forEach(col => {
+    const th = document.createElement('th');
+    if (!col.sortable) th.className = 'no-sort';
+    let arrow = '';
+    if (col.sortable) {
+      const active = sortCol === col.key;
+      const char = active ? (sortDir === 1 ? '\u25B2' : '\u25BC') : '\u25B2';
+      arrow = ' <span class="sort-arrow' + (active ? ' active' : '') + '">' + char + '</span>';
+      th.onclick = () => setSort(col.key);
     }
-  });
-  tbody.innerHTML = html;
-}
-
-function renderDetailRow(f){
-  const activeAreas = practiceKeys.filter(k=>f.practiceAreas[k]).map(k=>practiceAreaLabels[k]);
-  const url = f.website.startsWith("http") ? f.website : "https://"+f.website;
-  return `<tr class="detail-row"><td colspan="${columns.length}">
-    <div class="detail-content">
-      <div class="detail-grid">
-        <div class="detail-section">
-          <h4>Firm Details</h4>
-          <p><strong>Website:</strong> <a href="${url}" target="_blank" rel="noopener">${escapeHtml(f.website)}</a></p>
-          <p><strong>Headquarters:</strong> ${escapeHtml(f.hq)}</p>
-          <p><strong>Employees:</strong> ${escapeHtml(f.employees)}</p>
-          <p><strong>Actuaries:</strong> ${escapeHtml(f.actuaries)}</p>
-          <p style="margin-top:8px"><strong>Notes:</strong> ${escapeHtml(f.notes)}</p>
-          <div style="margin-top:8px"><strong>Practice Areas:</strong>
-            <div class="practice-list">${activeAreas.map(a=>`<span class="practice-tag">${a}</span>`).join("")}</div>
-          </div>
-        </div>
-        <div class="detail-section">
-          <h4>Recent News</h4>
-          <div id="news-${f.name.replace(/[^a-zA-Z0-9]/g,'_')}"><div class="spinner"></div> Loading news...</div>
-        </div>
-      </div>
-    </div>
-  </td></tr>`;
-}
-
-// ============= EXPAND/COLLAPSE =============
-function toggleExpand(idx,event){
-  if(event.target.closest(".star-btn")) return;
-  expandedRow = expandedRow===idx ? null : idx;
-  renderTable();
-  if(expandedRow!==null){
-    const f = filteredFirms[idx];
-    fetchNews(f.name);
-  }
-}
-
-// ============= BOOKMARKS =============
-function toggleBookmark(name,event){
-  event.stopPropagation();
-  if(bookmarks[name]) delete bookmarks[name];
-  else bookmarks[name] = true;
-  localStorage.setItem("actuary_bookmarks",JSON.stringify(bookmarks));
-  renderTable();
-}
-
-// ============= NEWS FETCH =============
-function fetchNews(firmName){
-  const containerId = "news-"+firmName.replace(/[^a-zA-Z0-9]/g,"_");
-  const container = document.getElementById(containerId);
-  if(!container) return;
-
-  const queries = [
-    firmName + " actuarial",
-    firmName
-  ];
-  let allItems = [];
-  let completed = 0;
-  let anySuccess = false;
-
-  queries.forEach((q,qi)=>{
-    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
-    fetch(rssUrl)
-      .then(r=>{if(!r.ok) throw new Error("HTTP "+r.status);return r.text();})
-      .then(xml=>{
-        anySuccess = true;
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(xml,"text/xml");
-        const items = doc.querySelectorAll("item");
-        items.forEach((item,i)=>{
-          if(i>=5) return;
-          const title = item.querySelector("title")?.textContent||"";
-          const link = item.querySelector("link")?.textContent||"";
-          const pubDate = item.querySelector("pubDate")?.textContent||"";
-          allItems.push({title,link,pubDate,queryIdx:qi});
-        });
-      })
-      .catch(()=>{})
-      .finally(()=>{
-        completed++;
-        if(completed===queries.length){
-          renderNewsResults(container,firmName,allItems,anySuccess);
-        }
-      });
+    th.innerHTML = col.label + arrow;
+    tr.appendChild(th);
   });
 }
 
-function renderNewsResults(container,firmName,items,anySuccess){
-  if(!anySuccess || items.length===0){
-    const searchUrl1 = `https://news.google.com/search?q=${encodeURIComponent(firmName+" actuarial")}&hl=en-US&gl=US&ceid=US:en`;
-    const searchUrl2 = `https://news.google.com/search?q=${encodeURIComponent(firmName)}&hl=en-US&gl=US&ceid=US:en`;
-    container.innerHTML = `
-      <p style="color:var(--gray-600);font-size:.82rem;">Could not fetch news automatically (CORS restriction).</p>
-      <div class="news-fallback">
-        <a href="${searchUrl1}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-right:6px">Search "${firmName} actuarial" on Google News</a>
-        <a href="${searchUrl2}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Search "${firmName}" on Google News</a>
-      </div>`;
+// ===== RENDER TABLE BODY =====
+function renderBody(list) {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="' + columns.length + '" style="text-align:center;padding:40px;color:var(--gray-600)">No firms match the current filters.</td></tr>';
     return;
   }
-  // Deduplicate by title
-  const seen = new Set();
-  const unique = items.filter(it=>{
-    if(seen.has(it.title)) return false;
-    seen.add(it.title);
-    return true;
-  }).slice(0,8);
 
-  let html = unique.map(it=>{
-    const d = it.pubDate ? new Date(it.pubDate).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "";
-    return `<div class="news-item"><a href="${it.link}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a><div class="news-date">${d}</div></div>`;
-  }).join("");
+  list.forEach((firm, idx) => {
+    const prio = isPriority(firm.name);
+    const tr = document.createElement('tr');
+    tr.className = 'data-row' + (prio ? ' priority-row' : '');
+    tr.onclick = () => toggleExpand(firm.name, tr);
 
-  const searchUrl = `https://news.google.com/search?q=${encodeURIComponent(firmName)}&hl=en-US&gl=US&ceid=US:en`;
-  html += `<div style="margin-top:10px"><a href="${searchUrl}" target="_blank" rel="noopener" style="font-size:.78rem;color:var(--blue)">View more on Google News &rarr;</a></div>`;
-  container.innerHTML = html;
-}
+    // # column
+    tr.innerHTML = '<td class="row-num">' + (idx + 1) + '</td>';
 
-// ============= STATS =============
-function renderStats(){
-  const bar = document.getElementById("statsBar");
-  const tierCounts = {};
-  tiers.forEach(t=>tierCounts[t]=0);
-  filteredFirms.forEach(f=>tierCounts[f.tier]++);
+    // Star
+    tr.innerHTML += '<td><button class="star-btn' + (prio ? ' starred' : '') + '" onclick="togglePriority(\'' + escHTML(firm.name).replace(/'/g, "\\'") + '\', event)" title="Toggle priority">\u2605</button></td>';
 
-  // Top practice areas
-  const paCounts = {};
-  practiceKeys.forEach(k=>paCounts[k]=0);
-  filteredFirms.forEach(f=>practiceKeys.forEach(k=>{if(f.practiceAreas[k]) paCounts[k]++;}));
-  const topPA = practiceKeys.sort((a,b)=>paCounts[b]-paCounts[a]).slice(0,3);
+    // Name + category label
+    tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
 
-  let html = `<div class="stat-card"><div class="stat-value">${filteredFirms.length}</div><div class="stat-label">Firms Shown</div></div>`;
-  tiers.forEach(t=>{
-    if(tierCounts[t]>0){
-      html += `<div class="stat-card"><div class="stat-value">${tierCounts[t]}</div><div class="stat-label">${t}</div></div>`;
+    // Tier
+    tr.innerHTML += '<td><span class="tier-badge ' + tierClass(firm.tier) + '">' + escHTML(firm.tier) + '</span></td>';
+
+    // HQ
+    tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
+
+    // Ownership
+    tr.innerHTML += '<td style="font-size:.8rem">' + escHTML(firm.ownership) + '</td>';
+
+    // Employees
+    tr.innerHTML += '<td>' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
+
+    // Actuaries
+    tr.innerHTML += '<td>' + sourcedValueHTML(firm.actuaries, firm.actuarySources) + '</td>';
+
+    // Revenue
+    tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
+
+    // Focus areas
+    tr.innerHTML += '<td><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
+
+    tbody.appendChild(tr);
+
+    // Expanded detail row
+    if (expandedRow === firm.name) {
+      const detailTr = document.createElement('tr');
+      detailTr.className = 'detail-row';
+      detailTr.innerHTML = '<td colspan="' + columns.length + '">' + renderDetail(firm) + '</td>';
+      tbody.appendChild(detailTr);
     }
   });
-  html += `<div class="stat-card"><div class="stat-value">${topPA.map(k=>practiceAreaLabels[k].split("/")[0]).join(", ")}</div><div class="stat-label">Top Practice Areas</div></div>`;
-  bar.innerHTML = html;
 }
 
-// ============= EXPORT =============
-function exportCSV(){
-  const headers = ["Firm Name","Tier","HQ","Employees","Actuaries","Website","Notes",...practiceKeys.map(k=>practiceAreaLabels[k])];
-  const rows = filteredFirms.map(f=>[
-    f.name,f.tier,f.hq,f.employees,f.actuaries,f.website,f.notes,
-    ...practiceKeys.map(k=>f.practiceAreas[k]?"Yes":"No")
-  ]);
-  let csv = headers.map(h=>'"'+h.replace(/"/g,'""')+'"').join(",")+"\n";
-  rows.forEach(r=>{csv += r.map(c=>'"'+(c||"").replace(/"/g,'""')+'"').join(",")+"\n";});
-  downloadFile(csv,"actuarial_firms_export.csv","text/csv");
+function renderDetail(f) {
+  const websiteURL = f.website.startsWith('http') ? f.website : 'https://' + f.website;
+
+  let sourcesHTML = '';
+  const sourceGroups = [
+    { label: 'Employee Count Sources', sources: f.employeeSources },
+    { label: 'Actuary Count Sources', sources: f.actuarySources },
+    { label: 'Revenue Sources', sources: f.revenueSources }
+  ];
+  sourceGroups.forEach(g => {
+    if (g.sources && g.sources.length > 0) {
+      sourcesHTML += '<div style="margin-bottom:10px"><div class="detail-label">' + g.label + '</div><div class="source-link-list">';
+      g.sources.forEach(s => {
+        sourcesHTML += '<a href="' + escHTML(s.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + escHTML(s.label) + ' \u2197</a>';
+      });
+      sourcesHTML += '</div></div>';
+    }
+  });
+  if (!sourcesHTML) sourcesHTML = '<p style="color:var(--gray-600);font-size:.82rem">No sources available.</p>';
+
+  const newsQuery = encodeURIComponent(f.name + ' actuarial');
+  const newsURL = 'https://news.google.com/search?q=' + newsQuery;
+
+  return '<div class="detail-content" onclick="event.stopPropagation()">' +
+    '<div class="detail-grid">' +
+      '<div class="detail-section">' +
+        '<h4>Firm Details</h4>' +
+        '<div class="detail-row-item"><div class="detail-label">Website</div><div class="detail-val"><a href="' + escHTML(websiteURL) + '" target="_blank" rel="noopener">' + escHTML(f.website) + ' \u2197</a></div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Headquarters</div><div class="detail-val">' + escHTML(f.hq) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Ownership</div><div class="detail-val">' + escHTML(f.ownership) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Employees</div><div class="detail-val">' + escHTML(f.employees) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Actuaries</div><div class="detail-val">' + escHTML(f.actuaries) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Revenue</div><div class="detail-val">' + escHTML(f.revenue) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Notes</div><div class="detail-val">' + escHTML(f.notes) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Practice Areas</div><div class="detail-practice-tags">' + focusTagsHTML(f.practiceAreas, true) + '</div></div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<h4>Sources</h4>' +
+        sourcesHTML +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<h4>News &amp; Research</h4>' +
+        '<p style="font-size:.82rem;color:var(--gray-600);margin-bottom:8px">Search for recent news about this firm:</p>' +
+        '<a class="news-btn" href="' + newsURL + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Google News: ' + escHTML(f.name) + '</a>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
 
-function exportJSON(){
-  const data = filteredFirms.map(f=>({...f}));
-  downloadFile(JSON.stringify(data,null,2),"actuarial_firms_export.json","application/json");
+function toggleExpand(name, rowEl) {
+  expandedRow = expandedRow === name ? null : name;
+  render();
 }
 
-function downloadFile(content,filename,mimeType){
-  const blob = new Blob([content],{type:mimeType});
-  const a = document.createElement("a");
+// ===== STATS =====
+function renderStats(list) {
+  const total = list.length;
+  const t1l = list.filter(f => f.tier === 'Tier 1 - Large').length;
+  const t1b = list.filter(f => f.tier === 'Tier 1 - Big 4').length;
+  const t2 = list.filter(f => f.tier === 'Tier 2 - Specialized').length;
+  const t3 = list.filter(f => f.tier === 'Tier 3 - Boutique').length;
+  const prioCount = list.filter(f => isPriority(f.name)).length;
+
+  // Top focus areas
+  const focusCounts = {};
+  for (const key of Object.keys(practiceAreaConfig)) {
+    focusCounts[key] = list.filter(f => f.practiceAreas[key]).length;
+  }
+  const topFocus = Object.entries(focusCounts).sort((a,b) => b[1] - a[1]).slice(0, 3);
+
+  let html = '';
+  html += '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">Total Firms</div></div>';
+  if (t1l) html += '<div class="stat-card"><div class="stat-value">' + t1l + '</div><div class="stat-label">Tier 1 Large</div></div>';
+  if (t1b) html += '<div class="stat-card"><div class="stat-value">' + t1b + '</div><div class="stat-label">Tier 1 Big 4</div></div>';
+  if (t2) html += '<div class="stat-card"><div class="stat-value">' + t2 + '</div><div class="stat-label">Tier 2 Specialized</div></div>';
+  if (t3) html += '<div class="stat-card"><div class="stat-value">' + t3 + '</div><div class="stat-label">Tier 3 Boutique</div></div>';
+  html += '<div class="stat-card"><div class="stat-value" style="color:var(--star-gold)">' + prioCount + '</div><div class="stat-label">Priorities \u2605</div></div>';
+
+  topFocus.forEach(([key, count]) => {
+    if (count > 0) {
+      html += '<div class="stat-card"><div class="stat-value">' + count + '</div><div class="stat-label">' + practiceAreaConfig[key].full + '</div></div>';
+    }
+  });
+
+  document.getElementById('statsBar').innerHTML = html;
+}
+
+// ===== HEADER =====
+function renderHeader(filtered) {
+  const prioCount = priorities.length;
+  document.getElementById('headerSub').textContent = '';
+  document.getElementById('filterCount').textContent = filtered.length + ' of ' + firms.length + ' firms | ' + prioCount + ' priorities';
+}
+
+// ===== MAIN RENDER =====
+function render() {
+  const filtered = getFiltered();
+  const sorted = sortFirms(filtered);
+  renderHead();
+  renderBody(sorted);
+  renderStats(sorted);
+  renderHeader(sorted);
+}
+
+function applyFilters() { render(); }
+
+function clearFilters() {
+  document.getElementById('categoryFilter').value = '';
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('#tierFilters input').forEach(i => i.checked = true);
+  document.querySelectorAll('#focusFilters input').forEach(i => i.checked = false);
+  document.querySelectorAll('#ownershipFilters input').forEach(i => i.checked = true);
+  document.getElementById('sizeFilter').value = '';
+  document.getElementById('priorityOnly').checked = false;
+  render();
+}
+
+// ===== EXPORT =====
+function exportCSV() {
+  const filtered = sortFirms(getFiltered());
+  const headers = ['Name','Category','Tier','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Notes'];
+  const rows = filtered.map(f => {
+    const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
+    return [f.name, f.category, f.tier, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+  });
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = filename;
+  a.download = 'firm_tracker_export.csv';
   a.click();
-  URL.revokeObjectURL(a.href);
 }
 
-// ============= SIDEBAR TOGGLE =============
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("open");
-  document.getElementById("overlay").classList.toggle("show");
+function exportJSON() {
+  const filtered = sortFirms(getFiltered());
+  const blob = new Blob([JSON.stringify(filtered, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'firm_tracker_export.json';
+  a.click();
 }
 
-// ============= INIT =============
+// ===== SIDEBAR TOGGLE =====
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// ===== INIT =====
 initFilters();
-renderHead();
-applyFilters();
+render();
 </script>
 </body>
 </html>
