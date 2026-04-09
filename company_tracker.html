@@ -11,7 +11,7 @@
   --gray-200:#eeeeee;--gray-300:#e0e0e0;--gray-400:#bdbdbd;--gray-600:#757575;--gray-700:#616161;--gray-800:#424242;
   --blue:#1565c0;--purple:#7b1fa2;--teal:#00838f;--orange:#ef6c00;--red:#c62828;--green:#2e7d32;--slate:#455a64;
   --star-gold:#ffc107;
-  --sidebar-w:300px;--header-h:64px;
+  --sidebar-w:300px;--header-h:64px;--tab-h:46px;
 }
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--gray-100);color:var(--gray-800);line-height:1.5}
 /* HEADER */
@@ -25,10 +25,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 .btn-light{background:rgba(255,255,255,.15);color:#fff}.btn-light:hover{background:rgba(255,255,255,.25)}
 .btn-sm{padding:4px 10px;font-size:.75rem}
 .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:4px 8px}
+/* TAB BAR */
+.tab-bar{position:fixed;top:var(--header-h);left:0;right:0;display:flex;gap:0;background:#1a237e;padding:0 24px;border-bottom:2px solid #0d1442;z-index:99}
+.tab-btn{padding:12px 24px;border:none;background:transparent;color:rgba(255,255,255,0.6);font-size:0.9rem;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s}
+.tab-btn:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.05)}
+.tab-btn.active{color:#fff;border-bottom-color:#ffc107;background:rgba(255,255,255,0.08)}
 /* LAYOUT */
-.layout{display:flex;margin-top:var(--header-h);min-height:calc(100vh - var(--header-h))}
+.layout{display:flex;margin-top:calc(var(--header-h) + var(--tab-h));min-height:calc(100vh - var(--header-h) - var(--tab-h))}
 /* SIDEBAR */
-.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:#fff;border-right:1px solid var(--gray-300);padding:20px 16px;overflow-y:auto;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));transition:transform .3s}
+.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:#fff;border-right:1px solid var(--gray-300);padding:20px 16px;overflow-y:auto;position:sticky;top:calc(var(--header-h) + var(--tab-h));height:calc(100vh - var(--header-h) - var(--tab-h));transition:transform .3s}
 .sidebar h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-600);margin:16px 0 6px;border-bottom:1px solid var(--gray-200);padding-bottom:4px}
 .sidebar h3:first-child{margin-top:0}
 .sidebar input[type=text]{width:100%;padding:8px 10px;border:1px solid var(--gray-300);border-radius:4px;font-size:.85rem;outline:none}
@@ -40,6 +45,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 .clear-btn{width:100%;margin-top:16px;padding:8px;background:var(--gray-200);border:1px solid var(--gray-300);border-radius:4px;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--gray-700)}
 .clear-btn:hover{background:var(--gray-300)}
 .category-select{font-size:.9rem;font-weight:600;padding:10px;border:2px solid var(--navy);border-radius:6px;background:#f0f2ff;color:var(--navy);margin-bottom:8px}
+.sidebar-section{display:none}
+.sidebar-section.visible{display:block}
 /* MAIN CONTENT */
 .main{flex:1;padding:20px 24px;overflow-x:auto;min-width:0}
 /* STATS BAR */
@@ -61,7 +68,6 @@ td{padding:8px 10px;border-bottom:1px solid var(--gray-200);vertical-align:middl
 tr.data-row{cursor:pointer;transition:background .15s}
 tr.data-row:nth-child(even of .data-row){background:var(--gray-50)}
 tr.data-row:hover{background:#e3f2fd}
-/* priority-row class removed, using tagged-top/tagged-potential instead */
 .row-num{color:var(--gray-600);font-size:.75rem;min-width:28px;text-align:center}
 .category-label{display:block;font-size:.65rem;color:var(--gray-600);font-weight:400;margin-top:1px}
 /* FIRM TYPE BADGES */
@@ -117,10 +123,13 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
 .news-btn:hover{background:var(--navy-light)}
 .detail-practice-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .detail-practice-tags .focus-tag{font-size:.72rem;padding:2px 10px}
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:60px 20px;color:var(--gray-700)}
+.empty-state p:first-child{font-size:1rem;font-weight:600;margin-bottom:6px}
 /* MOBILE */
 @media(max-width:900px){
   .menu-toggle{display:block}
-  .sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:90;transform:translateX(-100%)}
+  .sidebar{position:fixed;top:calc(var(--header-h) + var(--tab-h));left:0;bottom:0;z-index:90;transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0);box-shadow:4px 0 20px rgba(0,0,0,.2)}
   .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:85}
   .overlay.show{display:block}
@@ -131,6 +140,8 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
   .stat-card{min-width:80px;padding:8px 12px}
   .stat-card .stat-value{font-size:1.1rem}
   .header h1{font-size:1.1rem}
+  .tab-bar{padding:0 8px}
+  .tab-btn{padding:10px 14px;font-size:.8rem}
 }
 @media(max-width:600px){
   .header{padding:0 12px}
@@ -152,43 +163,65 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
   </div>
 </div>
 
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('actuarial')">Actuarial Firms</button>
+  <button class="tab-btn" onclick="switchTab('hl')">Houlihan Lokey Firms</button>
+  <button class="tab-btn" onclick="switchTab('other')">Other Firms of Interest</button>
+</div>
+
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <div class="layout">
   <aside class="sidebar" id="sidebar">
-    <h3>Category</h3>
-    <select class="category-select" id="categoryFilter" onchange="applyFilters()">
-      <option value="">All Categories</option>
-    </select>
+    <div class="sidebar-section visible" id="sidebarCategory">
+      <h3>Category</h3>
+      <select class="category-select" id="categoryFilter" onchange="applyFilters()">
+        <option value="">All Categories</option>
+      </select>
+    </div>
 
-    <h3>Search</h3>
-    <input type="text" id="searchInput" placeholder="Search firms..." oninput="applyFilters()">
+    <div class="sidebar-section visible" id="sidebarSearch">
+      <h3>Search</h3>
+      <input type="text" id="searchInput" placeholder="Search firms..." oninput="applyFilters()">
+    </div>
 
-    <h3>Firm Type</h3>
-    <div class="cb-group" id="firmTypeFilters"></div>
+    <div class="sidebar-section visible" id="sidebarFirmType">
+      <h3>Firm Type</h3>
+      <div class="cb-group" id="firmTypeFilters"></div>
+    </div>
 
-    <h3>Country</h3>
-    <div class="cb-group" id="countryFilters"></div>
+    <div class="sidebar-section visible" id="sidebarCountry">
+      <h3>Country</h3>
+      <div class="cb-group" id="countryFilters"></div>
+    </div>
 
-    <h3>Focus Areas</h3>
-    <div class="cb-group" id="focusFilters"></div>
+    <div class="sidebar-section visible" id="sidebarFocus">
+      <h3>Focus Areas</h3>
+      <div class="cb-group" id="focusFilters"></div>
+    </div>
 
-    <h3>Ownership Type</h3>
-    <div class="cb-group" id="ownershipFilters"></div>
+    <div class="sidebar-section visible" id="sidebarOwnership">
+      <h3>Ownership Type</h3>
+      <div class="cb-group" id="ownershipFilters"></div>
+    </div>
 
-    <h3>Firm Size</h3>
-    <select id="sizeFilter" onchange="applyFilters()">
-      <option value="">All Sizes</option>
-      <option value="small">Small (&lt;50)</option>
-      <option value="medium">Medium (50-500)</option>
-      <option value="large">Large (500-5,000)</option>
-      <option value="enterprise">Enterprise (5,000+)</option>
-    </select>
+    <div class="sidebar-section visible" id="sidebarSize">
+      <h3>Firm Size</h3>
+      <select id="sizeFilter" onchange="applyFilters()">
+        <option value="">All Sizes</option>
+        <option value="small">Small (&lt;50)</option>
+        <option value="medium">Medium (50-500)</option>
+        <option value="large">Large (500-5,000)</option>
+        <option value="enterprise">Enterprise (5,000+)</option>
+      </select>
+    </div>
 
-    <h3>Priority</h3>
-    <div class="cb-group">
-      <label><input type="checkbox" id="filterTopPriority" onchange="applyFilters()"> Top Priority &#9733;</label>
-      <label><input type="checkbox" id="filterPotential" onchange="applyFilters()"> Potential &#9679;</label>
+    <div class="sidebar-section visible" id="sidebarPriority">
+      <h3>Priority</h3>
+      <div class="cb-group">
+        <label><input type="checkbox" id="filterTopPriority" onchange="applyFilters()"> Top Priority &#9733;</label>
+        <label><input type="checkbox" id="filterPotential" onchange="applyFilters()"> Potential &#9679;</label>
+      </div>
     </div>
 
     <button class="clear-btn" onclick="clearFilters()">Clear All Filters</button>
@@ -208,8 +241,8 @@ tr.detail-row td{padding:0;border-bottom:2px solid var(--gray-300)}
 </div>
 
 <script>
-// ===== DATA =====
-const firms = [
+// ===== DATA: ACTUARIAL FIRMS =====
+const actuarialFirms = [
   {
     name: "Milliman",
     category: "Actuarial Firms",
@@ -236,7 +269,7 @@ const firms = [
     ownership: "Private",
     employees: "~107-176",
     employeeSources: [{label:"RocketReach",url:"https://rocketreach.co/gabriel-roeder-smith-company-profile_b5d09b95f42e40c2"},{label:"LinkedIn",url:"https://www.linkedin.com/company/gabriel-roeder-smith-&-company"}],
-    actuaries: "Not disclosed",
+    actuaries: "~60",
     actuarySources: [{label:"GRS Team",url:"https://grsconsulting.com/team/"}],
     revenue: "\u2014",
     revenueSources: [],
@@ -294,23 +327,6 @@ const firms = [
     website: "cheiron.us",
     practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
     notes: "Employee-owned. Public employers, Taft-Hartley plans, nonprofits. Offices in 9 US cities."
-  },
-  {
-    name: "Buck (now Gallagher)",
-    category: "Actuarial Firms",
-    firmType: "Actuarial Consulting",
-    hq: "New York, NY",
-    country: "United States",
-    ownership: "Subsidiary of Arthur J. Gallagher (NYSE: AJG)",
-    employees: "~2,300",
-    employeeSources: [{label:"Gallagher Announcement",url:"https://investor.ajg.com/news/news-details/2022/Arthur-J.-Gallagher--Co.-Announces-Agreement-To-Acquire-Buck/default.aspx"},{label:"Wikipedia",url:"https://en.wikipedia.org/wiki/Buck_(human_resources_consulting_company)"}],
-    actuaries: "~220+",
-    actuarySources: [{label:"Gallagher Announcement",url:"https://investor.ajg.com/news/news-details/2022/Arthur-J.-Gallagher--Co.-Announces-Agreement-To-Acquire-Buck/default.aspx"}],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "buck.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "220+ credentialed actuaries at time of Gallagher acquisition (2022-2023). Now folded into Gallagher."
   },
   {
     name: "Foster & Foster",
@@ -415,40 +431,6 @@ const firms = [
     notes: "Founded 1995. P&C specialty. RISK66 analytics platform."
   },
   {
-    name: "Dion Strategic Consulting Group",
-    category: "Actuarial Firms",
-    firmType: "Actuarial Consulting",
-    hq: "Toronto, ON",
-    country: "Canada",
-    ownership: "Private",
-    employees: "~17-19",
-    employeeSources: [{label:"RocketReach",url:"https://rocketreach.co"},{label:"ZoomInfo",url:"https://www.zoominfo.com"}],
-    actuaries: "~5-8 (est.)",
-    actuarySources: [],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "dionstrategic.com",
-    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},
-    notes: "Founded 2011. Alternative risk, captives, affinity/group program consulting."
-  },
-  {
-    name: "BPAS",
-    category: "Actuarial Firms",
-    firmType: "TPA / Benefits Admin",
-    hq: "Utica, NY",
-    country: "United States",
-    ownership: "Private",
-    employees: "~400-480",
-    employeeSources: [{label:"BPAS Website",url:"https://bpas.com/employers/services/actuarial-pension/"},{label:"LinkedIn",url:"https://www.linkedin.com/company/bpas"}],
-    actuaries: "~30+",
-    actuarySources: [{label:"BPAS Actuarial",url:"https://bpas.com/employers/services/actuarial-pension/"}],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "bpas.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
-    notes: "30+ credentialed actuaries. 17 offices. Supports 4,200 retirement plans. PwC spinoff 1973."
-  },
-  {
     name: "October Three Consulting",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
@@ -491,7 +473,7 @@ const firms = [
     ownership: "Private",
     employees: "~29",
     employeeSources: [],
-    actuaries: "Not disclosed",
+    actuaries: "~19",
     actuarySources: [],
     revenue: "\u2014",
     revenueSources: [],
@@ -508,7 +490,7 @@ const firms = [
     ownership: "Private",
     employees: "~32",
     employeeSources: [],
-    actuaries: "Not disclosed",
+    actuaries: "~23",
     actuarySources: [],
     revenue: "\u2014",
     revenueSources: [],
@@ -534,23 +516,6 @@ const firms = [
     notes: "One of largest independent non-brokerage risk/actuarial firms. Workers Comp, Liability, Med Mal. Spun out of York Risk 2019."
   },
   {
-    name: "Cowden Associates",
-    category: "Actuarial Firms",
-    firmType: "Actuarial Consulting",
-    hq: "Pittsburgh, PA",
-    country: "United States",
-    ownership: "Private (Acrisure partner, PE-backed)",
-    employees: "~16",
-    employeeSources: [],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "cowdenassociates.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "NORACS member. Compensation, Healthcare Benefits, Pension, Taft-Hartley. Operates within PE-backed Acrisure platform."
-  },
-  {
     name: "Eckler",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
@@ -559,7 +524,7 @@ const firms = [
     ownership: "Private (Principal-Owned)",
     employees: "~385",
     employeeSources: [],
-    actuaries: "Not disclosed",
+    actuaries: "~18",
     actuarySources: [],
     revenue: "\u2014",
     revenueSources: [],
@@ -619,23 +584,6 @@ const firms = [
     notes: ""
   },
   {
-    name: "Acrisure",
-    category: "Actuarial Firms",
-    firmType: "Insurance Broker",
-    hq: "Grand Rapids, MI",
-    country: "United States",
-    ownership: "Private (PE-backed)",
-    employees: "20,000+",
-    employeeSources: [],
-    actuaries: "Not disclosed",
-    actuarySources: [],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "acrisure.com",
-    practiceAreas: {pension:false,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
-    notes: "One of largest global insurance brokerages. PE-backed by multiple firms."
-  },
-  {
     name: "Conrad Siegel",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
@@ -678,7 +626,7 @@ const firms = [
     ownership: "Private (PGF/Polaris Partners invested 2024)",
     employees: "~115",
     employeeSources: [{label:"ZoomInfo",url:"https://www.zoominfo.com/c/martin--co/344928232"}],
-    actuaries: "Not disclosed",
+    actuaries: "~15",
     actuarySources: [],
     revenue: "~$10.8M",
     revenueSources: [{label:"CBInsights",url:"https://www.cbinsights.com/company/martin-and-company"}],
@@ -686,23 +634,30 @@ const firms = [
     practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
     notes: "Tech-enabled P&C insurance services. Product dev, state filings, regulatory compliance. Founded 1993. 90%+ regulatory approval rate."
   },
-  {
-    name: "Select Actuarial",
-    category: "Actuarial Firms",
-    firmType: "Actuarial Consulting",
-    hq: "Nashville, TN",
-    country: "United States",
-    ownership: "Private",
-    employees: "~17",
-    employeeSources: [],
-    actuaries: "~15",
-    actuarySources: [],
-    revenue: "~$4M",
-    revenueSources: [],
-    website: "selectactuarial.com",
-    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:true},
-    notes: "Independent P&C firm founded 1999. Loss reserves, risk retention, M&A due diligence. Serves public entity pools and captives."
-  },
+];
+
+// ===== DATA: HOULIHAN LOKEY FIRMS =====
+const hlFirms = [
+  // {
+  //   name: "Example Corp",
+  //   hq: "New York, NY",
+  //   country: "United States",
+  //   ownership: "Private",
+  //   employees: "500",
+  //   employeeSources: [],
+  //   ebitda: "$50M",
+  //   ebitdaSources: [],
+  //   revenue: "$200M",
+  //   revenueSources: [],
+  //   website: "example.com",
+  //   description: "Full-service consulting firm specializing in...",
+  //   notes: ""
+  // }
+];
+
+// ===== DATA: OTHER FIRMS OF INTEREST =====
+const otherFirms = [
+  // Same structure as hlFirms
 ];
 
 // ===== PRACTICE AREA CONFIG =====
@@ -716,8 +671,44 @@ const practiceAreaConfig = {
   ma:      { short: "M&A",     full: "M&A/Valuation",       cls: "tag-ma" }
 };
 
+// ===== COLUMN CONFIGS PER TAB =====
+const actuarialColumns = [
+  { key: '#', label: '#', sortable: false },
+  { key: 'tag', label: 'Tag', sortable: false },
+  { key: 'name', label: 'Firm Name', sortable: true },
+  { key: 'firmType', label: 'Firm Type', sortable: true },
+  { key: 'hq', label: 'Headquarters', sortable: true },
+  { key: 'ownership', label: 'Ownership', sortable: true },
+  { key: 'employees', label: 'Employees', sortable: true },
+  { key: 'actuaries', label: 'Actuaries', sortable: true },
+  { key: 'revenue', label: 'Revenue', sortable: true },
+  { key: 'focus', label: 'Focus Areas', sortable: false }
+];
+
+const hlColumns = [
+  { key: '#', label: '#', sortable: false },
+  { key: 'tag', label: 'Tag', sortable: false },
+  { key: 'name', label: 'Firm Name', sortable: true },
+  { key: 'hq', label: 'Headquarters', sortable: true },
+  { key: 'ownership', label: 'Ownership', sortable: true },
+  { key: 'employees', label: 'Employees', sortable: true },
+  { key: 'ebitda', label: 'EBITDA', sortable: true },
+  { key: 'revenue', label: 'Revenue', sortable: true },
+  { key: 'description', label: 'Description', sortable: false }
+];
+
+const otherColumns = [
+  { key: '#', label: '#', sortable: false },
+  { key: 'tag', label: 'Tag', sortable: false },
+  { key: 'name', label: 'Firm Name', sortable: true },
+  { key: 'hq', label: 'Headquarters', sortable: true },
+  { key: 'ownership', label: 'Ownership', sortable: true },
+  { key: 'employees', label: 'Employees', sortable: true },
+  { key: 'revenue', label: 'Revenue', sortable: true },
+  { key: 'description', label: 'Description', sortable: false }
+];
+
 // ===== STATE =====
-// Migration: convert old firm_priorities or actuary_bookmarks to new firm_tags format
 let tags = JSON.parse(localStorage.getItem('firm_tags') || '{}');
 (function migrateOldPriorities() {
   let migrated = false;
@@ -737,23 +728,23 @@ let tags = JSON.parse(localStorage.getItem('firm_tags') || '{}');
   if (migrated) localStorage.setItem('firm_tags', JSON.stringify(tags));
 })();
 
+let currentTab = 'actuarial';
 let sortCol = 'name';
-let sortDir = 1; // 1 = asc, -1 = desc
+let sortDir = 1;
 let expandedRow = null;
 
-// ===== COLUMNS =====
-const columns = [
-  { key: '#', label: '#', sortable: false },
-  { key: 'tag', label: 'Tag', sortable: false },
-  { key: 'name', label: 'Firm Name', sortable: true },
-  { key: 'firmType', label: 'Firm Type', sortable: true },
-  { key: 'hq', label: 'Headquarters', sortable: true },
-  { key: 'ownership', label: 'Ownership', sortable: true },
-  { key: 'employees', label: 'Employees', sortable: true },
-  { key: 'actuaries', label: 'Actuaries', sortable: true },
-  { key: 'revenue', label: 'Revenue', sortable: true },
-  { key: 'focus', label: 'Focus Areas', sortable: false }
-];
+// ===== TAB HELPERS =====
+function getCurrentFirms() {
+  if (currentTab === 'actuarial') return actuarialFirms;
+  if (currentTab === 'hl') return hlFirms;
+  return otherFirms;
+}
+
+function getCurrentColumns() {
+  if (currentTab === 'actuarial') return actuarialColumns;
+  if (currentTab === 'hl') return hlColumns;
+  return otherColumns;
+}
 
 // ===== HELPERS =====
 function parseNum(str) {
@@ -856,72 +847,153 @@ function focusTagsHTML(pa, full) {
   return html;
 }
 
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+  currentTab = tab;
+  expandedRow = null;
+  sortCol = 'name';
+  sortDir = 1;
+
+  // Update tab button active states
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[onclick="switchTab(\'' + tab + '\')"]').classList.add('active');
+
+  // Rebuild sidebar filters for this tab
+  initFilters();
+  renderHead();
+  applyFilters();
+}
+
+// ===== SIDEBAR VISIBILITY =====
+function updateSidebarVisibility() {
+  const isActuarial = currentTab === 'actuarial';
+
+  document.getElementById('sidebarCategory').classList.toggle('visible', isActuarial);
+  document.getElementById('sidebarFirmType').classList.toggle('visible', isActuarial);
+  document.getElementById('sidebarFocus').classList.toggle('visible', isActuarial);
+
+  // These are always visible
+  document.getElementById('sidebarSearch').classList.add('visible');
+  document.getElementById('sidebarCountry').classList.add('visible');
+  document.getElementById('sidebarOwnership').classList.add('visible');
+  document.getElementById('sidebarSize').classList.add('visible');
+  document.getElementById('sidebarPriority').classList.add('visible');
+}
+
 // ===== INIT FILTERS =====
 function initFilters() {
-  // Categories
-  const cats = [...new Set(firms.map(f => f.category))];
-  const catSel = document.getElementById('categoryFilter');
-  cats.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c;
-    opt.textContent = c;
-    catSel.appendChild(opt);
-  });
+  const firms = getCurrentFirms();
 
-  // Firm Types
-  const firmTypes = [...new Set(firms.map(f => f.firmType))].sort((a,b) => firmTypeSortVal(a) - firmTypeSortVal(b));
+  // Update sidebar visibility
+  updateSidebarVisibility();
+
+  // Categories (actuarial only)
+  const catSel = document.getElementById('categoryFilter');
+  catSel.innerHTML = '<option value="">All Categories</option>';
+  if (currentTab === 'actuarial') {
+    const cats = [...new Set(firms.map(f => f.category))];
+    cats.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      catSel.appendChild(opt);
+    });
+  }
+
+  // Firm Types (actuarial only)
   const ftDiv = document.getElementById('firmTypeFilters');
-  firmTypes.forEach(t => {
-    ftDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(t) + '" onchange="applyFilters()" checked> ' + escHTML(t) + '</label>';
-  });
+  ftDiv.innerHTML = '';
+  if (currentTab === 'actuarial') {
+    const firmTypes = [...new Set(firms.map(f => f.firmType))].sort((a,b) => firmTypeSortVal(a) - firmTypeSortVal(b));
+    firmTypes.forEach(t => {
+      ftDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(t) + '" onchange="applyFilters()" checked> ' + escHTML(t) + '</label>';
+    });
+  }
 
   // Countries
-  const countries = [...new Set(firms.map(f => f.country))].sort();
   const countryDiv = document.getElementById('countryFilters');
+  countryDiv.innerHTML = '';
+  const countries = [...new Set(firms.map(f => f.country))].sort();
   countries.forEach(c => {
     countryDiv.innerHTML += '<label><input type="checkbox" value="' + escHTML(c) + '" onchange="applyFilters()" checked> ' + escHTML(c) + '</label>';
   });
 
-  // Focus areas
+  // Focus areas (actuarial only)
   const focusDiv = document.getElementById('focusFilters');
-  for (const [key, cfg] of Object.entries(practiceAreaConfig)) {
-    focusDiv.innerHTML += '<label><input type="checkbox" value="' + key + '" onchange="applyFilters()"> ' + cfg.full + '</label>';
+  focusDiv.innerHTML = '';
+  if (currentTab === 'actuarial') {
+    for (const [key, cfg] of Object.entries(practiceAreaConfig)) {
+      focusDiv.innerHTML += '<label><input type="checkbox" value="' + key + '" onchange="applyFilters()"> ' + cfg.full + '</label>';
+    }
   }
 
   // Ownership
   const ownerTypes = ['Public', 'Private', 'Employee-Owned', 'Subsidiary', 'Partnership'];
   const ownDiv = document.getElementById('ownershipFilters');
+  ownDiv.innerHTML = '';
   ownerTypes.forEach(o => {
     ownDiv.innerHTML += '<label><input type="checkbox" value="' + o + '" onchange="applyFilters()" checked> ' + o + '</label>';
   });
+
+  // Reset other filter states
+  document.getElementById('searchInput').value = '';
+  document.getElementById('sizeFilter').value = '';
+  document.getElementById('filterTopPriority').checked = false;
+  document.getElementById('filterPotential').checked = false;
 }
 
 // ===== FILTERING =====
 function getFiltered() {
-  const cat = document.getElementById('categoryFilter').value;
+  const firms = getCurrentFirms();
   const search = document.getElementById('searchInput').value.toLowerCase().trim();
-  const checkedFirmTypes = [...document.querySelectorAll('#firmTypeFilters input:checked')].map(i => i.value);
   const checkedCountries = [...document.querySelectorAll('#countryFilters input:checked')].map(i => i.value);
-  const checkedFocus = [...document.querySelectorAll('#focusFilters input:checked')].map(i => i.value);
   const checkedOwn = [...document.querySelectorAll('#ownershipFilters input:checked')].map(i => i.value);
   const sizeFilter = document.getElementById('sizeFilter').value;
   const showTop = document.getElementById('filterTopPriority').checked;
   const showPotential = document.getElementById('filterPotential').checked;
 
+  // Actuarial-specific filters
+  let cat = '';
+  let checkedFirmTypes = [];
+  let checkedFocus = [];
+  if (currentTab === 'actuarial') {
+    cat = document.getElementById('categoryFilter').value;
+    checkedFirmTypes = [...document.querySelectorAll('#firmTypeFilters input:checked')].map(i => i.value);
+    checkedFocus = [...document.querySelectorAll('#focusFilters input:checked')].map(i => i.value);
+  }
+
   return firms.filter(f => {
-    if (cat && f.category !== cat) return false;
-    if (search && !f.name.toLowerCase().includes(search) && !f.hq.toLowerCase().includes(search) && !f.notes.toLowerCase().includes(search) && !f.ownership.toLowerCase().includes(search)) return false;
-    if (!checkedFirmTypes.includes(f.firmType)) return false;
-    if (!checkedCountries.includes(f.country)) return false;
-    if (checkedFocus.length > 0 && !checkedFocus.some(k => f.practiceAreas[k])) return false;
+    // Search
+    if (search) {
+      const searchFields = [f.name, f.hq, f.ownership, f.notes || ''];
+      if (f.description) searchFields.push(f.description);
+      if (!searchFields.some(field => field.toLowerCase().includes(search))) return false;
+    }
+
+    // Country
+    if (checkedCountries.length > 0 && !checkedCountries.includes(f.country)) return false;
+
+    // Ownership
     if (!checkedOwn.includes(getOwnershipType(f.ownership))) return false;
+
+    // Size
     if (sizeFilter && getSizeCategory(f.employees) !== sizeFilter) return false;
+
+    // Priority
     if (showTop || showPotential) {
       const t = tags[f.name];
       if (showTop && showPotential) { if (t !== 'top' && t !== 'potential') return false; }
       else if (showTop) { if (t !== 'top') return false; }
       else if (showPotential) { if (t !== 'potential') return false; }
     }
+
+    // Actuarial-specific
+    if (currentTab === 'actuarial') {
+      if (cat && f.category !== cat) return false;
+      if (checkedFirmTypes.length > 0 && !checkedFirmTypes.includes(f.firmType)) return false;
+      if (checkedFocus.length > 0 && !checkedFocus.some(k => f.practiceAreas[k])) return false;
+    }
+
     return true;
   });
 }
@@ -932,12 +1004,13 @@ function sortFirms(list) {
     let va, vb;
     switch (sortCol) {
       case 'name': va = a.name.toLowerCase(); vb = b.name.toLowerCase(); break;
-      case 'firmType': va = firmTypeSortVal(a.firmType); vb = firmTypeSortVal(b.firmType); break;
+      case 'firmType': va = firmTypeSortVal(a.firmType || ''); vb = firmTypeSortVal(b.firmType || ''); break;
       case 'hq': va = a.hq.toLowerCase(); vb = b.hq.toLowerCase(); break;
       case 'ownership': va = a.ownership.toLowerCase(); vb = b.ownership.toLowerCase(); break;
       case 'employees': va = parseEmployeeNum(a.employees); vb = parseEmployeeNum(b.employees); break;
       case 'actuaries': va = parseEmployeeNum(a.actuaries); vb = parseEmployeeNum(b.actuaries); break;
       case 'revenue': va = parseRevenue(a.revenue); vb = parseRevenue(b.revenue); break;
+      case 'ebitda': va = parseRevenue(a.ebitda || ''); vb = parseRevenue(b.ebitda || ''); break;
       default: va = a.name.toLowerCase(); vb = b.name.toLowerCase();
     }
     if (va < vb) return -1 * sortDir;
@@ -954,6 +1027,7 @@ function setSort(col) {
 
 // ===== RENDER TABLE HEAD =====
 function renderHead() {
+  const columns = getCurrentColumns();
   const tr = document.getElementById('tableHead');
   tr.innerHTML = '';
   columns.forEach(col => {
@@ -973,8 +1047,20 @@ function renderHead() {
 
 // ===== RENDER TABLE BODY =====
 function renderBody(list) {
+  const columns = getCurrentColumns();
   const tbody = document.getElementById('tableBody');
   tbody.innerHTML = '';
+  const firms = getCurrentFirms();
+
+  // Empty state for tabs with no firms
+  if (firms.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="' + columns.length + '">' +
+      '<div class="empty-state">' +
+      '<p>No firms added yet.</p>' +
+      '<p style="font-size:0.8rem;color:#757575;">Firms will appear here as they are added to the database.</p>' +
+      '</div></td></tr>';
+    return;
+  }
 
   if (list.length === 0) {
     tbody.innerHTML = '<tr><td colspan="' + columns.length + '" style="text-align:center;padding:40px;color:var(--gray-600)">No firms match the current filters.</td></tr>';
@@ -997,29 +1083,53 @@ function renderBody(list) {
     const tagTitle = tag === 'top' ? 'Top Priority' : tag === 'potential' ? 'Potential' : 'Click to tag';
     tr.innerHTML += '<td><button class="tag-btn ' + tagClass + '" onclick="cycleTag(\'' + escHTML(firm.name).replace(/'/g, "\\'") + '\',event)" title="' + tagTitle + '">' + tagIcon + '</button></td>';
 
-    // Name + category label
-    tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
-
-    // Firm Type
-    tr.innerHTML += '<td><span class="firmtype-badge ' + firmTypeClass(firm.firmType) + '">' + escHTML(firm.firmType) + '</span></td>';
-
-    // HQ
-    tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
-
-    // Ownership
-    tr.innerHTML += '<td style="font-size:.8rem">' + escHTML(firm.ownership) + '</td>';
-
-    // Employees
-    tr.innerHTML += '<td>' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
-
-    // Actuaries
-    tr.innerHTML += '<td>' + sourcedValueHTML(firm.actuaries, firm.actuarySources) + '</td>';
-
-    // Revenue
-    tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
-
-    // Focus areas
-    tr.innerHTML += '<td><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
+    if (currentTab === 'actuarial') {
+      // Name + category label
+      tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
+      // Firm Type
+      tr.innerHTML += '<td><span class="firmtype-badge ' + firmTypeClass(firm.firmType) + '">' + escHTML(firm.firmType) + '</span></td>';
+      // HQ
+      tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
+      // Ownership
+      tr.innerHTML += '<td style="font-size:.8rem">' + escHTML(firm.ownership) + '</td>';
+      // Employees
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
+      // Actuaries
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.actuaries, firm.actuarySources) + '</td>';
+      // Revenue
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
+      // Focus areas
+      tr.innerHTML += '<td><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
+    } else if (currentTab === 'hl') {
+      // Name
+      tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong></td>';
+      // HQ
+      tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
+      // Ownership
+      tr.innerHTML += '<td style="font-size:.8rem">' + escHTML(firm.ownership) + '</td>';
+      // Employees
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
+      // EBITDA
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.ebitda || '\u2014', firm.ebitdaSources) + '</td>';
+      // Revenue
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
+      // Description
+      tr.innerHTML += '<td style="font-size:.78rem;max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHTML(firm.description || '') + '</td>';
+    } else {
+      // Other tab
+      // Name
+      tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong></td>';
+      // HQ
+      tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
+      // Ownership
+      tr.innerHTML += '<td style="font-size:.8rem">' + escHTML(firm.ownership) + '</td>';
+      // Employees
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
+      // Revenue
+      tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
+      // Description
+      tr.innerHTML += '<td style="font-size:.78rem;max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHTML(firm.description || '') + '</td>';
+    }
 
     tbody.appendChild(tr);
 
@@ -1034,8 +1144,18 @@ function renderBody(list) {
 }
 
 function renderDetail(f) {
-  const websiteURL = f.website.startsWith('http') ? f.website : 'https://' + f.website;
+  const websiteURL = f.website ? (f.website.startsWith('http') ? f.website : 'https://' + f.website) : '';
 
+  if (currentTab === 'actuarial') {
+    return renderActuarialDetail(f, websiteURL);
+  } else if (currentTab === 'hl') {
+    return renderHLDetail(f, websiteURL);
+  } else {
+    return renderOtherDetail(f, websiteURL);
+  }
+}
+
+function renderActuarialDetail(f, websiteURL) {
   let sourcesHTML = '';
   const sourceGroups = [
     { label: 'Employee Count Sources', sources: f.employeeSources },
@@ -1060,7 +1180,7 @@ function renderDetail(f) {
     '<div class="detail-grid">' +
       '<div class="detail-section">' +
         '<h4>Firm Details</h4>' +
-        '<div class="detail-row-item"><div class="detail-label">Website</div><div class="detail-val"><a href="' + escHTML(websiteURL) + '" target="_blank" rel="noopener">' + escHTML(f.website) + ' \u2197</a></div></div>' +
+        (websiteURL ? '<div class="detail-row-item"><div class="detail-label">Website</div><div class="detail-val"><a href="' + escHTML(websiteURL) + '" target="_blank" rel="noopener">' + escHTML(f.website) + ' \u2197</a></div></div>' : '') +
         '<div class="detail-row-item"><div class="detail-label">Headquarters</div><div class="detail-val">' + escHTML(f.hq) + '</div></div>' +
         '<div class="detail-row-item"><div class="detail-label">Country</div><div class="detail-val">' + escHTML(f.country) + '</div></div>' +
         '<div class="detail-row-item"><div class="detail-label">Ownership</div><div class="detail-val">' + escHTML(f.ownership) + '</div></div>' +
@@ -1083,6 +1203,100 @@ function renderDetail(f) {
   '</div>';
 }
 
+function renderHLDetail(f, websiteURL) {
+  let sourcesHTML = '';
+  const sourceGroups = [
+    { label: 'Employee Count Sources', sources: f.employeeSources },
+    { label: 'EBITDA Sources', sources: f.ebitdaSources },
+    { label: 'Revenue Sources', sources: f.revenueSources }
+  ];
+  sourceGroups.forEach(g => {
+    if (g.sources && g.sources.length > 0) {
+      sourcesHTML += '<div style="margin-bottom:10px"><div class="detail-label">' + g.label + '</div><div class="source-link-list">';
+      g.sources.forEach(s => {
+        sourcesHTML += '<a href="' + escHTML(s.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + escHTML(s.label) + ' \u2197</a>';
+      });
+      sourcesHTML += '</div></div>';
+    }
+  });
+  if (!sourcesHTML) sourcesHTML = '<p style="color:var(--gray-600);font-size:.82rem">No sources available.</p>';
+
+  const newsQuery = encodeURIComponent(f.name);
+  const newsURL = 'https://news.google.com/search?q=' + newsQuery;
+
+  return '<div class="detail-content" onclick="event.stopPropagation()">' +
+    '<div class="detail-grid">' +
+      '<div class="detail-section">' +
+        '<h4>Firm Details</h4>' +
+        (websiteURL ? '<div class="detail-row-item"><div class="detail-label">Website</div><div class="detail-val"><a href="' + escHTML(websiteURL) + '" target="_blank" rel="noopener">' + escHTML(f.website) + ' \u2197</a></div></div>' : '') +
+        '<div class="detail-row-item"><div class="detail-label">Headquarters</div><div class="detail-val">' + escHTML(f.hq) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Country</div><div class="detail-val">' + escHTML(f.country) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Ownership</div><div class="detail-val">' + escHTML(f.ownership) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Employees</div><div class="detail-val">' + escHTML(f.employees) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">EBITDA</div><div class="detail-val">' + escHTML(f.ebitda || '\u2014') + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Revenue</div><div class="detail-val">' + escHTML(f.revenue) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Description</div><div class="detail-val">' + escHTML(f.description || '') + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Notes</div><div class="detail-val">' + escHTML(f.notes || '') + '</div></div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<h4>Sources</h4>' +
+        sourcesHTML +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<h4>News &amp; Research</h4>' +
+        '<p style="font-size:.82rem;color:var(--gray-600);margin-bottom:8px">Search for recent news about this firm:</p>' +
+        '<a class="news-btn" href="' + newsURL + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Google News: ' + escHTML(f.name) + '</a>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderOtherDetail(f, websiteURL) {
+  let sourcesHTML = '';
+  const sourceGroups = [
+    { label: 'Employee Count Sources', sources: f.employeeSources },
+    { label: 'Revenue Sources', sources: f.revenueSources }
+  ];
+  sourceGroups.forEach(g => {
+    if (g.sources && g.sources.length > 0) {
+      sourcesHTML += '<div style="margin-bottom:10px"><div class="detail-label">' + g.label + '</div><div class="source-link-list">';
+      g.sources.forEach(s => {
+        sourcesHTML += '<a href="' + escHTML(s.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + escHTML(s.label) + ' \u2197</a>';
+      });
+      sourcesHTML += '</div></div>';
+    }
+  });
+  if (!sourcesHTML) sourcesHTML = '<p style="color:var(--gray-600);font-size:.82rem">No sources available.</p>';
+
+  const newsQuery = encodeURIComponent(f.name);
+  const newsURL = 'https://news.google.com/search?q=' + newsQuery;
+
+  return '<div class="detail-content" onclick="event.stopPropagation()">' +
+    '<div class="detail-grid">' +
+      '<div class="detail-section">' +
+        '<h4>Firm Details</h4>' +
+        (websiteURL ? '<div class="detail-row-item"><div class="detail-label">Website</div><div class="detail-val"><a href="' + escHTML(websiteURL) + '" target="_blank" rel="noopener">' + escHTML(f.website) + ' \u2197</a></div></div>' : '') +
+        '<div class="detail-row-item"><div class="detail-label">Headquarters</div><div class="detail-val">' + escHTML(f.hq) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Country</div><div class="detail-val">' + escHTML(f.country) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Ownership</div><div class="detail-val">' + escHTML(f.ownership) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Employees</div><div class="detail-val">' + escHTML(f.employees) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Revenue</div><div class="detail-val">' + escHTML(f.revenue) + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Description</div><div class="detail-val">' + escHTML(f.description || '') + '</div></div>' +
+        '<div class="detail-row-item"><div class="detail-label">Notes</div><div class="detail-val">' + escHTML(f.notes || '') + '</div></div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<h4>Sources</h4>' +
+        sourcesHTML +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<h4>News &amp; Research</h4>' +
+        '<p style="font-size:.82rem;color:var(--gray-600);margin-bottom:8px">Search for recent news about this firm:</p>' +
+        '<a class="news-btn" href="' + newsURL + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Google News: ' + escHTML(f.name) + '</a>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
 function toggleExpand(name, rowEl) {
   expandedRow = expandedRow === name ? null : name;
   render();
@@ -1090,44 +1304,53 @@ function toggleExpand(name, rowEl) {
 
 // ===== STATS =====
 function renderStats(list) {
+  const firms = getCurrentFirms();
   const total = list.length;
-  const firmTypeCounts = {};
-  list.forEach(f => { firmTypeCounts[f.firmType] = (firmTypeCounts[f.firmType] || 0) + 1; });
   const topCount = list.filter(f => tags[f.name] === 'top').length;
   const potentialCount = list.filter(f => tags[f.name] === 'potential').length;
 
-  // Top focus areas
-  const focusCounts = {};
-  for (const key of Object.keys(practiceAreaConfig)) {
-    focusCounts[key] = list.filter(f => f.practiceAreas[key]).length;
-  }
-  const topFocus = Object.entries(focusCounts).sort((a,b) => b[1] - a[1]).slice(0, 3);
-
   let html = '';
   html += '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">Total Firms</div></div>';
-  const ftOrder = ['Actuarial Consulting','Insurance Broker','Big 4 / Accounting','Reinsurance Broker','TPA / Benefits Admin','Healthcare Consulting','Professional Organization'];
-  ftOrder.forEach(ft => {
-    const c = firmTypeCounts[ft] || 0;
-    if (c > 0) html += '<div class="stat-card"><div class="stat-value">' + c + '</div><div class="stat-label">' + ft + '</div></div>';
-  });
+
+  if (currentTab === 'actuarial') {
+    // Firm type breakdown
+    const firmTypeCounts = {};
+    list.forEach(f => { firmTypeCounts[f.firmType] = (firmTypeCounts[f.firmType] || 0) + 1; });
+    const ftOrder = ['Actuarial Consulting','Insurance Broker','Big 4 / Accounting','Reinsurance Broker','TPA / Benefits Admin','Healthcare Consulting','Professional Organization'];
+    ftOrder.forEach(ft => {
+      const c = firmTypeCounts[ft] || 0;
+      if (c > 0) html += '<div class="stat-card"><div class="stat-value">' + c + '</div><div class="stat-label">' + ft + '</div></div>';
+    });
+  }
+
   html += '<div class="stat-card"><div class="stat-value" style="color:#ffc107">' + topCount + '</div><div class="stat-label">Top Priority \u2605</div></div>';
   html += '<div class="stat-card"><div class="stat-value" style="color:#1565c0">' + potentialCount + '</div><div class="stat-label">Potential \u25CF</div></div>';
 
-  topFocus.forEach(([key, count]) => {
-    if (count > 0) {
-      html += '<div class="stat-card"><div class="stat-value">' + count + '</div><div class="stat-label">' + practiceAreaConfig[key].full + '</div></div>';
+  if (currentTab === 'actuarial') {
+    // Top focus areas
+    const focusCounts = {};
+    for (const key of Object.keys(practiceAreaConfig)) {
+      focusCounts[key] = list.filter(f => f.practiceAreas[key]).length;
     }
-  });
+    const topFocus = Object.entries(focusCounts).sort((a,b) => b[1] - a[1]).slice(0, 3);
+    topFocus.forEach(([key, count]) => {
+      if (count > 0) {
+        html += '<div class="stat-card"><div class="stat-value">' + count + '</div><div class="stat-label">' + practiceAreaConfig[key].full + '</div></div>';
+      }
+    });
+  }
 
   document.getElementById('statsBar').innerHTML = html;
 }
 
 // ===== HEADER =====
 function renderHeader(filtered) {
+  const firms = getCurrentFirms();
   const topCount = Object.values(tags).filter(v => v === 'top').length;
   const potentialCount = Object.values(tags).filter(v => v === 'potential').length;
+  const tabLabel = currentTab === 'actuarial' ? 'Actuarial' : currentTab === 'hl' ? 'Houlihan Lokey' : 'Other';
   document.getElementById('headerSub').textContent = '';
-  document.getElementById('filterCount').textContent = filtered.length + ' of ' + firms.length + ' firms | ' + topCount + ' Top Priority | ' + potentialCount + ' Potential';
+  document.getElementById('filterCount').textContent = filtered.length + ' of ' + firms.length + ' ' + tabLabel + ' firms | ' + topCount + ' Top Priority | ' + potentialCount + ' Potential';
 }
 
 // ===== MAIN RENDER =====
@@ -1143,11 +1366,13 @@ function render() {
 function applyFilters() { render(); }
 
 function clearFilters() {
-  document.getElementById('categoryFilter').value = '';
+  if (currentTab === 'actuarial') {
+    document.getElementById('categoryFilter').value = '';
+    document.querySelectorAll('#firmTypeFilters input').forEach(i => i.checked = true);
+    document.querySelectorAll('#focusFilters input').forEach(i => i.checked = false);
+  }
   document.getElementById('searchInput').value = '';
-  document.querySelectorAll('#firmTypeFilters input').forEach(i => i.checked = true);
   document.querySelectorAll('#countryFilters input').forEach(i => i.checked = true);
-  document.querySelectorAll('#focusFilters input').forEach(i => i.checked = false);
   document.querySelectorAll('#ownershipFilters input').forEach(i => i.checked = true);
   document.getElementById('sizeFilter').value = '';
   document.getElementById('filterTopPriority').checked = false;
@@ -1158,17 +1383,38 @@ function clearFilters() {
 // ===== EXPORT =====
 function exportCSV() {
   const filtered = sortFirms(getFiltered());
-  const headers = ['Name','Category','Firm Type','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Priority','Notes'];
-  const rows = filtered.map(f => {
-    const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
-    const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
-    return [f.name, f.category, f.firmType, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, priority, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
-  });
-  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+
+  if (currentTab === 'actuarial') {
+    const headers = ['Name','Category','Firm Type','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Priority','Notes'];
+    const rows = filtered.map(f => {
+      const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
+      const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
+      return [f.name, f.category, f.firmType, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, priority, f.notes].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+    });
+    downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
+  } else if (currentTab === 'hl') {
+    const headers = ['Name','HQ','Country','Ownership','Employees','EBITDA','Revenue','Website','Description','Priority','Notes'];
+    const rows = filtered.map(f => {
+      const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
+      return [f.name, f.hq, f.country, f.ownership, f.employees, f.ebitda||'', f.revenue, f.website, f.description||'', priority, f.notes||''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+    });
+    downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
+  } else {
+    const headers = ['Name','HQ','Country','Ownership','Employees','Revenue','Website','Description','Priority','Notes'];
+    const rows = filtered.map(f => {
+      const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
+      return [f.name, f.hq, f.country, f.ownership, f.employees, f.revenue, f.website, f.description||'', priority, f.notes||''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+    });
+    downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
+  }
+}
+
+function downloadCSV(csv) {
   const blob = new Blob([csv], {type:'text/csv'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'firm_tracker_export.csv';
+  const tabName = currentTab === 'actuarial' ? 'actuarial' : currentTab === 'hl' ? 'houlihan_lokey' : 'other';
+  a.download = 'firm_tracker_' + tabName + '_export.csv';
   a.click();
 }
 
@@ -1183,7 +1429,8 @@ function exportJSON() {
   const blob = new Blob([JSON.stringify(exportData, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'firm_tracker_export.json';
+  const tabName = currentTab === 'actuarial' ? 'actuarial' : currentTab === 'hl' ? 'houlihan_lokey' : 'other';
+  a.download = 'firm_tracker_' + tabName + '_export.json';
   a.click();
 }
 
