@@ -91,6 +91,8 @@ tr.data-row:hover{background:#e3f2fd}
 .tag-ma{background:#455a64}
 /* TAG BUTTONS */
 .tag-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;padding:0 4px;transition:color .15s;line-height:1}
+.comment-box{width:100%;padding:4px 6px;border:1px solid #e0e0e0;border-radius:4px;font-size:.75rem;font-family:inherit;resize:vertical;background:#fafafa;color:#424242;line-height:1.4}
+.comment-box:focus{border-color:#1565c0;outline:none;background:#fff;box-shadow:0 0 0 2px rgba(21,101,192,.12)}
 .tag-none{color:#bdbdbd}
 .tag-potential{color:#1565c0}
 .tag-top{color:#ffc107}
@@ -7508,7 +7510,8 @@ const hlColumns = [
   { key: 'ownership', label: 'Ownership', sortable: true },
   { key: 'employees', label: 'Employees', sortable: true },
   { key: 'revenue', label: 'Revenue', sortable: true },
-  { key: 'description', label: 'Description', sortable: false }
+  { key: 'description', label: 'Description', sortable: false },
+  { key: 'comments', label: 'My Notes', sortable: false }
 ];
 
 const otherColumns = [
@@ -7524,6 +7527,14 @@ const otherColumns = [
 
 // ===== STATE =====
 let tags = JSON.parse(localStorage.getItem('firm_tags') || '{}');
+let comments = JSON.parse(localStorage.getItem('firm_comments') || '{}');
+
+function saveComment(name, el) {
+  const val = el.value.trim();
+  if (val) comments[name] = val;
+  else delete comments[name];
+  localStorage.setItem('firm_comments', JSON.stringify(comments));
+}
 (function migrateOldPriorities() {
   let migrated = false;
   ['firm_priorities', 'actuary_bookmarks'].forEach(oldKey => {
@@ -7933,6 +7944,9 @@ function renderBody(list) {
       tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
       // Description (bullets with <br> already in data)
       tr.innerHTML += '<td style="font-size:.78rem;min-width:400px;max-width:600px;white-space:normal;line-height:1.6">' + (firm.description || '') + '</td>';
+      // Comments
+      const cmt = (comments[firm.name] || '').replace(/"/g, '&quot;');
+      tr.innerHTML += '<td style="min-width:180px;max-width:250px"><textarea class="comment-box" rows="2" placeholder="Add notes..." onblur="saveComment(\'' + escHTML(firm.name).replace(/'/g, "\\'") + '\',this)" onclick="event.stopPropagation()">' + escHTML(comments[firm.name] || '') + '</textarea></td>';
     } else {
       // Other tab
       // Name
@@ -8211,10 +8225,10 @@ function exportCSV() {
     });
     downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
   } else if (currentTab === 'hl') {
-    const headers = ['Name','HQ','Country','Ownership','Employees','EBITDA','Revenue','Website','Description','Priority','Notes'];
+    const headers = ['Name','HQ','Country','Ownership','Employees','EBITDA','Revenue','Website','Description','Priority','My Notes','Notes'];
     const rows = filtered.map(f => {
       const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
-      return [f.name, f.hq, f.country, f.ownership, f.employees, f.ebitda||'', f.revenue, f.website, f.description||'', priority, f.notes||''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+      return [f.name, f.hq, f.country, f.ownership, f.employees, f.ebitda||'', f.revenue, f.website, f.description||'', priority, comments[f.name]||'', f.notes||''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
     });
     downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
   } else {
