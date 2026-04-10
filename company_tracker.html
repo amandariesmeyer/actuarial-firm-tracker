@@ -7503,7 +7503,6 @@ const actuarialColumns = [
 const hlColumns = [
   { key: '#', label: '#', sortable: false },
   { key: 'tag', label: 'Tag', sortable: false },
-  { key: 'rank', label: 'Rank', sortable: true },
   { key: 'name', label: 'Firm Name', sortable: true },
   { key: 'sector', label: 'Sector', sortable: true },
   { key: 'ownership', label: 'Ownership', sortable: true },
@@ -7927,10 +7926,6 @@ function renderBody(list) {
       // Focus areas
       tr.innerHTML += '<td><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
     } else if (currentTab === 'hl') {
-      // Rank
-      const rankVal = firm.rank || 0;
-      const rankColor = rankVal >= 4 ? '#ffc107' : rankVal >= 3 ? '#ff9800' : rankVal >= 2 ? '#2196f3' : rankVal >= 1 ? '#4caf50' : '#bdbdbd';
-      tr.innerHTML += '<td style="text-align:center"><span style="display:inline-block;min-width:24px;padding:2px 8px;border-radius:10px;font-size:.75rem;font-weight:700;background:' + rankColor + ';color:' + (rankVal >= 3 ? '#000' : '#fff') + '">' + rankVal + '</span></td>';
       // Name
       tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong></td>';
       // Sector
