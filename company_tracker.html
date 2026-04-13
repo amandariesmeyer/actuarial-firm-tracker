@@ -59,7 +59,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 .stat-card .stat-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-600);margin-top:1px}
 /* TABLE */
 .table-wrap{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:.83rem}
+table{width:100%;border-collapse:collapse;font-size:.83rem;table-layout:auto}
+td{word-wrap:break-word;overflow-wrap:break-word}
 thead{background:var(--navy-light);color:#fff;position:sticky;top:0;z-index:10}
 th{padding:9px 10px;text-align:left;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;font-size:.74rem;text-transform:uppercase;letter-spacing:.4px}
 th:hover{background:var(--navy)}
@@ -7934,23 +7935,23 @@ function renderBody(list) {
 
     if (currentTab === 'actuarial') {
       // Name + category label
-      tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
+      tr.innerHTML += '<td style="max-width:140px;font-size:.82rem"><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
       // Firm Type
-      tr.innerHTML += '<td><span class="firmtype-badge ' + firmTypeClass(firm.firmType) + '">' + escHTML(firm.firmType) + '</span></td>';
+      tr.innerHTML += '<td style="max-width:110px"><span class="firmtype-badge ' + firmTypeClass(firm.firmType) + '">' + escHTML(firm.firmType) + '</span></td>';
       // HQ
-      tr.innerHTML += '<td>' + escHTML(firm.hq) + '</td>';
+      tr.innerHTML += '<td style="max-width:110px;font-size:.75rem">' + escHTML(firm.hq) + '</td>';
       // Ownership
-      tr.innerHTML += '<td style="font-size:.8rem">' + escHTML(firm.ownership) + '</td>';
+      tr.innerHTML += '<td style="max-width:130px;font-size:.72rem;line-height:1.3">' + escHTML(firm.ownership) + '</td>';
       // Employees
-      tr.innerHTML += '<td>' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
+      tr.innerHTML += '<td style="max-width:90px;font-size:.78rem">' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
       // Actuaries
-      tr.innerHTML += '<td>' + sourcedValueHTML(firm.actuaries, firm.actuarySources) + '</td>';
+      tr.innerHTML += '<td style="max-width:90px;font-size:.78rem">' + sourcedValueHTML(firm.actuaries, firm.actuarySources) + '</td>';
       // Revenue
-      tr.innerHTML += '<td>' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
+      tr.innerHTML += '<td style="max-width:80px;font-size:.78rem">' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
       // Focus areas
-      tr.innerHTML += '<td><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
-      // Description
-      tr.innerHTML += '<td style="font-size:.76rem;min-width:300px;max-width:450px;white-space:normal;line-height:1.5">' + (firm.description || '') + '</td>';
+      tr.innerHTML += '<td style="max-width:130px"><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
+      // Description (wide)
+      tr.innerHTML += '<td style="font-size:.8rem;min-width:450px;width:500px;white-space:normal;line-height:1.6">' + (firm.description || '') + '</td>';
     } else if (currentTab === 'hl') {
       // Name
       tr.innerHTML += '<td><strong>' + escHTML(firm.name) + '</strong></td>';
