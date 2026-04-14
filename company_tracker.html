@@ -93,6 +93,7 @@ tr.data-row:hover{background:#e3f2fd}
 .tag-reins{background:#ef6c00}
 .tag-erm{background:#00838f}
 .tag-ma{background:#455a64}
+.tag-eb{background:#6a1b9a}
 /* TAG BUTTONS */
 .tag-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;padding:0 4px;transition:color .15s;line-height:1}
 .comment-box{width:100%;padding:4px 6px;border:1px solid #e0e0e0;border-radius:4px;font-size:.75rem;font-family:inherit;resize:vertical;background:#fafafa;color:#424242;line-height:1.4}
@@ -250,6 +251,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Seattle, WA",
+    founded: "1947",
     country: "United States",
     ownership: "Private",
     employees: "~4,400",
@@ -268,6 +270,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Southfield, MI",
+    founded: "1938",
     country: "United States",
     ownership: "Private",
     employees: "~107-176",
@@ -277,15 +280,16 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "grsconsulting.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false,eb:true},
     notes: "#1 public pension actuarial firm. $1.1T+ in accrued liability. ~24% market share of public pensions.",
-    description: "• Pension consulting and sustainable benefit design for public sector plans<br>• OPEB/retiree healthcare valuation with decades of government plan experience<br>• DB plan administration and participant services<br>• GRS Foresight stress-testing software for public retirement program modeling"
+    description: "• Pension consulting and sustainable benefit design with a focus on public sector plans<br>• OPEB/retiree healthcare valuation with decades of government plan experience<br>• DB plan administration and participant services<br>• GRS Foresight stress-testing software for public retirement program modeling"
   },
   {
     name: "Cavanaugh Macdonald",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Kennesaw, GA",
+    founded: "2005",
     country: "United States",
     ownership: "Private",
     employees: "~40-43",
@@ -295,15 +299,16 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "cavmacconsulting.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false,eb:true},
     notes: "#3 public pension firm by liability. $690B+ in liabilities. Public sector focus.",
-    description: "• Actuarial valuations for state and local government pension and OPEB plans<br>• Legislative modeling and policy-impact analysis for proposed benefit changes<br>• Exclusively serves governmental clients; 129 pension/OPEB systems, $869B in liabilities"
+    description: "• Actuarial valuations for state and local government pension and OPEB plans with a focus on public sector<br>• Legislative modeling and policy-impact analysis for proposed benefit changes<br>• Exclusively serves governmental clients; 129 pension/OPEB systems, $869B in liabilities"
   },
   {
     name: "Segal Consulting",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "New York, NY",
+    founded: "1939",
     country: "United States",
     ownership: "Private",
     employees: "~1,100",
@@ -315,13 +320,14 @@ const actuarialFirms = [
     website: "segalco.com",
     practiceAreas: {pension:true,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
     notes: "#4 public pension firm. $551B+ in liabilities. Also does health/benefits for multiemployer plans.",
-    description: "• Benefits, retirement, and compensation consulting across public and private sectors<br>• Deep expertise in multiemployer plans, higher education, healthcare, and energy<br>• Compliance, fiduciary, and vendor oversight advisory services<br>• M&A support, financial well-being programs, and benefits technology consulting"
+    description: "• Benefits, retirement, and compensation consulting with a focus on multi-employer and public plans<br>• Deep expertise in multiemployer plans, higher education, healthcare, and energy<br>• Compliance, fiduciary, and vendor oversight advisory services<br>• M&A support, financial well-being programs, and benefits technology consulting"
   },
   {
     name: "Cheiron",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Washington, DC",
+    founded: "2002",
     country: "United States",
     ownership: "Employee-Owned",
     employees: "~94",
@@ -331,7 +337,7 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "cheiron.us",
-    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false,eb:true},
     notes: "Employee-owned. Public employers, Taft-Hartley plans, nonprofits. Offices in 9 US cities.",
     description: "• Pension stress testing, modeling, and adjustable plan design for risk management<br>• Health and welfare financial forecasting and benefit pricing<br>• Custom in-house software development for pension and health plan analysis<br>• Primarily serves multiemployer and public pension and health plans"
   },
@@ -340,6 +346,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Fort Lauderdale, FL",
+    founded: "1979",
     country: "United States",
     ownership: "Private",
     employees: "100+",
@@ -349,7 +356,7 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "foster-foster.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false,eb:true},
     notes: "Public pension specialist. Strong in Florida and Southeast US municipal plans. 90+ consultants/actuaries firm-wide.",
     description: "• Retirement consulting for public, private, and multi-employer plans nationwide<br>• Pension administration and valuation for plans with 5 to 180,000+ members<br>• Health and welfare actuarial analysis and plan management<br>• Serves 400+ clients with personalized service and trustee education"
   },
@@ -358,6 +365,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Bloomington, IL",
+    founded: "2003",
     country: "United States",
     ownership: "Employee-Owned",
     employees: "~93-95",
@@ -376,6 +384,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Dallas, TX",
+    founded: "1968",
     country: "United States",
     ownership: "Private",
     employees: "~102",
@@ -394,6 +403,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Boca Raton, FL",
+    founded: "1994",
     country: "United States",
     ownership: "Private",
     employees: "150+",
@@ -412,6 +422,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Brentwood, TN",
+    founded: "1995",
     country: "United States",
     ownership: "Private",
     employees: "~25-40",
@@ -422,7 +433,7 @@ const actuarialFirms = [
     revenueSources: [],
     website: "sigmaactuary.com",
     practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},
-    notes: "Founded 1995. P&C specialty. RISK66 analytics platform.",
+    notes: "Founded 1995. P&C specialty. RISK66 analytics platform. Geared toward captive insurance. Website quote by USI.",
     description: "• P&C loss forecasting, loss run analysis, and actuarial analytics for risk managers<br>• RISK66 platform providing analytics tools and educational resources<br>• Captive insurance support and analytics-driven risk management<br>• Helps clients reduce total cost of risk through data-driven insights"
   },
   {
@@ -430,11 +441,12 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Chicago, IL",
+    founded: "2009",
     country: "United States",
     ownership: "Private",
     employees: "~162",
     employeeSources: [{label:"RocketReach",url:"https://rocketreach.co/october-three-consulting-profile_b5cd76c1f42e0b0f"}],
-    actuaries: "Not disclosed",
+    actuaries: "~60",
     actuarySources: [],
     revenue: "\u2014",
     revenueSources: [],
@@ -448,8 +460,9 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Farmington, CT",
+    founded: "2012",
     country: "United States",
-    ownership: "Private",
+    ownership: "Affiliate of RSM",
     employees: "~100+",
     employeeSources: [{label:"RRC Actuarial Services",url:"https://riskreg.com/actuarial-services/"}],
     actuaries: "Not disclosed (FSAs, FCASs, EAs)",
@@ -466,6 +479,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Austin, TX",
+    founded: "1945",
     country: "United States",
     ownership: "Private",
     employees: "~25-26",
@@ -475,7 +489,7 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "ruddwisdom.com",
-    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false,eb:true},
     notes: "Oldest actuarial consulting firm in Texas (est. 1945). Niche: utility ratemaking actuarial.",
     description: "• Actuarial consulting for public sector defined benefit pension plans since 1945<br>• OPEB valuations and postretirement medical benefit plan consulting<br>• Serves governmental entities, private corporations, and professional associations<br>• Texas-based with deep expertise in state and local government retirement systems"
   },
@@ -484,6 +498,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Philadelphia, PA",
+    founded: "1987",
     country: "United States",
     ownership: "Private",
     employees: "200+",
@@ -494,24 +509,25 @@ const actuarialFirms = [
     revenueSources: [],
     website: "insconsultants.com",
     practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
-    notes: "Regulatory oversight specialist. Strong in insurance department work. Founded 1987.",
+    notes: "A group of regulatory consulting firms. Regulatory oversight specialist. Strong in insurance department work. Founded 1987.",
     description: "• Financial examinations, actuarial, IT, and market regulation for insurance regulators<br>• MLR exams, reinsurance analysis, PBM/pharmaceutical regulation, and receivership<br>• Serves regulators only, eliminating conflicts of interest with industry<br>• Training delivery for regulatory staff via on-site, webinar, and off-site formats"
   },
   {
-    name: "Bickmore / Prime Actuarial",
+    name: "Bickmore Actuarial",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Sacramento, CA",
+    founded: "1984",
     country: "United States",
     ownership: "Private",
     employees: "~20",
     employeeSources: [{label:"Bickmore About",url:"https://www.bickmoreactuarial.net/aboutus/"}],
-    actuaries: "~10-15",
+    actuaries: "~21",
     actuarySources: [],
     revenue: "\u2014",
     revenueSources: [],
     website: "bfrisk.com",
-    practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false},
+    practiceAreas: {pension:true,life:false,pc:true,health:false,reinsurance:false,erm:true,ma:false,eb:true},
     notes: "One of largest independent non-brokerage risk/actuarial firms. Workers Comp, Liability, Med Mal. Spun out of York Risk 2019.",
     description: "• Actuarial consulting for public entities, risk pools, and governmental programs<br>• OPEB and pension valuations with rapid turnaround<br>• Board and trustee education on actuarial matters"
   },
@@ -520,6 +536,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Toronto, Canada",
+    founded: "1927",
     country: "Canada",
     ownership: "Private (Principal-Owned)",
     employees: "~350+",
@@ -529,7 +546,7 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "eckler.ca",
-    practiceAreas: {pension:true,life:true,pc:false,health:true,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:true,pc:true,health:true,reinsurance:false,erm:false,ma:false},
     notes: "Canada's largest independent actuarial firm. Offices across Canada and Caribbean. Founded 1927.",
     description: "• Canada's largest independent actuarial and consulting firm<br>• Pensions, benefits, compensation, and financial wellness consulting (25+ consultants + 14+ modelling experts)<br>• Life insurance (30+ professionals) and P&C insurance (24+ actuaries) practices<br>• Technology solutions for plan administration; serves Canada and Caribbean"
   },
@@ -538,11 +555,12 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Multi-city",
+    founded: "1999",
     country: "United States",
     ownership: "Subsidiary of HMA",
     employees: "~200+ experts",
     employeeSources: [{label:"Wakely About",url:"https://www.wakely.com/about/"}],
-    actuaries: "Not disclosed (includes analysts + consultants)",
+    actuaries: "~120",
     actuarySources: [],
     revenue: "\u2014",
     revenueSources: [],
@@ -556,6 +574,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Healthcare Consulting",
     hq: "Murrieta, CA",
+    founded: "2003",
     country: "United States",
     ownership: "Private (Founder-Owned)",
     employees: "~20-24",
@@ -574,6 +593,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Unknown",
+    founded: "1981",
     country: "Unknown",
     ownership: "Private",
     employees: "~132",
@@ -583,7 +603,7 @@ const actuarialFirms = [
     revenue: "\u2014",
     revenueSources: [],
     website: "boltonusa.com",
-    practiceAreas: {pension:false,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false},
+    practiceAreas: {pension:true,life:false,pc:false,health:false,reinsurance:false,erm:false,ma:false,eb:true},
     notes: "",
     description: "• Retirement and benefits consulting for corporate, public sector, and nonprofit clients<br>• Independent investment advisory for defined contribution and defined benefit plans<br>• Health benefits, talent development, and organizational performance consulting<br>• Specializes in multiemployer plans and healthcare organizations"
   },
@@ -592,6 +612,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Harrisburg, PA",
+    founded: "1963",
     country: "United States",
     ownership: "Private (Consultant-Owned Partnership)",
     employees: "~115",
@@ -610,6 +631,7 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Atlanta, GA",
+    founded: "2008",
     country: "United States",
     ownership: "Private",
     employees: "~70-80",
@@ -628,18 +650,19 @@ const actuarialFirms = [
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
     hq: "Newtown Square, PA",
+    founded: "1993",
     country: "United States",
     ownership: "Private (PGF/Polaris Partners invested 2024)",
     employees: "~70+",
     employeeSources: [{label:"Martin About",url:"https://www.martincompanyus.com/about-us/"}],
-    actuaries: "Not disclosed",
+    actuaries: "~19",
     actuarySources: [],
     revenue: "~$10.8M",
     revenueSources: [{label:"CBInsights",url:"https://www.cbinsights.com/company/martin-and-company"}],
     website: "martincompanyus.com",
     practiceAreas: {pension:false,life:false,pc:true,health:false,reinsurance:false,erm:false,ma:false},
     notes: "Tech-enabled P&C insurance services. Product dev, state filings, regulatory compliance. Founded 1993. 90%+ regulatory approval rate.",
-    description: "• P&C insurance actuarial consulting, state filing, and compliance services<br>• Product development, company licensing, and competitive intelligence for insurers<br>• Proprietary technology to streamline operations<br>• Serves carriers, program administrators, and MGAs across all U.S. jurisdictions"
+    description: "• P&C insurance actuarial consulting, state filing, and compliance services for MGAs and carriers<br>• Product development, company licensing, and competitive intelligence for insurers<br>• Proprietary technology to streamline operations<br>• Serves carriers, program administrators, and MGAs across all U.S. jurisdictions"
   },
 ];
 
@@ -7489,7 +7512,8 @@ const practiceAreaConfig = {
   health:  { short: "Health",  full: "Health/Benefits",     cls: "tag-health" },
   reinsurance: { short: "Reins.", full: "Reinsurance",      cls: "tag-reins" },
   erm:     { short: "ERM",     full: "ERM/Captive",         cls: "tag-erm" },
-  ma:      { short: "M&A",     full: "M&A/Valuation",       cls: "tag-ma" }
+  ma:      { short: "M&A",     full: "M&A/Valuation",       cls: "tag-ma" },
+  eb:      { short: "EB",      full: "Employee Benefits",   cls: "tag-eb" }
 };
 
 // ===== COLUMN CONFIGS PER TAB =====
@@ -7498,6 +7522,7 @@ const actuarialColumns = [
   { key: 'tag', label: 'Tag', sortable: false },
   { key: 'name', label: 'Firm Name', sortable: true },
   { key: 'hq', label: 'Headquarters', sortable: true },
+  { key: 'founded', label: 'Founded', sortable: true },
   { key: 'ownership', label: 'Ownership', sortable: true },
   { key: 'employees', label: 'Employees', sortable: true },
   { key: 'actuaries', label: 'Actuaries', sortable: true },
@@ -7839,6 +7864,7 @@ function sortFirms(list) {
       case 'name': va = a.name.toLowerCase(); vb = b.name.toLowerCase(); break;
       case 'firmType': va = firmTypeSortVal(a.firmType || ''); vb = firmTypeSortVal(b.firmType || ''); break;
       case 'hq': va = a.hq.toLowerCase(); vb = b.hq.toLowerCase(); break;
+      case 'founded': va = parseInt(a.founded) || 0; vb = parseInt(b.founded) || 0; break;
       case 'ownership': va = a.ownership.toLowerCase(); vb = b.ownership.toLowerCase(); break;
       case 'employees': va = parseEmployeeNum(a.employees); vb = parseEmployeeNum(b.employees); break;
       case 'actuaries': va = parseEmployeeNum(a.actuaries); vb = parseEmployeeNum(b.actuaries); break;
@@ -7923,6 +7949,8 @@ function renderBody(list) {
       tr.innerHTML += '<td style="max-width:140px;font-size:.82rem"><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
       // HQ
       tr.innerHTML += '<td style="max-width:110px;font-size:.75rem">' + escHTML(firm.hq) + '</td>';
+      // Founded
+      tr.innerHTML += '<td style="max-width:60px;font-size:.78rem;text-align:center">' + escHTML(firm.founded || '') + '</td>';
       // Ownership
       tr.innerHTML += '<td style="max-width:130px;font-size:.72rem;line-height:1.3">' + escHTML(firm.ownership) + '</td>';
       // Employees
@@ -8219,11 +8247,11 @@ function exportCSV() {
   const filtered = sortFirms(getFiltered());
 
   if (currentTab === 'actuarial') {
-    const headers = ['Name','Category','HQ','Ownership','Employees','Actuaries','Website','Practice Areas','Priority','Notes','Description'];
+    const headers = ['Name','Category','HQ','Founded','Ownership','Employees','Actuaries','Website','Practice Areas','Priority','Notes','Description'];
     const rows = filtered.map(f => {
       const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
       const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
-      return [f.name, f.category, f.hq, f.ownership, f.employees, f.actuaries, f.website, pa, priority, f.notes, f.description || ''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+      return [f.name, f.category, f.hq, f.founded || '', f.ownership, f.employees, f.actuaries, f.website, pa, priority, f.notes, f.description || ''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
     });
     downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
   } else if (currentTab === 'hl') {
