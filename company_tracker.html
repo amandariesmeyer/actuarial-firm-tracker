@@ -408,24 +408,6 @@ const actuarialFirms = [
     description: "• Actuarial consulting, predictive analytics, and data services for insurers<br>• Product development, compliance, and technology consulting<br>• Serves insurance companies globally across multiple P&C and specialty lines"
   },
   {
-    name: "Health Management Associates (HMA)",
-    category: "Actuarial Firms",
-    firmType: "Healthcare Consulting",
-    hq: "Lansing, MI",
-    country: "United States",
-    ownership: "Private",
-    employees: "~700-1,000",
-    employeeSources: [{label:"HMA Website",url:"https://www.healthmanagement.com/our-team/"},{label:"HMA News",url:"https://www.healthmanagement.com/insights/hma-news/health-management-associates-acquires-wakely-consulting-group/"}],
-    actuaries: "~50-75 (est.)",
-    actuarySources: [],
-    revenue: "\u2014",
-    revenueSources: [],
-    website: "healthmanagement.com",
-    practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Health-only actuarial. Medicaid rate setting, Medicare bid prep, ACA marketplace filings. Acquired Wakely.",
-    description: "• Leading national healthcare and human services consulting firm<br>• Medicaid, managed care, behavioral health, and delivery system advisory<br>• Federal and state health policy expertise<br>• Serves government agencies, health systems, foundations, and investors"
-  },
-  {
     name: "SIGMA Actuarial Consulting Group",
     category: "Actuarial Firms",
     firmType: "Actuarial Consulting",
@@ -557,7 +539,7 @@ const actuarialFirms = [
     firmType: "Healthcare Consulting",
     hq: "Multi-city",
     country: "United States",
-    ownership: "Subsidiary of HMA (since 2021)",
+    ownership: "Subsidiary of HMA",
     employees: "~200+ experts",
     employeeSources: [{label:"Wakely About",url:"https://www.wakely.com/about/"}],
     actuaries: "Not disclosed (includes analysts + consultants)",
@@ -566,7 +548,7 @@ const actuarialFirms = [
     revenueSources: [],
     website: "wakely.com",
     practiceAreas: {pension:false,life:false,pc:false,health:true,reinsurance:false,erm:false,ma:false},
-    notes: "Proprietary ACA data from 35 states, 19M lives. $1.4B in reserves. Medicare Advantage, Medicaid, ACA/Exchange specialist.",
+    notes: "HMA parent company provides healthcare and human services consulting; 700+ consultants. Proprietary ACA data from 35 states, 19M lives. $1.4B in reserves. Medicare Advantage, Medicaid, ACA/Exchange specialist.",
     description: "• Healthcare actuarial consulting; ACA marketplace analytics and strategy leader<br>• Serves health plans, state/federal government, employers, and providers<br>• Risk adjustment expertise across 35 states and 19 million lives<br>• HMA company focused on data-driven healthcare decisions"
   },
   {
@@ -7515,12 +7497,10 @@ const actuarialColumns = [
   { key: '#', label: '#', sortable: false },
   { key: 'tag', label: 'Tag', sortable: false },
   { key: 'name', label: 'Firm Name', sortable: true },
-  { key: 'firmType', label: 'Firm Type', sortable: true },
   { key: 'hq', label: 'Headquarters', sortable: true },
   { key: 'ownership', label: 'Ownership', sortable: true },
   { key: 'employees', label: 'Employees', sortable: true },
   { key: 'actuaries', label: 'Actuaries', sortable: true },
-  { key: 'revenue', label: 'Revenue', sortable: true },
   { key: 'focus', label: 'Focus Areas', sortable: false },
   { key: 'description', label: 'Description', sortable: false }
 ];
@@ -7577,8 +7557,8 @@ function saveComment(name, el) {
 })();
 
 let currentTab = 'actuarial';
-let sortCol = 'name';
-let sortDir = 1;
+let sortCol = 'actuaries';
+let sortDir = -1;
 let expandedRow = null;
 
 // ===== TAB HELPERS =====
@@ -7699,8 +7679,13 @@ function focusTagsHTML(pa, full) {
 function switchTab(tab) {
   currentTab = tab;
   expandedRow = null;
-  sortCol = 'name';
-  sortDir = 1;
+  if (tab === 'actuarial') {
+    sortCol = 'actuaries';
+    sortDir = -1;
+  } else {
+    sortCol = 'name';
+    sortDir = 1;
+  }
 
   // Update tab button active states
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -7936,8 +7921,6 @@ function renderBody(list) {
     if (currentTab === 'actuarial') {
       // Name + category label
       tr.innerHTML += '<td style="max-width:140px;font-size:.82rem"><strong>' + escHTML(firm.name) + '</strong><span class="category-label">' + escHTML(firm.category) + '</span></td>';
-      // Firm Type
-      tr.innerHTML += '<td style="max-width:110px"><span class="firmtype-badge ' + firmTypeClass(firm.firmType) + '">' + escHTML(firm.firmType) + '</span></td>';
       // HQ
       tr.innerHTML += '<td style="max-width:110px;font-size:.75rem">' + escHTML(firm.hq) + '</td>';
       // Ownership
@@ -7946,8 +7929,6 @@ function renderBody(list) {
       tr.innerHTML += '<td style="max-width:90px;font-size:.78rem">' + sourcedValueHTML(firm.employees, firm.employeeSources) + '</td>';
       // Actuaries
       tr.innerHTML += '<td style="max-width:90px;font-size:.78rem">' + sourcedValueHTML(firm.actuaries, firm.actuarySources) + '</td>';
-      // Revenue
-      tr.innerHTML += '<td style="max-width:80px;font-size:.78rem">' + sourcedValueHTML(firm.revenue, firm.revenueSources) + '</td>';
       // Focus areas
       tr.innerHTML += '<td style="max-width:130px"><div class="focus-tags">' + focusTagsHTML(firm.practiceAreas, false) + '</div></td>';
       // Description (wide)
@@ -8238,11 +8219,11 @@ function exportCSV() {
   const filtered = sortFirms(getFiltered());
 
   if (currentTab === 'actuarial') {
-    const headers = ['Name','Category','Firm Type','HQ','Ownership','Employees','Actuaries','Revenue','Website','Practice Areas','Priority','Notes','Description'];
+    const headers = ['Name','Category','HQ','Ownership','Employees','Actuaries','Website','Practice Areas','Priority','Notes','Description'];
     const rows = filtered.map(f => {
       const pa = Object.entries(f.practiceAreas).filter(([k,v]) => v).map(([k]) => practiceAreaConfig[k].full).join('; ');
       const priority = tags[f.name] === 'top' ? 'Top Priority' : tags[f.name] === 'potential' ? 'Potential' : '';
-      return [f.name, f.category, f.firmType, f.hq, f.ownership, f.employees, f.actuaries, f.revenue, f.website, pa, priority, f.notes, f.description || ''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
+      return [f.name, f.category, f.hq, f.ownership, f.employees, f.actuaries, f.website, pa, priority, f.notes, f.description || ''].map(v => '"' + (v||'').replace(/"/g,'""') + '"');
     });
     downloadCSV([headers.join(','), ...rows.map(r => r.join(','))].join('\n'));
   } else if (currentTab === 'hl') {
